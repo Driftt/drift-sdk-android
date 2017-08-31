@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- "Mark Favorite", should appear as action button if possible -->
+    <item
+        android:id="@+id/drift_sdk_create_conversation_action"
+        android:icon="@drawable/ic_action_create"
+        android:title="Create"
+        app:showAsAction="always"/>
+
+
+</menu>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="drift.com.drift.activities.ConversationActivity"
+    android:background="@color/drift_sdk_white">
+
+    <ProgressBar
+        android:id="@+id/drift_sdk_conversation_activity_progress_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:animateLayoutChanges="true">
+
+
+        <TextView
+            android:id="@+id/drift_sdk_conversation_activity_status_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No network connection"
+            android:background="@color/drift_sdk_red"
+            android:textColor="@color/drift_sdk_white"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/drift_sdk_conversation_activity_welcome_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            tools:text="Test Offline Message"
+            android:textColor="@color/drift_sdk_black"
+            android:textStyle="bold"
+            android:textAlignment="center"/>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/drift_sdk_conversation_activity_recycler_activity"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingBottom="35dp"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:padding="10dp"
+            android:text="We're ⚡️ by Drift"
+            android:textColor="@color/drift_sdk_textColor"
+            android:textSize="10sp"
+            android:textAlignment="center"
+            android:layout_marginTop="-35dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="-3dp"
+            android:background="@drawable/drift_sdk_conversation_activity_bottom_shadow" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:animateLayoutChanges="true">
+
+
+            <ImageView
+                android:id="@+id/drift_sdk_conversation_activity_plus_button"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:background="@color/drift_sdk_red"
+                android:scaleType="centerInside"
+                android:visibility="gone"/>
+
+            <EditText
+                android:id="@+id/drift_sdk_conversation_activity_edit_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Reply"
+                android:gravity="center_vertical"
+                android:background="@color/drift_sdk_transparent"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingStart="20dp"
+                android:textSize="14sp"
+                android:inputType="textCapSentences"
+                android:imeActionLabel="Send"
+                android:imeOptions="actionSend"
+                />
+
+
+            <ImageView
+                android:id="@+id/drift_sdk_conversation_activity_send_button"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_send_message_button"
+                android:visibility="gone"
+                android:background="@color/drift_sdk_red"/>
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>
