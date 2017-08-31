@@ -64,8 +64,8 @@ Thats it. Your good to go!!
 
 A user can begin a conversation in response to a campaign or by presenting the conversations list
 
-```Swift
-  Drift.showConversationActivity()
+```Java
+  Drift.showConversationActivity();
 ```
 
 Thats it. Your good to go!!
