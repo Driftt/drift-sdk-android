@@ -6,7 +6,7 @@
     </style>
 
     <style name="DriftTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">#E92E4B</item>
     </style>
 
 </resources>
