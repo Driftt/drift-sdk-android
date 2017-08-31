@@ -69,7 +69,6 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
         public void onReceive(Context context, Intent intent) {
             //check if the broadcast message is for our enqueued download
             long referenceId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
-
             if(DownloadHelper.getInstance().isDownloadFromApp(referenceId)) {
                 Toast.makeText(ConversationActivity.this, "Download Complete", Toast.LENGTH_LONG).show();
             }
