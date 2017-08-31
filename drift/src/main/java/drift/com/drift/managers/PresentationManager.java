@@ -205,7 +205,7 @@ public class PresentationManager {
 
             openButton.setTextColor(ColorHelper.getForegroundColor());
             closeButton.setTextColor(ColorHelper.getForegroundColor());
-            
+
             closeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
