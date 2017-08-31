@@ -203,8 +203,6 @@ public class PresentationManager {
             Drawable backgroundDrawable = DrawableCompat.wrap(bottomLinearLayout.getBackground()).mutate();
             DrawableCompat.setTint(backgroundDrawable, ColorHelper.getBackgroundColor());
 
-
-
             closeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

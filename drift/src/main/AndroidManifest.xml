@@ -9,17 +9,22 @@
         android:allowBackup="true"
         android:label="@string/app_name"
         android:supportsRtl="true">
-        <activity android:name=".activities.DriftActivity" />
+
+        <activity android:name=".activities.DriftActivity"
+            android:theme="@style/DriftTheme.NoActionBar"/>
         <activity
             android:name=".activities.ConversationListActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:theme="@style/DriftTheme.NoActionBar"/>
         <activity
             android:name=".activities.ConversationActivity"
             android:parentActivityName=".activities.ConversationListActivity"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:theme="@style/DriftTheme.NoActionBar"/>
         <activity android:name=".activities.ImageViewerActivity"
             android:parentActivityName=".activities.ConversationActivity"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:theme="@style/DriftTheme.NoActionBar"/>
     </application>
 
 </manifest>
