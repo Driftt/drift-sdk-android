@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Animation">
+        <item name="android:windowEnterAnimation">@anim/popup_show</item>
+        <item name="android:windowExitAnimation">@anim/popup_hide</item>
+    </style>
+
+    <style name="DriftTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorAccent">@color/driftColorAccent</item>
+    </style>
+
+</resources>

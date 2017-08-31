@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="15dp"
+    android:paddingEnd="15dp"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp">
+
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1"
+        android:background="@drawable/drift_sdk_day_divider_gradient_left"
+        android:layout_gravity="center_vertical"/>
+
+    <TextView
+        android:id="@+id/drift_sdk_conversation_day_divider_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Today"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:textStyle="bold"
+        android:textColor="@color/drift_sdk_black"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1"
+        android:background="@drawable/drift_sdk_day_divider_gradient_right"
+        android:layout_gravity="center_vertical"/>
+
+
+</LinearLayout>

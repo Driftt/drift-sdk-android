@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="drift_sdk_red">#E92E4B</color>
+    <color name="drift_sdk_green">#13CB6E</color>
+    <color name="drift_sdk_black">#000000</color>
+    <color name="drift_sdk_white">#FFFFFF</color>
+
+    <color name="drift_sdk_textColor">#7795A4</color>
+
+    <color name="drift_sdk_transparent">#00000000</color>
+
+    <color name="drift_sdk_day_divider_color">#B5D2E1</color>
+
+    <color name="drift_sdk_attachment_cell_background_color">#E1EEF5</color>
+
+
+    <color name="driftColorAccent">#6566AB</color>
+</resources>

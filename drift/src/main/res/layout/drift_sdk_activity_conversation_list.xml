@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="drift.com.drift.activities.ConversationListActivity"
+    android:background="@color/drift_sdk_white">
+
+    <ProgressBar
+        android:id="@+id/drift_sdk_conversation_list_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:animateLayoutChanges="true">
+
+            <TextView
+                android:id="@+id/drift_sdk_conversation_list_load_page_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Connection Error"
+                android:background="@color/drift_sdk_red"
+                android:textColor="@color/drift_sdk_white"
+
+                android:textSize="12sp"
+                android:gravity="center"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:visibility="gone"
+                />
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/drift_sdk_conversation_list_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/drift_sdk_conversation_list_empty_linear_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You have no conversations \n\nLets Talk!"
+            android:gravity="center"
+            android:layout_gravity="center"
+            />
+
+        <Button
+            android:id="@+id/drift_sdk_conversation_list_empty_state_create_button"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="New Conversation"
+            android:layout_gravity="center"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:background="@drawable/drift_sdk_empty_state_button_background"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <include
+        android:id="@+id/drift_sdk_conversation_message_cell_day_header"
+        layout="@layout/drift_sdk_conversation_day_divider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <LinearLayout
+        android:id="@+id/drift_sdk_conversation_message_content_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="5dp">
+
+        <ImageView
+            android:id="@+id/drift_sdk_conversation_message_cell_user_image_view"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start">
+
+                <TextView
+                    android:id="@+id/drift_sdk_conversation_message_cell_user_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:textColor="@color/drift_sdk_black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:text="Sarah Martin" />
+
+                <TextView
+                    android:id="@+id/drift_sdk_conversation_message_cell_time_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/drift_sdk_conversation_message_cell_user_text_view"
+                    android:maxLines="1"
+                    android:minWidth="30dp"
+                    tools:text="9:20 Am" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/drift_sdk_conversation_message_cell_main_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:autoLink="all"
+                android:lineSpacingExtra="2dp"
+                android:textColor="@color/drift_sdk_black"
+                android:textIsSelectable="true"
+                android:textSize="14sp"
+                tools:text="Yeah i tried that first. I had this issue a few weeks ago as well and Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+
+
+            <ImageView
+                android:id="@+id/drift_sdk_conversation_message_cell_attachment_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/drift_sdk_attachment_placeholder"/>
+
+
+            <HorizontalScrollView
+                android:id="@+id/drift_sdk_conversation_message_cell_attachments_nested_scroll_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:scrollbars="none"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:id="@+id/drift_sdk_conversation_message_cell_attachments_linear_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:divider="@drawable/drift_sdk_conversation_tag_linear_layout_divider"
+                    android:orientation="horizontal"
+                    android:showDividers="middle">
+
+                    <!--Attachment View-->
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

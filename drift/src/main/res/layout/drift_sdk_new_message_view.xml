@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/drift_sdk_new_message_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/drift_sdk_new_message_background"
+        android:orientation="vertical"
+        android:elevation="3dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:paddingTop="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="15dp">
+
+                <TextView
+                    android:id="@+id/drift_sdk_new_message_title_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Lisa Richards"
+                    android:textStyle="bold"
+                    android:textColor="@color/drift_sdk_black"
+                    />
+
+                <TextView
+                    android:id="@+id/drift_sdk_new_message_subtitle_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="This is a sample message that truncates"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:layout_marginEnd="10dp"
+                    android:lineSpacingExtra="2dp"
+                    android:layout_marginTop="3dp"
+                    />
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/drift_sdk_new_message_user_image_view"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="15dp"
+                android:src="@drawable/placeholder"
+                />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/drift_sdk_new_message_bottom_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/drift_sdk_new_message_bottom_linear_layout_background"
+            >
+
+            <Button
+                android:id="@+id/drift_sdk_new_message_close_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Dismiss"
+                android:textAllCaps="false"
+                android:background="@drawable/drift_sdk_new_message_left_button_background"
+                android:textColor="@color/drift_sdk_white"
+                android:textSize="12sp"
+                />
+
+            <Button
+                android:id="@+id/drift_sdk_new_message_open_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Open"
+                android:textStyle="bold"
+                android:textAllCaps="false"
+                android:background="@drawable/drift_sdk_new_message_right_button_background"
+                android:textColor="@color/drift_sdk_white"
+                android:textSize="12sp"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/drift_sdk_new_message_unread_text_view"
+        android:layout_width="40dp"
+        android:layout_height="25dp"
+        android:background="@drawable/drift_sdk_inbox_count_background"
+        android:textColor="@color/drift_sdk_white"
+        android:gravity="center"
+        android:text="+12"
+        android:textSize="10sp"
+        android:layout_marginStart="-45dp"
+        android:elevation="4dp"
+        android:layout_toEndOf="@id/drift_sdk_new_message_linear_layout" />
+
+</RelativeLayout>
