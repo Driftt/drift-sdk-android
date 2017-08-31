@@ -65,7 +65,7 @@ public class MessagesWrapper {
         });
     }
 
-    public static void createConversation(String bodyString, final APICallbackWrapper<Conversation> callback) {
+    public static void createConversation(String bodyString, final APICallbackWrapper<Message> callback) {
 
         HashMap<String, String> payload = new HashMap<>();
 
@@ -75,9 +75,9 @@ public class MessagesWrapper {
 
         payload.put("body", body);
 
-        APIManager.getConversationClient().createConversation(payload).enqueue(new Callback<Conversation>() {
+        APIManager.getConversationClient().createConversation(payload).enqueue(new Callback<Message>() {
             @Override
-            public void onResponse(Call<Conversation> call, Response<Conversation> response) {
+            public void onResponse(Call<Message> call, Response<Message> response) {
                 if((response.code() != 200 && response.code() != 201) || response.body() == null) {
                     callback.onResponse(null);
                 }else{
@@ -86,7 +86,7 @@ public class MessagesWrapper {
             }
 
             @Override
-            public void onFailure(Call<Conversation> call, Throwable throwable) {
+            public void onFailure(Call<Message> call, Throwable throwable) {
                 LoggerHelper.logMessage(TAG, throwable.getLocalizedMessage());
                 callback.onResponse(null);
             }

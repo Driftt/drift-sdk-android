@@ -131,11 +131,11 @@ public class MessageManager {
 
     }
 
-    public void createConversation(String body, final APICallbackWrapper<Conversation> callbackWrapper) {
+    public void createConversation(String body, final APICallbackWrapper<Message> callbackWrapper) {
 
-        MessagesWrapper.createConversation(body, new APICallbackWrapper<Conversation>() {
+        MessagesWrapper.createConversation(body, new APICallbackWrapper<Message>() {
             @Override
-            public void onResponse(Conversation response) {
+            public void onResponse(Message response) {
 
                 callbackWrapper.onResponse(response);
             }
