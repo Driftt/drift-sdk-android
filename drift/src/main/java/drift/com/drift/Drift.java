@@ -14,7 +14,7 @@ public class Drift {
 
     private static Drift _drift = null;
     private Context context;
-    public Boolean debugMode = true;
+    public Boolean debugMode = false;
     private ApplicationLifecycleHelper applicationLifecycleHelper = new ApplicationLifecycleHelper();
 
     Drift(Context context) {
