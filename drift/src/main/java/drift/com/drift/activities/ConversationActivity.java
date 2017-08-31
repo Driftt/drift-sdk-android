@@ -83,7 +83,7 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
 
         return new Intent(context, ConversationActivity.class)
                 .putExtras(data)
-                .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
     }
 
     public static Intent intentForCreateConversation(Context context) {
