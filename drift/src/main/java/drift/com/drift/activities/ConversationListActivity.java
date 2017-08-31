@@ -52,7 +52,7 @@ public class ConversationListActivity extends DriftActivity {
     ConversationListAdapter conversationListAdapter;
 
     public static void showFromContext(Context context) {
-        Intent intent = (new Intent(context, ConversationListActivity.class)).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        Intent intent = (new Intent(context, ConversationListActivity.class)).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
