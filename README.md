@@ -70,6 +70,15 @@ A user can begin a conversation in response to a campaign or by presenting the c
 
 Thats it. Your good to go!!
 
+# Customisation
+
+Configuring the colors used within the app can be done [here](https://app.drift.com/settings/widget/design)
+
+To configure the accent color used in the SDK you should define a color attribute in your apps color resource file.
+
+```xml
+<color name="driftColorAccent">#157AFB</color>
+```
 
 # Contributing
 
