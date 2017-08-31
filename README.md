@@ -19,21 +19,20 @@ Drift uses [Jitpack](http://jitpack.io) for its releases
 Add Jitpack to your root build.gradle file 
 
 ```
-	allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
+allprojects {
+	repositories {	
+		maven { url 'https://jitpack.io' }
 	}
+}
 ```
 
 You can then add drift as a dependency in your app build.gradle file
 
 
 ```
-	dependencies {
-		compile 'com.github.User:Repo:Tag'
-	}
+dependencies {
+	compile 'com.github.drift:drift-sdk-android:v1.0'
+}
 ```
 
 ## Registering
@@ -42,23 +41,21 @@ To get started with the Drift SDK you need an embed ID from your Drift settings 
 
 In your Application `onCreate` method call:
 ```Java
-    Drift.setupDrift(this, "");
+Drift.setupDrift(this, "");
 ```
 
 Once your user has successfully logged into the app registering a user with the device is done by calling register user with a unique identifier, typically the id from your database, and their email address:
 
 ```Java
-  Drift.registerUser("123748", "sample@drift.com");
+Drift.registerUser("123748", "sample@drift.com");
 ```
 
 When your user logs out simply call logout so they stop receiving messages.
 
 ```Java
-  Drift.logout();
+Drift.logout();
 ```
 
-
-Thats it. Your good to go!!
 
 # Messaging
 
