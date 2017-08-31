@@ -1,7 +1,6 @@
 Drift
 ============
-[![Release](https://jitpack.io/v/driftt/drift-sdk-android.svg)]
-(https://jitpack.io/#driftt/drift-sdk-android)
+![Release](https://jitpack.io/v/driftt/drift-sdk-android.svg)
 
 Drift is the official Drift SDK for Android
 
@@ -15,7 +14,7 @@ Drift is the official Drift SDK for Android
 
 ## Installation
 
-Drift uses [Jitpack] (http://jitpack.io) 
+Drift uses [Jitpack](http://jitpack.io) for its releases
 
 Add Jitpack to your root build.gradle file 
 
