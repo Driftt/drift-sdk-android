@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.drift_sdk_toolbar);
         setSupportActionBar(toolbar);
 
-        Drift.registerUser("1237438", "eoin+app@8bytes.is");
+        Drift.registerUser("123748", "eoin+app@8bytes.ir");
 
         conversationButton = findViewById(R.id.drift_sdk_main_activity_show_conversations);
 

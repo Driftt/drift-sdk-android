@@ -52,4 +52,35 @@
 
 
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/drift_sdk_conversation_list_empty_linear_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You have no conversations \n\nLets Talk!"
+            android:gravity="center"
+            android:layout_gravity="center"
+            />
+
+        <Button
+            android:id="@+id/drift_sdk_conversation_list_empty_state_create_button"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="New Conversation"
+            android:layout_gravity="center"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:background="@drawable/drift_sdk_empty_state_button_background"/>
+
+    </LinearLayout>
+
 </RelativeLayout>

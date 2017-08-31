@@ -3,8 +3,10 @@ package drift.com.drift.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -20,7 +24,9 @@ import java.util.ArrayList;
 
 import drift.com.drift.R;
 import drift.com.drift.adapters.ConversationListAdapter;
+import drift.com.drift.helpers.Alert;
 import drift.com.drift.helpers.ClickListener;
+import drift.com.drift.helpers.ColorHelper;
 import drift.com.drift.helpers.LoggerHelper;
 import drift.com.drift.helpers.RecyclerTouchListener;
 import drift.com.drift.helpers.StatusBarColorizer;
@@ -39,6 +45,9 @@ public class ConversationListActivity extends DriftActivity {
     RecyclerView conversationRecyclerView;
     ProgressBar progressBar;
     TextView networkAvailabilityBar;
+
+    LinearLayout emptyState;
+    Button emptyStateButton;
 
     ConversationListAdapter conversationListAdapter;
 
@@ -62,6 +71,9 @@ public class ConversationListActivity extends DriftActivity {
         progressBar = findViewById(R.id.drift_sdk_conversation_list_progress_bar);
         networkAvailabilityBar =  findViewById(R.id.drift_sdk_conversation_list_load_page_text_view);
 
+        emptyState = findViewById(R.id.drift_sdk_conversation_list_empty_linear_layout);
+        emptyStateButton = findViewById(R.id.drift_sdk_conversation_list_empty_state_create_button);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         conversationRecyclerView.setLayoutManager(layoutManager);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(conversationRecyclerView.getContext(),
@@ -79,6 +91,23 @@ public class ConversationListActivity extends DriftActivity {
                 }
             }
         }));
+
+        emptyStateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = ConversationActivity.intentForCreateConversation(ConversationListActivity.this);
+                ConversationListActivity.this.startActivity(intent);
+            }
+        });
+
+
+        emptyStateButton.setTextColor(ColorHelper.getForegroundColor());
+
+        Drawable backgroundDrawable = DrawableCompat.wrap(emptyStateButton.getBackground()).mutate();
+        DrawableCompat.setTint(backgroundDrawable, ColorHelper.getBackgroundColor());
+
+
+        emptyState.setVisibility(View.GONE);
 
         conversationListAdapter = new ConversationListAdapter(this, ConversationManager.getInstance().getConversations());
         conversationRecyclerView.setAdapter(conversationListAdapter);
@@ -109,7 +138,21 @@ public class ConversationListActivity extends DriftActivity {
                                 if (response != null) {
                                     progressBar.setVisibility(View.GONE);
                                     LoggerHelper.logMessage(TAG, response.toString());
+
+                                    if (response.isEmpty()) {
+                                        emptyState.setVisibility(View.VISIBLE);
+                                    } else {
+                                        emptyState.setVisibility(View.GONE);
+                                    }
+
                                     conversationListAdapter.updateDate(response);
+                                } else {
+                                    Alert.showAlert(ConversationListActivity.this, "Error", "Failed to load conversations", "Retry", new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            refreshData();
+                                        }
+                                    });
                                 }
                             }
                         });
