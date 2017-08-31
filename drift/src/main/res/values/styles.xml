@@ -5,15 +5,8 @@
         <item name="android:windowExitAnimation">@anim/popup_hide</item>
     </style>
 
-
     <style name="DriftTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-
-
-    </style>
-
-    <style name="DriftTheme.NoActionBar">
-
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
 </resources>

@@ -11,20 +11,20 @@
         android:supportsRtl="true">
 
         <activity android:name=".activities.DriftActivity"
-            android:theme="@style/DriftTheme.NoActionBar"/>
+            android:theme="@style/DriftTheme"/>
         <activity
             android:name=".activities.ConversationListActivity"
             android:launchMode="singleTop"
-            android:theme="@style/DriftTheme.NoActionBar"/>
+            android:theme="@style/DriftTheme"/>
         <activity
             android:name=".activities.ConversationActivity"
             android:parentActivityName=".activities.ConversationListActivity"
             android:launchMode="singleTop"
-            android:theme="@style/DriftTheme.NoActionBar"/>
+            android:theme="@style/DriftTheme"/>
         <activity android:name=".activities.ImageViewerActivity"
             android:parentActivityName=".activities.ConversationActivity"
             android:launchMode="singleTop"
-            android:theme="@style/DriftTheme.NoActionBar"/>
+            android:theme="@style/DriftTheme"/>
     </application>
 
 </manifest>
