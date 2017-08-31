@@ -37,7 +37,7 @@ dependencies {
 
 ## Registering
 
-To get started with the Drift SDK you need an embed ID from your Drift settings page. This can be accessed [here](https://app.drift.com/settings/livechat) by looking after the drift.load method in the Javascript SDK.
+To get started with the Drift SDK you need the embed ID from your Drift settings page. This can be accessed [here](https://app.drift.com/settings/livechat) by looking after the drift.load method in the Javascript SDK.
 
 In your Application `onCreate` method call:
 ```Java
