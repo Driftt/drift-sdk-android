@@ -357,12 +357,12 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
         final Message message = messageRequest.messageFromRequest(conversationId);
         conversationAdapter.addMessage(recyclerView, message);
 
-        MessageManager.getInstance().createConversation(textToSend, new APICallbackWrapper<Conversation>() {
+        MessageManager.getInstance().createConversation(textToSend, new APICallbackWrapper<Message>() {
             @Override
-            public void onResponse(Conversation response) {
+            public void onResponse(Message response) {
 
                 if (response != null) {
-                    conversationId = response.id;
+                    conversationId = response.conversationId;
                     conversationType = ConversationType.CONTINUE;
 
                     message.sendStatus = Message.SendStatus.SENT;
