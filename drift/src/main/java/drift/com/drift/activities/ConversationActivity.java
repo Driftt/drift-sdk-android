@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,6 +65,7 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
     TextView statusTextView;
     TextView driftWelcomeMessage;
     ImageView driftWelcomeImageView;
+    LinearLayout welcomeMessageLinearLayout;
 
     TextView driftBrandTextView;
 
@@ -133,6 +135,7 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
         driftWelcomeMessage = findViewById(R.id.drift_sdk_conversation_activity_welcome_text_view);
         driftWelcomeImageView = findViewById(R.id.drift_sdk_conversation_activity_welcome_image_view);
         driftBrandTextView = findViewById(R.id.drift_sdk_conversation_activity_drift_brand_text_view);
+        welcomeMessageLinearLayout = findViewById(R.id.drift_sdk_conversation_activity_welcome_linear_layout);
 
         Intent intent = getIntent();
 
@@ -208,7 +211,7 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
             @Override
             public void onClick(View view, int position) {
                 Message message = conversationAdapter.getItemAt(position);
-                if (message != null){
+                if (message != null && message.sendStatus == Message.SendStatus.FAILED){
                     resendMessage(message);
                 }
             }
@@ -301,11 +304,11 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
                     }
 
                 }
-                driftWelcomeMessage.setVisibility(View.VISIBLE);
+                welcomeMessageLinearLayout.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
                 break;
             case CONTINUE:
-                driftWelcomeMessage.setVisibility(View.GONE);
+                welcomeMessageLinearLayout.setVisibility(View.GONE);
                 break;
         }
     }
@@ -390,18 +393,21 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
         final String textToSend = textEntryEditText.getText().toString();
         final MessageRequest messageRequest = new MessageRequest(textToSend, endUserId, null, this);
         final Message message = messageRequest.messageFromRequest(conversationId);
-        conversationAdapter.addMessage(recyclerView, message);
+
+        progressBar.setVisibility(View.VISIBLE);
 
         MessageManager.getInstance().createConversation(textToSend, new APICallbackWrapper<Message>() {
             @Override
             public void onResponse(Message response) {
+
+                progressBar.setVisibility(View.GONE);
 
                 if (response != null) {
                     conversationId = response.conversationId;
                     conversationType = ConversationType.CONTINUE;
 
                     message.sendStatus = Message.SendStatus.SENT;
-                    conversationAdapter.updateMessage(message);
+                    conversationAdapter.addMessage(recyclerView, message);
                     updateForConversationType();
                 } else {
                     conversationAdapter.updateData(new ArrayList<Message>());

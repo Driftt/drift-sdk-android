@@ -8,13 +8,6 @@
     tools:context="drift.com.drift.activities.ConversationActivity"
     android:background="@color/drift_sdk_white">
 
-    <ProgressBar
-        android:id="@+id/drift_sdk_conversation_activity_progress_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -36,26 +29,6 @@
             android:paddingTop="4dp"
             android:paddingBottom="4dp"
             android:visibility="gone"/>
-
-        <TextView
-            android:id="@+id/drift_sdk_conversation_activity_welcome_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:layout_marginTop="10dp"
-            tools:text="Test Offline Message"
-            android:textColor="@color/drift_sdk_black"
-            android:textAlignment="center"
-            android:textSize="12sp"/>
-
-
-        <ImageView
-            android:id="@+id/drift_sdk_conversation_activity_welcome_image_view"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"/>
-
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/drift_sdk_conversation_activity_recycler_activity"
@@ -134,5 +107,40 @@
 
 
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/drift_sdk_conversation_activity_welcome_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/drift_sdk_conversation_activity_welcome_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            tools:text="Test Offline Message"
+            android:textColor="@color/drift_sdk_black"
+            android:textAlignment="center"
+            android:textSize="12sp"/>
+
+
+        <ImageView
+            android:id="@+id/drift_sdk_conversation_activity_welcome_image_view"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"/>
+
+    </LinearLayout>
+
+
+    <ProgressBar
+        android:id="@+id/drift_sdk_conversation_activity_progress_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
 
 </RelativeLayout>
