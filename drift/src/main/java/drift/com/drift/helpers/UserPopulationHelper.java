@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.content.res.AppCompatResources;
 import android.widget.ImageView;
@@ -18,13 +19,15 @@ import drift.com.drift.model.User;
 
 
 public class UserPopulationHelper {
-    public static void populateTextAndImageFromUser(Context context, User user, TextView textView, ImageView imageView) {
+    public static void populateTextAndImageFromUser(Context context, User user, @Nullable TextView textView, ImageView imageView) {
 
         Uri uriToLoad = null;
         Boolean ignoreUri = false;
         if (user != null) {
 
-            textView.setText(user.name);
+            if (textView != null) {
+                textView.setText(user.name);
+            }
 
             if (user.bot) {
                 ignoreUri = true;
@@ -47,7 +50,9 @@ public class UserPopulationHelper {
 
         } else {
             //Unknown User
-            textView.setText("Unknown User");
+            if (textView != null) {
+                textView.setText("Unknown User");
+            }
         }
 
         if (!ignoreUri) {

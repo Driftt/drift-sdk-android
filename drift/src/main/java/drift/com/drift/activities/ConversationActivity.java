@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import drift.com.drift.R;
 import drift.com.drift.adapters.ConversationAdapter;
@@ -32,14 +34,17 @@ import drift.com.drift.helpers.LoggerHelper;
 import drift.com.drift.helpers.MessageReadHelper;
 import drift.com.drift.helpers.RecyclerTouchListener;
 import drift.com.drift.helpers.StatusBarColorizer;
+import drift.com.drift.helpers.UserPopulationHelper;
 import drift.com.drift.managers.AttachmentManager;
 import drift.com.drift.managers.MessageManager;
 import drift.com.drift.model.Attachment;
 import drift.com.drift.model.Auth;
+import drift.com.drift.model.Configuration;
 import drift.com.drift.model.Conversation;
 import drift.com.drift.model.Embed;
 import drift.com.drift.model.Message;
 import drift.com.drift.model.MessageRequest;
+import drift.com.drift.model.User;
 import drift.com.drift.wrappers.APICallbackWrapper;
 import drift.com.drift.wrappers.AttachmentCallback;
 
@@ -58,6 +63,12 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
     RecyclerView recyclerView;
     TextView statusTextView;
     TextView driftWelcomeMessage;
+    ImageView driftWelcomeImageView;
+
+    TextView driftBrandTextView;
+
+    @Nullable
+    User userForWelcomeMessage;
 
     ProgressBar progressBar;
 
@@ -120,6 +131,9 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
         statusTextView = findViewById(R.id.drift_sdk_conversation_activity_status_view);
         progressBar = findViewById(R.id.drift_sdk_conversation_activity_progress_view);
         driftWelcomeMessage = findViewById(R.id.drift_sdk_conversation_activity_welcome_text_view);
+        driftWelcomeImageView = findViewById(R.id.drift_sdk_conversation_activity_welcome_image_view);
+        driftBrandTextView = findViewById(R.id.drift_sdk_conversation_activity_drift_brand_text_view);
+
         Intent intent = getIntent();
 
         if ( intent.getExtras() != null ) {
@@ -272,12 +286,20 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
             case CREATE:
 
                 Embed embed = Embed.getInstance();
-                if (embed != null){
+                if (embed != null && embed.configuration != null){
                     if (embed.configuration.isOrgCurrentlyOpen()) {
                         driftWelcomeMessage.setText(embed.configuration.theme.welcomeMessage);
                     } else {
                         driftWelcomeMessage.setText(embed.configuration.theme.awayMessage);
                     }
+                    updateWelcomeImage(embed.configuration);
+
+                    if (embed.configuration.showBranding) {
+                        driftBrandTextView.setVisibility(View.VISIBLE);
+                    } else {
+                        driftBrandTextView.setVisibility(View.GONE);
+                    }
+
                 }
                 driftWelcomeMessage.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
@@ -285,6 +307,19 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
             case CONTINUE:
                 driftWelcomeMessage.setVisibility(View.GONE);
                 break;
+        }
+    }
+
+    public void updateWelcomeImage(Configuration configuration) {
+
+
+        if (userForWelcomeMessage == null) {
+
+            userForWelcomeMessage = configuration.getUserForWelcomeMessage();
+
+            if (userForWelcomeMessage != null) {
+                UserPopulationHelper.populateTextAndImageFromUser(this, userForWelcomeMessage, null, driftWelcomeImageView);
+            }
         }
     }
 

@@ -1,5 +1,6 @@
 package drift.com.drift.model;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
@@ -10,7 +11,11 @@ import org.joda.time.Interval;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.TimeZone;
+
+import drift.com.drift.helpers.UserPopulationHelper;
 
 /**
  * Created by eoin on 28/07/2017.
@@ -21,13 +26,12 @@ public class Configuration {
     public enum WidgetStatus {ON, AWAY}
     public enum WidgetMode{ MANUAL, AUTO}
 
+
     @SerializedName("inboxId")
     public Integer inboxId;
 
     @SerializedName("refreshRate")
     public Integer refreshRate;
-
-
 
     @SerializedName("inboxEmailAddress")
     public String inboxEmailAddress;
@@ -55,6 +59,9 @@ public class Configuration {
     @SerializedName("showBranding")
     public Boolean showBranding;
 
+    @SerializedName("team")
+    public ArrayList<User> team;
+
     public WidgetStatus getWidgetStatus() {
         try {
             return WidgetStatus.valueOf(widgetStatus);
@@ -72,6 +79,33 @@ public class Configuration {
             t.printStackTrace();
             return WidgetMode.MANUAL;
         }
+    }
+
+    @Nullable
+    public User getUserForWelcomeMessage(){
+
+        if (theme == null) {
+            return null;
+        }
+        User selectedUser = null;
+        if (theme.getUserListMode() == Theme.UserListMode.CUSTOM) {
+
+            for (User user : team) {
+                if (theme.userListIds.contains(user.id)) {
+                    selectedUser = user;
+                    break;
+                }
+            }
+        }
+
+        if (selectedUser == null) {
+            User randomUser = team.get((new Random()).nextInt(team.size()));
+            if (randomUser != null) {
+                selectedUser = randomUser;
+            }
+        }
+
+        return selectedUser;
     }
 
     public boolean isOrgCurrentlyOpen(){

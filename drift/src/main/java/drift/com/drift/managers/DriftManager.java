@@ -41,7 +41,6 @@ public class DriftManager {
                     response.saveEmbed();
                     LoggerHelper.logMessage(TAG, response.configuration.toString());
 
-
                     if (registerInformation != null) {
                         registerUser(registerInformation.userId, registerInformation.email);
                     }
