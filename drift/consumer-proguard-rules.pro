@@ -3,8 +3,6 @@
 # See https://speakerdeck.com/chalup/proguard
 -optimizations !code/allocation/variable
 
--keep public class * {
+-keep public class drift.com.drift.Drift {
     public protected *;
 }
-
--keep public class drift.com.drift.Drift
