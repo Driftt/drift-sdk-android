@@ -14,10 +14,10 @@ public class Drift {
 
     private static Drift _drift = null;
     private Context context;
-    public Boolean debugMode = false;
+    private Boolean debugMode = false;
     private ApplicationLifecycleHelper applicationLifecycleHelper = new ApplicationLifecycleHelper();
 
-    Drift(Context context) {
+    private Drift(Context context) {
         this.context = context;
     }
 

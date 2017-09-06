@@ -3,7 +3,6 @@ package drift.com.drift.managers;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -51,7 +50,7 @@ public class PresentationManager {
 
     @Nullable private PopupWindow pw;
 
-    public void didReceiveNewMessage(Message message) {
+    void didReceiveNewMessage(Message message) {
 
         //Did Get new message, if conversation activity is shown and conversation id's match send message to that activity
         //Otherwise add message to conversation in conversation manager and set to unread.
@@ -136,7 +135,7 @@ public class PresentationManager {
         }
     }
 
-    void showPopupForMessage(final Message message, final int otherMessages) {
+    private void showPopupForMessage(final Message message, final int otherMessages) {
 
         User user = UserManager.getInstance().userMap.get(message.authorId);
         Auth auth = Auth.getInstance();
@@ -175,7 +174,7 @@ public class PresentationManager {
                     //Already showing a new message. Maybe update unread count?
                     LoggerHelper.logMessage(TAG, "Popup still showing, we should update it");
 
-                    TextView unreadTextView = (TextView) view.findViewById(R.id.drift_sdk_new_message_unread_text_view);
+                    TextView unreadTextView = view.findViewById(R.id.drift_sdk_new_message_unread_text_view);
                     updateUnreadCount(unreadTextView, otherMessages);
 
                     return;
