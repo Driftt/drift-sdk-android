@@ -36,13 +36,9 @@ public class Embed {
     @SerializedName("orgId")
     public Integer orgId;
 
-    @SerializedName("verified")
-    public Boolean verified;
 
     @SerializedName("configuration")
     public Configuration configuration;
-
-
 
     private static Embed loadEmbed(){
 

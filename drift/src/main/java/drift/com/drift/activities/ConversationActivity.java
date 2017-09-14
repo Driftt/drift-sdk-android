@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,11 +17,13 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import drift.com.drift.R;
 import drift.com.drift.adapters.ConversationAdapter;
@@ -32,14 +35,17 @@ import drift.com.drift.helpers.LoggerHelper;
 import drift.com.drift.helpers.MessageReadHelper;
 import drift.com.drift.helpers.RecyclerTouchListener;
 import drift.com.drift.helpers.StatusBarColorizer;
+import drift.com.drift.helpers.UserPopulationHelper;
 import drift.com.drift.managers.AttachmentManager;
 import drift.com.drift.managers.MessageManager;
 import drift.com.drift.model.Attachment;
 import drift.com.drift.model.Auth;
+import drift.com.drift.model.Configuration;
 import drift.com.drift.model.Conversation;
 import drift.com.drift.model.Embed;
 import drift.com.drift.model.Message;
 import drift.com.drift.model.MessageRequest;
+import drift.com.drift.model.User;
 import drift.com.drift.wrappers.APICallbackWrapper;
 import drift.com.drift.wrappers.AttachmentCallback;
 
@@ -58,6 +64,13 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
     RecyclerView recyclerView;
     TextView statusTextView;
     TextView driftWelcomeMessage;
+    ImageView driftWelcomeImageView;
+    LinearLayout welcomeMessageLinearLayout;
+
+    TextView driftBrandTextView;
+
+    @Nullable
+    User userForWelcomeMessage;
 
     ProgressBar progressBar;
 
@@ -120,6 +133,10 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
         statusTextView = findViewById(R.id.drift_sdk_conversation_activity_status_view);
         progressBar = findViewById(R.id.drift_sdk_conversation_activity_progress_view);
         driftWelcomeMessage = findViewById(R.id.drift_sdk_conversation_activity_welcome_text_view);
+        driftWelcomeImageView = findViewById(R.id.drift_sdk_conversation_activity_welcome_image_view);
+        driftBrandTextView = findViewById(R.id.drift_sdk_conversation_activity_drift_brand_text_view);
+        welcomeMessageLinearLayout = findViewById(R.id.drift_sdk_conversation_activity_welcome_linear_layout);
+
         Intent intent = getIntent();
 
         if ( intent.getExtras() != null ) {
@@ -194,7 +211,7 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
             @Override
             public void onClick(View view, int position) {
                 Message message = conversationAdapter.getItemAt(position);
-                if (message != null){
+                if (message != null && message.sendStatus == Message.SendStatus.FAILED){
                     resendMessage(message);
                 }
             }
@@ -272,19 +289,40 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
             case CREATE:
 
                 Embed embed = Embed.getInstance();
-                if (embed != null){
+                if (embed != null && embed.configuration != null){
                     if (embed.configuration.isOrgCurrentlyOpen()) {
                         driftWelcomeMessage.setText(embed.configuration.theme.welcomeMessage);
                     } else {
                         driftWelcomeMessage.setText(embed.configuration.theme.awayMessage);
                     }
+                    updateWelcomeImage(embed.configuration);
+
+                    if (embed.configuration.showBranding) {
+                        driftBrandTextView.setVisibility(View.VISIBLE);
+                    } else {
+                        driftBrandTextView.setVisibility(View.GONE);
+                    }
+
                 }
-                driftWelcomeMessage.setVisibility(View.VISIBLE);
+                welcomeMessageLinearLayout.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
                 break;
             case CONTINUE:
-                driftWelcomeMessage.setVisibility(View.GONE);
+                welcomeMessageLinearLayout.setVisibility(View.GONE);
                 break;
+        }
+    }
+
+    public void updateWelcomeImage(Configuration configuration) {
+
+
+        if (userForWelcomeMessage == null) {
+
+            userForWelcomeMessage = configuration.getUserForWelcomeMessage();
+
+            if (userForWelcomeMessage != null) {
+                UserPopulationHelper.populateTextAndImageFromUser(this, userForWelcomeMessage, null, driftWelcomeImageView);
+            }
         }
     }
 
@@ -355,18 +393,21 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
         final String textToSend = textEntryEditText.getText().toString();
         final MessageRequest messageRequest = new MessageRequest(textToSend, endUserId, null, this);
         final Message message = messageRequest.messageFromRequest(conversationId);
-        conversationAdapter.addMessage(recyclerView, message);
+
+        progressBar.setVisibility(View.VISIBLE);
 
         MessageManager.getInstance().createConversation(textToSend, new APICallbackWrapper<Message>() {
             @Override
             public void onResponse(Message response) {
+
+                progressBar.setVisibility(View.GONE);
 
                 if (response != null) {
                     conversationId = response.conversationId;
                     conversationType = ConversationType.CONTINUE;
 
                     message.sendStatus = Message.SendStatus.SENT;
-                    conversationAdapter.updateMessage(message);
+                    conversationAdapter.addMessage(recyclerView, message);
                     updateForConversationType();
                 } else {
                     conversationAdapter.updateData(new ArrayList<Message>());
