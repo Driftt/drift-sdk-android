@@ -6,7 +6,7 @@ public class TextHelper {
     public static String cleanString(String body){
         body = body.replaceFirst("\\s++$", ""); //Trim trailing white spaces
 
-        body = body.replaceFirst("<p dir=\".+\">", "");
+        body = body.replaceFirst("<p dir=\"....?\">", "");
         body = body.replaceFirst("<p>", "");
 
         if (body.endsWith("</p>")) {
