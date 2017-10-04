@@ -14,8 +14,11 @@ public class TextHelper {
         body = body.replaceAll("<p>", "");
         body = body.replaceAll("</p>", "<br />");
 
-        if (body.endsWith("<br />")) {
-            body = body.substring(0, body.lastIndexOf("<br />"));
+        body = body.replaceFirst("<p dir=\"....?\">", "");
+        body = body.replaceFirst("<p>", "");
+
+        if (body.endsWith("</p>")) {
+            body = body.substring(0, body.lastIndexOf("</p>"));
         }
 
         return body;

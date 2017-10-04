@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.format.DateFormat;
+import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -281,6 +282,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
                 mainTextView.setText(Html.fromHtml(body));
                 mainTextView.setTextColor(ContextCompat.getColor(activity, R.color.drift_sdk_black));
             }
+            mainTextView.setMovementMethod(LinkMovementMethod.getInstance());
+
 
 
             if (message.sendStatus != Message.SendStatus.SENT){

@@ -69,7 +69,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:autoLink="all"
                 android:lineSpacingExtra="2dp"
                 android:textColor="@color/drift_sdk_black"
                 android:textIsSelectable="true"
