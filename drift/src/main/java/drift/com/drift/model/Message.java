@@ -48,7 +48,7 @@ public class Message {
     public String contentType;
 
     @SerializedName("authorId")
-    public Integer authorId;
+    public int authorId = 0;
 
     @SerializedName("createdAt")
     public Date createdAt;
