@@ -39,9 +39,7 @@ public class MessageRequest {
 
     public MessageRequest(String body, int authorId, @Nullable Integer attachmentId, Context context){
 
-        Editable editableText = new SpannableStringBuilder( body );
-        Linkify.addLinks(editableText, Linkify.WEB_URLS);
-        this.body = Html.toHtml(editableText).trim();
+        this.body = TextHelper.wrapTextForSending(body);
         this.authorId = authorId;
 
         if (attachmentId != null){
