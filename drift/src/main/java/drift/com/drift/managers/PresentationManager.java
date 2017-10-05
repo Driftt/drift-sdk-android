@@ -125,8 +125,10 @@ public class PresentationManager {
         int unreadMessageCount = -1;
         for (ConversationExtra conversationExtra : ConversationManager.getInstance().getConversations()) {
             if (conversationExtra.unreadMessages != 0) {
-                unreadMessages.add(conversationExtra.lastAgentMessage);
-                unreadMessageCount += conversationExtra.unreadMessages;
+                if (conversationExtra.lastAgentMessage != null) {
+                    unreadMessages.add(conversationExtra.lastAgentMessage);
+                    unreadMessageCount += conversationExtra.unreadMessages;
+                }
             }
         }
 
