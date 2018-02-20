@@ -18,7 +18,7 @@ public class Conversation {
     @SerializedName("displayId")
     public Integer displayId;
     @SerializedName("type")
-    public String type;
+    public String type = "";
     @SerializedName("status")
     public String status;
     @SerializedName("orgId")
