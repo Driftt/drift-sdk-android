@@ -48,7 +48,7 @@ public interface APIConversationAPIBuilder {
     Call<Message> postMessage(@Path("conversationId") Integer conversationId, @Body MessageRequest messageRequest);
 
     @POST("messages")
-    Call<Message> createConversation(@Body HashMap<String, String> payload);
+    Call<Message> createConversation(@Body HashMap<String, Object> payload);
 
     @POST("https://conversation2.api.drift.com/messages/{messageId}/read")
     Call<ResponseBody> markMessageAsRead(@Path("messageId") Integer messageId);
