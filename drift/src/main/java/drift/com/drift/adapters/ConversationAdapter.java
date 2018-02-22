@@ -302,7 +302,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
             if (message.isMessageFromEndUser()){
                 userTextView.setText("You");
             } else if (user != null) {
-                userTextView.setText(user.name);
+                userTextView.setText(user.getUserName());
 
                 if (user.bot) {
                     ignoreUri = true;

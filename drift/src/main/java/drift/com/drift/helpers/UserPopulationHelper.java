@@ -26,7 +26,7 @@ public class UserPopulationHelper {
         if (user != null) {
 
             if (textView != null) {
-                textView.setText(user.name);
+                textView.setText(user.getUserName());
             }
 
             if (user.bot) {

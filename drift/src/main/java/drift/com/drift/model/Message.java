@@ -56,9 +56,14 @@ public class Message {
     @SerializedName("attachments")
     public ArrayList<Integer> attachmentIds;
 
+    @SerializedName("attributes")
+    public MessageAttributes attributes;
 
     String formattedString;
 
+    public boolean preMessage = false;
+
+    public boolean fakeMessage = false;
 
     public SendStatus sendStatus = SendStatus.SENT;
 

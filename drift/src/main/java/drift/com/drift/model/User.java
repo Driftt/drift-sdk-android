@@ -17,10 +17,7 @@ public class User {
     public Integer orgId;
 
     @SerializedName("name")
-    public String name;
-
-    @SerializedName("email")
-    public String email;
+    private String name;
 
     @SerializedName("avatarUrl")
     public String avatarUrl;
@@ -28,5 +25,13 @@ public class User {
     @SerializedName("bot")
     public Boolean bot;
 
+    public String getUserName() {
+
+        if (name != null && !name.isEmpty()) {
+            return name;
+        } else {
+            return "No Name Set";
+        }
+    }
 
 }
