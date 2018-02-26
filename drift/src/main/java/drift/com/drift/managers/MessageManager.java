@@ -10,9 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
 
-import drift.com.drift.helpers.LoggerHelper;
 import drift.com.drift.helpers.TextHelper;
-import drift.com.drift.model.Conversation;
 import drift.com.drift.model.Message;
 import drift.com.drift.model.MessageRequest;
 import drift.com.drift.model.PreMessage;
@@ -40,6 +38,25 @@ public class MessageManager {
         messageCache = new HashMap<>();
         failedMessageCache = new HashMap<>();
     }
+
+    public ArrayList<Message> addMessageToConversation(int conversationId, Message message) {
+
+        ArrayList<Message> successMessages = messageCache.get(conversationId);
+
+        if (successMessages != null ){
+            successMessages.add(0, message);
+        } else {
+            ArrayList<Message> newMessages = new ArrayList<>();
+            newMessages.add(message);
+            messageCache.put(conversationId, newMessages);
+        }
+
+        messageCache.put(conversationId, sortMessagesForConversations(messageCache.get(conversationId)));
+
+        return getMessagesForConversationId(conversationId);
+
+    }
+
 
     @NonNull
     public ArrayList<Message> getMessagesForConversationId(int conversationId) {
@@ -139,6 +156,15 @@ public class MessageManager {
         ArrayList<Message> output = new ArrayList<>();
 
         ArrayList<Message> sorted = new ArrayList<Message>(rawMessages);
+
+
+        Collections.sort(sorted, new Comparator<Message>() {
+            public int compare(Message o1, Message o2) {
+                if (o1.createdAt == null || o2.createdAt == null)
+                    return 0;
+                return o1.createdAt.compareTo(o2.createdAt);
+            }
+        });
 
         for (Message message : sorted) {
 

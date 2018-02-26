@@ -72,7 +72,7 @@ public class PresentationManager {
             ConversationListActivity conversationListActivity = (ConversationListActivity) activity;
             conversationListActivity.didReceiveNewMessage();
 
-        } else {
+        } else if (message.authorType.equals("USER")) {
 
             showPopupForMessage(message, ConversationManager.getInstance().getUnreadCountForUser() - 1);
 

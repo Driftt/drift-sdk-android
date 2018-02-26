@@ -19,18 +19,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 
+import org.joda.time.DateTimeZone;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import drift.com.drift.R;
 import drift.com.drift.activities.ImageViewerActivity;
@@ -38,14 +43,19 @@ import drift.com.drift.helpers.ColorHelper;
 import drift.com.drift.helpers.DateHelper;
 import drift.com.drift.managers.AttachmentManager;
 import drift.com.drift.managers.UserManager;
+import drift.com.drift.model.AppointmentInfo;
 import drift.com.drift.model.Attachment;
 import drift.com.drift.model.Message;
 import drift.com.drift.model.User;
 import drift.com.drift.views.AttachmentView;
 
 
-public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapter.MessageCell>{
+public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
+    private static class CellTypes {
+        static final int MESSAGE = 0;
+        static final int MEETING_CELL = 1;
+    }
 
     private List<Message> messages;
     private Activity activity;
@@ -65,6 +75,20 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
         }
         this.messages = messages;
         notifyDataSetChanged();
+    }
+
+    public void updateDataAddingInOneMessage(ArrayList<Message> messages, RecyclerView recyclerView){
+        if (messages == null) {
+            return;
+        }
+        this.messages = messages;
+        notifyItemInserted(0);
+        if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
+            LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+            if (linearLayoutManager.findFirstVisibleItemPosition() < 1) {
+                recyclerView.scrollToPosition(0);
+            }
+        }
     }
 
     public void addMessage(RecyclerView recyclerView, Message message) {
@@ -100,19 +124,35 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
             messages.set(index, message);
             notifyItemChanged(index);
         }
-
-
     }
 
     @Override
-    public MessageCell onCreateViewHolder(ViewGroup parent, int viewType) {
+    public int getItemViewType(int position) {
+
+        Message message = getItemAt(position);
+
+        if (message.attributes != null && message.attributes.appointmentInfo != null) {
+            return CellTypes.MEETING_CELL;
+        }
+
+        return CellTypes.MESSAGE;
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View itemView = inflater.inflate(R.layout.drift_sdk_conversation_message_cell, parent, false);
-        return new MessageCell(itemView);
-    }
 
+        switch (viewType) {
+            case CellTypes.MESSAGE:
+                return new MessageCell(inflater.inflate(R.layout.drift_sdk_conversation_message_cell, parent, false));
+            case CellTypes.MEETING_CELL:
+                return new MeetingCell(inflater.inflate(R.layout.drift_sdk_conversation_meeting_cell, parent, false));
+        }
+        return null;
+    }
     @Override
-    public void onBindViewHolder(MessageCell holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         boolean showDayHeader = true;
         Message message = getItemAt(position);
@@ -127,7 +167,13 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
             }
         }
 
-        holder.setupForMessage(messages.get(position), showDayHeader);
+        if (holder.getItemViewType() == CellTypes.MESSAGE) {
+            MessageCell messageCell = (MessageCell) holder;
+            messageCell.setupForMessage(message, showDayHeader);
+        }else if (holder.getItemViewType() == CellTypes.MEETING_CELL){
+            MeetingCell meetingCell = (MeetingCell) holder;
+            meetingCell.setupForMessage(message, showDayHeader);
+        }
     }
 
     @Override
@@ -157,6 +203,12 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
         LinearLayout contentLinearLayout;
 
 
+        RelativeLayout meetingViewRelativeLayout;
+        ImageView meetingViewUserImageView;
+        TextView meetingViewTextView;
+        Button meetingScheduleButton;
+
+
         MessageCell(View view) {
             super(view);
 
@@ -175,6 +227,10 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
 
             contentLinearLayout = view.findViewById(R.id.drift_sdk_conversation_message_content_linear_layout);
 
+            meetingViewRelativeLayout = view.findViewById(R.id.drift_sdk_conversation_message_cell_schedule_meeting_relative_layout);
+            meetingViewUserImageView = view.findViewById(R.id.drift_sdk_conversation_message_cell_meeting_view_user_image_view);
+            meetingViewTextView = view.findViewById(R.id.drift_sdk_conversation_message_cell_meeting_view_text_view);
+            meetingScheduleButton = view.findViewById(R.id.drift_sdk_conversation_message_cell_meeting_button);
         }
 
         public void setupForMessage(final Message message, boolean showDayHeader){
@@ -290,6 +346,35 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
                 timeTextView.setText(message.readableSendStatus());
             }
 
+            if (message.attributes != null && message.attributes.presentSchedule != null){
+
+                User user = UserManager.getInstance().userMap.get(message.attributes.presentSchedule);
+
+                if(user != null){
+
+
+                    RequestOptions requestOptions = new RequestOptions()
+                            .circleCrop()
+                            .placeholder(R.drawable.placeholder);
+
+                    Glide.with(activity)
+                            .load(user.avatarUrl)
+                            .apply(requestOptions)
+                            .into(meetingViewUserImageView);
+
+
+                    meetingViewTextView.setText("Scheduling a Meeting with " + user.getUserName());
+                }else{
+                    Glide.with(activity).clear(meetingViewUserImageView);
+                    meetingViewTextView.setText("Scheduling Meeting");
+                }
+
+                meetingViewRelativeLayout.setVisibility(View.VISIBLE);
+            }else{
+                meetingViewRelativeLayout.setVisibility(View.GONE);
+            }
+
+
             setupForUser(message, UserManager.getInstance().userMap.get(message.authorId));
 
         }
@@ -341,4 +426,96 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
             }
         }
     }
+
+    class MeetingCell extends RecyclerView.ViewHolder {
+
+        LinearLayout dayHeader;
+        TextView dayHeaderTextView;
+
+        ImageView meetingUserImage;
+        TextView titleTextView;
+
+        TextView meetingTimeTextView;
+        TextView meetingDateTextView;
+        TextView meetingTimeZoneTextView;
+
+
+        MeetingCell(View view) {
+            super(view);
+            dayHeader = view.findViewById(R.id.drift_sdk_conversation_meeting_cell_day_header);
+            dayHeaderTextView = view.findViewById(R.id.drift_sdk_conversation_day_divider_text_view);
+            meetingUserImage = view.findViewById(R.id.drift_sdk_conversation_meeting_cell_user_image_view);
+            titleTextView = view.findViewById(R.id.drift_sdk_conversation_meeting_cell_title_text_view);
+
+            meetingTimeTextView = view.findViewById(R.id.drift_sdk_conversation_meeting_cell_time_text_view);
+            meetingDateTextView = view.findViewById(R.id.drift_sdk_conversation_meeting_cell_date_text_view);
+            meetingTimeZoneTextView = view.findViewById(R.id.drift_sdk_conversation_meeting_cell_timezone_text_view);
+        }
+
+        void setupForMessage(Message message, boolean showDayHeader) {
+            if (showDayHeader) {
+                dayHeader.setVisibility(View.VISIBLE);
+                if (DateHelper.isSameDay(message.createdAt, new Date())){
+                    dayHeaderTextView.setText("Today");
+                }else {
+                    String updatedTime = DateFormat.getDateFormat(activity).format(message.createdAt);
+                    dayHeaderTextView.setText(updatedTime);
+                }
+
+            } else {
+                dayHeader.setVisibility(View.GONE);
+            }
+
+            if (message.attributes != null) {
+                if (message.attributes.appointmentInfo != null && message.attributes.appointmentInfo.agentId != null) {
+                    AppointmentInfo appointmentInformation = message.attributes.appointmentInfo;
+
+                    User user = UserManager.getInstance().userMap.get(appointmentInformation.agentId);
+
+                    if (user != null) {
+                        RequestOptions requestOptions = new RequestOptions()
+                                .circleCrop()
+                                .placeholder(R.drawable.placeholder);
+                        Glide.with(activity).load(user.avatarUrl).apply(requestOptions).into(meetingUserImage);
+
+                        titleTextView.setText("Scheduled a Meeting with " + user.getUserName());
+                    } else {
+                        titleTextView.setText("Scheduled Meeting");
+                        Glide.with(activity).clear(meetingUserImage);
+                    }
+
+
+                    java.text.DateFormat timeFormat;
+                    try {
+
+                        TimeZone timeZone = DateTimeZone.forTimeZone(TimeZone.getTimeZone(appointmentInformation.agentTimeZone)).toTimeZone();
+
+                        timeFormat = DateFormat.getTimeFormat(activity);
+                        timeFormat.setTimeZone(timeZone);
+
+
+                    } catch (Throwable t) {
+                        t.printStackTrace();
+                        timeFormat = DateFormat.getTimeFormat(activity);
+
+                    }
+
+
+                    Date startDate = appointmentInformation.availabilitySlot;
+                    Date endDate = new Date(startDate.getTime() + appointmentInformation.slotDuration * 60000);
+
+                    String startDateText = timeFormat.format(startDate);
+                    String endDateText = timeFormat.format(endDate);
+
+                    meetingTimeTextView.setText(startDateText + "-" + endDateText);
+
+                    java.text.DateFormat dateFormat = java.text.DateFormat.getDateInstance(java.text.DateFormat.FULL);
+                    meetingDateTextView.setText(dateFormat.format(startDate));
+                    meetingTimeZoneTextView.setText(appointmentInformation.agentTimeZone);
+
+                }
+            }
+        }
+    }
+
 }

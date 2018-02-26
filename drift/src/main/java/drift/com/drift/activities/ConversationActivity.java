@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -37,11 +38,13 @@ import drift.com.drift.helpers.RecyclerTouchListener;
 import drift.com.drift.helpers.StatusBarColorizer;
 import drift.com.drift.helpers.UserPopulationHelper;
 import drift.com.drift.managers.AttachmentManager;
+import drift.com.drift.managers.DriftManager;
 import drift.com.drift.managers.MessageManager;
 import drift.com.drift.model.Attachment;
 import drift.com.drift.model.Auth;
 import drift.com.drift.model.Configuration;
 import drift.com.drift.model.Conversation;
+import drift.com.drift.model.DriftDataStore;
 import drift.com.drift.model.Embed;
 import drift.com.drift.model.Message;
 import drift.com.drift.model.MessageRequest;
@@ -351,7 +354,21 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
 
     public void didReceiveNewMessage(Message message) {
 
-        conversationAdapter.addMessage(recyclerView, message);
+
+        if (message.authorId == Auth.getInstance().endUser.id && message.contentType.equals("CHAT") && (message.attributes == null || message.attributes.appointmentInfo == null)&& !message.fakeMessage){
+            LoggerHelper.logMessage(TAG, "Ignoring own message");
+            return;
+        }
+
+
+        int originalCount = conversationAdapter.getItemCount();
+        ArrayList<Message> newMessages = MessageManager.getInstance().addMessageToConversation(conversationId, message);
+        if (newMessages.size() == originalCount + 1 && (message.attributes == null || message.attributes.appointmentInfo == null)) {
+            conversationAdapter.updateDataAddingInOneMessage(newMessages, recyclerView);
+        } else {
+            conversationAdapter.updateData(newMessages);
+        }
+
         MessageReadHelper.markMessageAsReadAlongWithPrevious(message);
     }
 
