@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.TimeZone;
 
 import drift.com.drift.R;
+import drift.com.drift.activities.ConversationActivity;
 import drift.com.drift.activities.ImageViewerActivity;
 import drift.com.drift.helpers.ColorHelper;
 import drift.com.drift.helpers.DateHelper;
@@ -46,6 +47,7 @@ import drift.com.drift.managers.UserManager;
 import drift.com.drift.model.AppointmentInfo;
 import drift.com.drift.model.Attachment;
 import drift.com.drift.model.Message;
+import drift.com.drift.model.MessageAttributes;
 import drift.com.drift.model.User;
 import drift.com.drift.views.AttachmentView;
 
@@ -58,9 +60,9 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     private List<Message> messages;
-    private Activity activity;
+    private ConversationActivity activity;
 
-    public ConversationAdapter(Activity activity, List<Message> messages) {
+    public ConversationAdapter(ConversationActivity activity, List<Message> messages) {
         if (messages == null) {
             this.messages = new ArrayList<>();
         } else {
@@ -155,7 +157,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         boolean showDayHeader = true;
-        Message message = getItemAt(position);
+        final Message message = getItemAt(position);
         if (position < getItemCount() - 1){
             Message pastMessage = getItemAt(position + 1);
 
@@ -170,6 +172,14 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (holder.getItemViewType() == CellTypes.MESSAGE) {
             MessageCell messageCell = (MessageCell) holder;
             messageCell.setupForMessage(message, showDayHeader);
+            messageCell.meetingScheduleButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    MessageAttributes attributes = message.attributes;
+                    if (attributes != null && attributes.presentSchedule != null)
+                    activity.didPressScheduleMeetingFor(attributes.presentSchedule);
+                }
+            });
         }else if (holder.getItemViewType() == CellTypes.MEETING_CELL){
             MeetingCell meetingCell = (MeetingCell) holder;
             meetingCell.setupForMessage(message, showDayHeader);
@@ -370,6 +380,12 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 }
 
                 meetingViewRelativeLayout.setVisibility(View.VISIBLE);
+
+                Drawable backgroundDrawable = DrawableCompat.wrap(meetingScheduleButton.getBackground()).mutate();
+                DrawableCompat.setTint(backgroundDrawable, ColorHelper.getBackgroundColor());
+
+                meetingScheduleButton.setTextColor(ColorHelper.getForegroundColor());
+
             }else{
                 meetingViewRelativeLayout.setVisibility(View.GONE);
             }

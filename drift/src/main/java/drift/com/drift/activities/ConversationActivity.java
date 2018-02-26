@@ -355,7 +355,8 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
     public void didReceiveNewMessage(Message message) {
 
 
-        if (message.authorId == Auth.getInstance().endUser.id && message.contentType.equals("CHAT") && (message.attributes == null || message.attributes.appointmentInfo == null)&& !message.fakeMessage){
+        Auth auth = Auth.getInstance();
+        if (auth != null && message.authorId == auth.endUser.id && message.contentType.equals("CHAT") && (message.attributes == null || message.attributes.appointmentInfo == null)&& !message.fakeMessage){
             LoggerHelper.logMessage(TAG, "Ignoring own message");
             return;
         }
@@ -457,5 +458,9 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
 
         LoggerHelper.logMessage(TAG, "Did load attachments: " + attachments.size());
         conversationAdapter.updateForAttachments(attachments);
+    }
+
+    public void didPressScheduleMeetingFor(int userId) {
+        LoggerHelper.logMessage(TAG, "Did Press Show Schedule");
     }
 }
