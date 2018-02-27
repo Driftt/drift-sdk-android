@@ -28,6 +28,7 @@ import java.util.Random;
 
 import drift.com.drift.R;
 import drift.com.drift.adapters.ConversationAdapter;
+import drift.com.drift.fragments.ScheduleMeetingDialogFragment;
 import drift.com.drift.helpers.Alert;
 import drift.com.drift.helpers.ClickListener;
 import drift.com.drift.helpers.ColorHelper;
@@ -461,6 +462,6 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
     }
 
     public void didPressScheduleMeetingFor(int userId) {
-        LoggerHelper.logMessage(TAG, "Did Press Show Schedule");
+        ScheduleMeetingDialogFragment.newInstance(userId, conversationId).show(getSupportFragmentManager(), ScheduleMeetingDialogFragment.class.getSimpleName());
     }
 }

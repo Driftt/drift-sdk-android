@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import drift.com.drift.model.Auth;
 import drift.com.drift.model.User;
+import drift.com.drift.model.UserAvailability;
 import retrofit2.Call;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -23,4 +24,7 @@ public interface APICustomerAPIBuilder {
     @GET("organizations/{orgId}/users")
     Call<ArrayList<User>> getUsers(@Path("orgId") Integer orgId);
 
+
+    @GET("scheduling/{userId}/availability")
+    Call<UserAvailability> getUserAvailability(@Path("userId") int userId);
 }
