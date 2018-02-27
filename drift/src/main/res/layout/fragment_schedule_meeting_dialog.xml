@@ -97,7 +97,8 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/drift_sdk_schedule_meeting_fragment_recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:background="@color/drift_sdk_green"/>
 
 
             <LinearLayout
@@ -153,12 +154,12 @@
                     android:layout_marginStart="30dp"
                     android:layout_marginEnd="30dp"
                     android:textColor="@color/drift_sdk_white"
-                    android:background="@color/drift_sdk_black"
+                    android:background="@drawable/drift_sdk_schedule_meeting_confirmation_button"
                     android:layout_marginBottom="15dp"/>
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="40dp"
                     android:padding="10dp"
                     android:text="Meeting ⚡️ by Drift"
                     android:textColor="@color/drift_sdk_textColor"

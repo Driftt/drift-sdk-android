@@ -1,7 +1,11 @@
 package drift.com.drift.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +21,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
+import java.util.Date;
+
 import drift.com.drift.R;
+import drift.com.drift.adapters.ScheduleMeetingAdapter;
+import drift.com.drift.helpers.ClickListener;
 import drift.com.drift.helpers.ColorHelper;
-import drift.com.drift.helpers.LoggerHelper;
+import drift.com.drift.helpers.DateHelper;
+import drift.com.drift.helpers.RecyclerTouchListener;
 import drift.com.drift.managers.UserManager;
 import drift.com.drift.model.User;
 import drift.com.drift.model.UserAvailability;
@@ -37,6 +46,23 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
     private int userId;
     private int conversationId;
 
+
+    enum ScheduleMeetingState {
+        DAY,
+        TIME,
+        CONFIRM;
+    }
+
+    ScheduleMeetingState scheduleMeetingState = ScheduleMeetingState.DAY;
+
+    @Nullable
+    Date selectedDate;
+
+    @Nullable
+    Date selectedTime;
+
+    @Nullable
+    UserAvailability userAvailability;
 
     TextView headerTitleTextView;
     TextView headerDurationTextView;
@@ -57,6 +83,8 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
     TextView confirmationDateTextView;
     TextView confirmationTimezoneTextView;
     Button confirmationButton;
+
+    ScheduleMeetingAdapter adapter;
 
     public ScheduleMeetingDialogFragment() {}
 
@@ -113,6 +141,42 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
         headerTitleTextView.setTextColor(ColorHelper.getForegroundColor());
         headerDurationTextView.setTextColor(ColorHelper.getForegroundColor());
 
+        adapter = new ScheduleMeetingAdapter();
+        recyclerView.setAdapter(adapter);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+                layoutManager.getOrientation());
+        dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.drift_sdk_recycler_view_divider));
+        recyclerView.addItemDecoration(dividerItemDecoration);
+
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Date chosenDate = adapter.getItemAt(position);
+                if (chosenDate != null){
+
+                    switch (scheduleMeetingState) {
+                        case DAY:
+                            selectedDate = chosenDate;
+                            adapter.setupForDates(userAvailability.getDatesForDay(chosenDate), ScheduleMeetingAdapter.SelectionType.TIME);
+                            scheduleMeetingState = ScheduleMeetingState.TIME;
+                            break;
+                        case TIME:
+                            selectedTime = chosenDate;
+                            setupForSelectedDate(chosenDate);
+                            break;
+
+                        case CONFIRM://Can't hapen
+                            break;
+                    }
+
+
+                }
+            }
+        }));
+
 
         User user = UserManager.getInstance().userMap.get(userId);
         if (user != null){
@@ -138,12 +202,45 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
     public void setupAvailabilityCall(){
 
         progressBar.setVisibility(View.VISIBLE);
+        //TODO: Cancel call on back
         ScheduleMeetingWrapper.getUserAvailability(userId, new APICallbackWrapper<UserAvailability>() {
             @Override
             public void onResponse(UserAvailability response) {
                 progressBar.setVisibility(View.GONE);
-                LoggerHelper.logMessage(TAG, "Got Response");
+
+                if (response != null) {
+                    userAvailability = response;
+                    headerDurationTextView.setText(String.valueOf(response.slotDuration) + " Mins");
+                    adapter.setupForDates(response.getUniqueDates(), ScheduleMeetingAdapter.SelectionType.DAY);
+                } else {
+                    //TODO: Show Error
+                }
+
             }
         });
+    }
+
+    public void setupForSelectedDate(Date date){
+
+        scheduleMeetingState = ScheduleMeetingState.CONFIRM;
+
+        recyclerView.setVisibility(View.GONE);
+        confirmationLinearLayout.setVisibility(View.VISIBLE);
+
+
+        confirmationDateTextView.setText(DateHelper.formatDateForScheduleDay(date));
+        if (userAvailability != null) {
+            confirmationTimezoneTextView.setText(userAvailability.agentTimezone);
+            final long ONE_MINUTE_IN_MILLIS = 60000;
+            Date endDate = new Date(date.getTime() + (userAvailability.slotDuration * ONE_MINUTE_IN_MILLIS));
+
+            confirmationTimeTextView.setText(DateHelper.formatDateForScheduleTime(date) + " - " + DateHelper.formatDateForScheduleTime(endDate));
+
+        } else {
+            confirmationTimezoneTextView.setText("");
+            confirmationTimeTextView.setText("");
+        }
+
+
     }
 }

@@ -28,4 +28,12 @@ public class DateHelper {
             return DateFormat.getDateFormat(Drift.getContext()).format(date);
         }
     }
+
+    public static String formatDateForScheduleDay(Date date){
+        return DateFormat.getDateFormat(Drift.getContext()).format(date);
+    }
+
+    public static String formatDateForScheduleTime(Date date){
+        return DateFormat.getTimeFormat(Drift.getContext()).format(date);
+    }
 }
