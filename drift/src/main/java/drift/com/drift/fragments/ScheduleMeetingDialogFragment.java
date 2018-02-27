@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -84,6 +85,8 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
     TextView confirmationTimezoneTextView;
     Button confirmationButton;
 
+    ImageButton backChevron;
+
     ScheduleMeetingAdapter adapter;
 
     public ScheduleMeetingDialogFragment() {}
@@ -134,12 +137,16 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
 
         confirmationButton = view.findViewById(R.id.drift_sdk_schedule_meeting_fragment_confirmation_button);
 
+        backChevron = view.findViewById(R.id.drift_sdk_schedule_meeting_fragment_back_chevron);
+
         confirmationLinearLayout.setVisibility(View.GONE);
         headerDurationTextView.setText("");
 
         headerRelativeLayout.setBackgroundColor(ColorHelper.getBackgroundColor());
         headerTitleTextView.setTextColor(ColorHelper.getForegroundColor());
         headerDurationTextView.setTextColor(ColorHelper.getForegroundColor());
+        backChevron.setColorFilter(ColorHelper.getBackgroundColor());
+
 
         adapter = new ScheduleMeetingAdapter();
         recyclerView.setAdapter(adapter);

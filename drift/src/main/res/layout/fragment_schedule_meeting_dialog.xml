@@ -53,6 +53,15 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="20dp">
 
+                <ImageButton
+                    android:id="@+id/drift_sdk_schedule_meeting_fragment_back_chevron"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/back_chevron"
+                    android:background="@color/drift_sdk_transparent"
+                    android:layout_marginStart="10dp"
+                    android:scaleType="centerInside"/>
+
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -73,7 +82,8 @@
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:layout_marginEnd="30dp"/>
 
             </LinearLayout>
 
