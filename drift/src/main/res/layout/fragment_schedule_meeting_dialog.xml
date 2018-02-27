@@ -97,8 +97,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/drift_sdk_schedule_meeting_fragment_recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/drift_sdk_green"/>
+                android:layout_height="match_parent" />
 
 
             <LinearLayout
