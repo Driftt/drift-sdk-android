@@ -33,6 +33,7 @@ import com.bumptech.glide.request.RequestOptions;
 import org.joda.time.DateTimeZone;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
@@ -501,33 +502,19 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     }
 
 
-                    java.text.DateFormat timeFormat;
-                    try {
-
-                        TimeZone timeZone = DateTimeZone.forTimeZone(TimeZone.getTimeZone(appointmentInformation.agentTimeZone)).toTimeZone();
-
-                        timeFormat = DateFormat.getTimeFormat(activity);
-                        timeFormat.setTimeZone(timeZone);
-
-
-                    } catch (Throwable t) {
-                        t.printStackTrace();
-                        timeFormat = DateFormat.getTimeFormat(activity);
-
-                    }
-
-
                     Date startDate = appointmentInformation.availabilitySlot;
                     Date endDate = new Date(startDate.getTime() + appointmentInformation.slotDuration * 60000);
 
-                    String startDateText = timeFormat.format(startDate);
-                    String endDateText = timeFormat.format(endDate);
+                    String startDateText = DateHelper.formatDateForScheduleTime(startDate);
+                    String endDateText = DateHelper.formatDateForScheduleTime(endDate);
 
                     meetingTimeTextView.setText(startDateText + "-" + endDateText);
 
                     java.text.DateFormat dateFormat = java.text.DateFormat.getDateInstance(java.text.DateFormat.FULL);
                     meetingDateTextView.setText(dateFormat.format(startDate));
-                    meetingTimeZoneTextView.setText(appointmentInformation.agentTimeZone);
+                    Calendar cal = Calendar.getInstance();
+                    TimeZone tz = cal.getTimeZone();
+                    meetingTimeZoneTextView.setText(tz.getDisplayName());
 
                 }
             }

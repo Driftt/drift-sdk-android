@@ -22,7 +22,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 import drift.com.drift.R;
 import drift.com.drift.adapters.ScheduleMeetingAdapter;
@@ -254,7 +256,10 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
 
         confirmationDateTextView.setText(DateHelper.formatDateForScheduleDay(date));
         if (userAvailability != null) {
-            confirmationTimezoneTextView.setText(userAvailability.agentTimezone);
+            Calendar cal = Calendar.getInstance();
+            TimeZone tz = cal.getTimeZone();
+
+            confirmationTimezoneTextView.setText(tz.getDisplayName());
             final long ONE_MINUTE_IN_MILLIS = 60000;
             Date endDate = new Date(date.getTime() + (userAvailability.slotDuration * ONE_MINUTE_IN_MILLIS));
 
