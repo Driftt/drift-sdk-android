@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -78,7 +79,7 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
 
     RecyclerView recyclerView;
 
-    LinearLayout confirmationLinearLayout;
+    ScrollView confirmationScrollView;
 
     TextView confirmationTimeTextView;
     TextView confirmationDateTextView;
@@ -129,7 +130,7 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
 
         progressBar = view.findViewById(R.id.drift_sdk_schedule_meeting_fragment_progress_bar);
 
-        confirmationLinearLayout = view.findViewById(R.id.drift_sdk_schedule_meeting_fragment_confirmation_linear_layout);
+        confirmationScrollView = view.findViewById(R.id.drift_sdk_schedule_meeting_fragment_confirmation_scroll_view);
 
         confirmationTimeTextView = view.findViewById(R.id.drift_sdk_schedule_meeting_fragment_confirmation_time_text_view);
         confirmationDateTextView = view.findViewById(R.id.drift_sdk_schedule_meeting_fragment_confirmation_date_text_view);
@@ -139,7 +140,7 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
 
         backChevron = view.findViewById(R.id.drift_sdk_schedule_meeting_fragment_back_chevron);
 
-        confirmationLinearLayout.setVisibility(View.GONE);
+        confirmationScrollView.setVisibility(View.GONE);
         headerDurationTextView.setText("");
 
         headerRelativeLayout.setBackgroundColor(ColorHelper.getBackgroundColor());
@@ -237,7 +238,7 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
 
 
         recyclerView.setVisibility(View.GONE);
-        confirmationLinearLayout.setVisibility(View.VISIBLE);
+        confirmationScrollView.setVisibility(View.VISIBLE);
 
 
         confirmationDateTextView.setText(DateHelper.formatDateForScheduleDay(date));
@@ -275,7 +276,7 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
                     adapter.setupForDates(userAvailability.getUniqueDates(), ScheduleMeetingAdapter.SelectionType.DAY);
                 }
                 recyclerView.setVisibility(View.VISIBLE);
-                confirmationLinearLayout.setVisibility(View.GONE);
+                confirmationScrollView.setVisibility(View.GONE);
                 break;
             case TIME:
                 titleTextView.setText("Select a Time");
@@ -284,7 +285,7 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
                     adapter.setupForDates(userAvailability.getDatesForDay(selectedDate), ScheduleMeetingAdapter.SelectionType.TIME);
                 }
                 recyclerView.setVisibility(View.VISIBLE);
-                confirmationLinearLayout.setVisibility(View.GONE);
+                confirmationScrollView.setVisibility(View.GONE);
                 break;
         }
     }
@@ -301,6 +302,11 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
             case DAY:
                 break;
         }
+    }
+
+    public void didPressSchedule() {
+
+
 
     }
 }
