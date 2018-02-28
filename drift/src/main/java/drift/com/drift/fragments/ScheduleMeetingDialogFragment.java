@@ -167,12 +167,11 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
                     switch (scheduleMeetingState) {
                         case DAY:
                             selectedDate = chosenDate;
-                            adapter.setupForDates(userAvailability.getDatesForDay(chosenDate), ScheduleMeetingAdapter.SelectionType.TIME);
-                            scheduleMeetingState = ScheduleMeetingState.TIME;
+                            changeToState(ScheduleMeetingState.TIME);
                             break;
                         case TIME:
                             selectedTime = chosenDate;
-                            setupForSelectedDate(chosenDate);
+                            changeToState(ScheduleMeetingState.CONFIRM);
                             break;
 
                         case CONFIRM://Can't hapen
@@ -183,6 +182,13 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
                 }
             }
         }));
+
+        backChevron.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                didPressBackChevron();
+            }
+        });
 
 
         User user = UserManager.getInstance().userMap.get(userId);
@@ -202,7 +208,7 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
         }
 
         setupAvailabilityCall();
-
+        changeToState(ScheduleMeetingState.DAY);
         return view;
     }
 
@@ -218,7 +224,7 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
                 if (response != null) {
                     userAvailability = response;
                     headerDurationTextView.setText(String.valueOf(response.slotDuration) + " Mins");
-                    adapter.setupForDates(response.getUniqueDates(), ScheduleMeetingAdapter.SelectionType.DAY);
+                    changeToState(ScheduleMeetingState.DAY);
                 } else {
                     //TODO: Show Error
                 }
@@ -229,7 +235,6 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
 
     public void setupForSelectedDate(Date date){
 
-        scheduleMeetingState = ScheduleMeetingState.CONFIRM;
 
         recyclerView.setVisibility(View.GONE);
         confirmationLinearLayout.setVisibility(View.VISIBLE);
@@ -248,6 +253,51 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
             confirmationTimeTextView.setText("");
         }
 
+    }
+
+    public void changeToState(ScheduleMeetingState state){
+
+        scheduleMeetingState = state;
+
+        switch (state){
+
+            case CONFIRM:
+                backChevron.setVisibility(View.VISIBLE);
+                if (selectedTime != null) {
+                    setupForSelectedDate(selectedTime);
+                }
+                break;
+            case DAY:
+                backChevron.setVisibility(View.INVISIBLE);
+                if (userAvailability != null) {
+                    adapter.setupForDates(userAvailability.getUniqueDates(), ScheduleMeetingAdapter.SelectionType.DAY);
+                }
+                recyclerView.setVisibility(View.VISIBLE);
+                confirmationLinearLayout.setVisibility(View.GONE);
+                break;
+            case TIME:
+                backChevron.setVisibility(View.VISIBLE);
+                if (userAvailability != null && selectedDate != null) {
+                    adapter.setupForDates(userAvailability.getDatesForDay(selectedDate), ScheduleMeetingAdapter.SelectionType.TIME);
+                }
+                recyclerView.setVisibility(View.VISIBLE);
+                confirmationLinearLayout.setVisibility(View.GONE);
+                break;
+        }
+    }
+
+    public void didPressBackChevron(){
+
+        switch (scheduleMeetingState){
+            case CONFIRM:
+                changeToState(ScheduleMeetingState.TIME);
+                break;
+            case TIME:
+                changeToState(ScheduleMeetingState.DAY);
+                break;
+            case DAY:
+                break;
+        }
 
     }
 }
