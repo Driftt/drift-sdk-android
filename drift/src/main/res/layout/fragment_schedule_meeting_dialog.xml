@@ -55,7 +55,7 @@
 
                 <ImageButton
                     android:id="@+id/drift_sdk_schedule_meeting_fragment_back_chevron"
-                    android:layout_width="20dp"
+                    android:layout_width="30dp"
                     android:layout_height="20dp"
                     android:src="@drawable/back_chevron"
                     android:background="@color/drift_sdk_transparent"
@@ -83,7 +83,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:layout_marginEnd="30dp"/>
+                    android:layout_marginEnd="40dp"/>
 
             </LinearLayout>
 
@@ -96,13 +96,19 @@
                 android:textStyle="bold"
                 android:textColor="@color/drift_sdk_black" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/drift_sdk_recycler_view_divider"
+                />
+
         </LinearLayout>
 
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginTop="10dp">
+            android:layout_height="300dp">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/drift_sdk_schedule_meeting_fragment_recycler_view"
@@ -160,8 +166,8 @@
                     android:text="Schedule"
                     android:textAllCaps="false"
                     android:layout_gravity="center"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginEnd="30dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:textColor="@color/drift_sdk_white"
                     android:background="@drawable/drift_sdk_schedule_meeting_confirmation_button"
                     android:layout_marginBottom="15dp"/>

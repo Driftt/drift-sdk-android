@@ -262,12 +262,14 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
         switch (state){
 
             case CONFIRM:
+                titleTextView.setText("");
                 backChevron.setVisibility(View.VISIBLE);
                 if (selectedTime != null) {
                     setupForSelectedDate(selectedTime);
                 }
                 break;
             case DAY:
+                titleTextView.setText("Select a Day");
                 backChevron.setVisibility(View.INVISIBLE);
                 if (userAvailability != null) {
                     adapter.setupForDates(userAvailability.getUniqueDates(), ScheduleMeetingAdapter.SelectionType.DAY);
@@ -276,6 +278,7 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
                 confirmationLinearLayout.setVisibility(View.GONE);
                 break;
             case TIME:
+                titleTextView.setText("Select a Time");
                 backChevron.setVisibility(View.VISIBLE);
                 if (userAvailability != null && selectedDate != null) {
                     adapter.setupForDates(userAvailability.getDatesForDay(selectedDate), ScheduleMeetingAdapter.SelectionType.TIME);
