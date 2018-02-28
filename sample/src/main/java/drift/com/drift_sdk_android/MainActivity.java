@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        Drift.registerUser("123743810", "eoin+app@8bytes.ie");
+        Drift.registerUser("", "");
 
 
 
