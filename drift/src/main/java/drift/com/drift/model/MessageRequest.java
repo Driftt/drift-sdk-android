@@ -36,6 +36,15 @@ public class MessageRequest {
     @SerializedName("context")
     public ConversationContext conversationContext;
 
+    @SerializedName("attributes")
+    MessageRequestAttributes attributes;
+
+
+    public MessageRequest(GoogleMeeting googleMeeting, UserAvailability userAvailability, int meetingUserId, int conversationId, Date timeSlot){
+        this.body = "";
+        this.type = "CHAT";
+        attributes = new MessageRequestAttributes(googleMeeting, userAvailability, meetingUserId, conversationId, timeSlot);
+    }
 
     public MessageRequest(String body, int authorId, @Nullable Integer attachmentId, Context context){
 

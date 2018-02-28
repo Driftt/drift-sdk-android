@@ -26,13 +26,17 @@ import java.util.Date;
 
 import drift.com.drift.R;
 import drift.com.drift.adapters.ScheduleMeetingAdapter;
+import drift.com.drift.helpers.Alert;
 import drift.com.drift.helpers.ClickListener;
 import drift.com.drift.helpers.ColorHelper;
 import drift.com.drift.helpers.DateHelper;
 import drift.com.drift.helpers.LoggerHelper;
 import drift.com.drift.helpers.RecyclerTouchListener;
+import drift.com.drift.managers.MessageManager;
 import drift.com.drift.managers.UserManager;
 import drift.com.drift.model.GoogleMeeting;
+import drift.com.drift.model.Message;
+import drift.com.drift.model.MessageRequest;
 import drift.com.drift.model.User;
 import drift.com.drift.model.UserAvailability;
 import drift.com.drift.wrappers.APICallbackWrapper;
@@ -234,7 +238,7 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
                     headerDurationTextView.setText(String.valueOf(response.slotDuration) + " Mins");
                     changeToState(ScheduleMeetingState.DAY);
                 } else {
-                    //TODO: Show Error
+                    showAlertForFailedToGetAvailability();
                 }
 
             }
@@ -320,16 +324,58 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
             public void onResponse(GoogleMeeting response) {
                 if (response != null) {
                     LoggerHelper.logMessage(TAG, response.toString());
+                    createMessageForMeeting(response);
                 } else {
-
+                    progressBar.setVisibility(View.GONE);
+                    showAlertForScheduleMeeting();
                 }
             }
         });
     }
 
-    public void createMessageForMeeting(GoogleMeeting googleMeeting) {
+    public void createMessageForMeeting(final GoogleMeeting googleMeeting) {
+        progressBar.setVisibility(View.VISIBLE);
 
+        MessageRequest messageRequest = new MessageRequest(googleMeeting, userAvailability, userId, conversationId, selectedTime);
 
+        MessageManager.getInstance().sendMessageForConversationId(conversationId, messageRequest, new APICallbackWrapper<Message>() {
+            @Override
+            public void onResponse(Message response) {
+                progressBar.setVisibility(View.GONE);
 
+                if (response != null) {
+                    dismiss();
+                } else {
+                    showAlertForCreatingMeetingMessage(googleMeeting);
+                }
+            }
+        });
+    }
+
+    public void showAlertForFailedToGetAvailability(){
+        Alert.showAlert(getActivity(), "Error", "Failed to load users availability", "Retry", new Runnable() {
+            @Override
+            public void run() {
+                setupAvailabilityCall();
+            }
+        });
+    }
+
+    public void showAlertForScheduleMeeting(){
+        Alert.showAlert(getActivity(), "Error", "Failed to schedule meeting", "Retry", new Runnable() {
+            @Override
+            public void run() {
+                didPressSchedule();
+            }
+        });
+    }
+
+    public void showAlertForCreatingMeetingMessage(final GoogleMeeting googleMeeting){
+        Alert.showAlert(getActivity(), "Error", "Failed to schedule meeting", "Retry", new Runnable() {
+            @Override
+            public void run() {
+                createMessageForMeeting(googleMeeting);
+            }
+        });
     }
 }
