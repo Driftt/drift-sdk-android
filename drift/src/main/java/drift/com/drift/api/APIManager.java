@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import java.util.Date;
 
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -69,16 +70,13 @@ public class APIManager {
 
 
         Gson gson = generateGson();
-//        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-//        if (!BuildConfig.DEBUG) {
-//            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
-//        } else {
-//            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-//        }
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         OkHttpClient customerClient = new OkHttpClient.Builder()
                 .addInterceptor(new APIAuthTokenInterceptor())
-//                .addInterceptor(new HardAuthInterceptor())
+                .addInterceptor(loggingInterceptor)
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -91,7 +89,7 @@ public class APIManager {
 
         OkHttpClient conversationClient = new OkHttpClient.Builder()
                 .addInterceptor(new APIAuthTokenInterceptor())
-//                .addInterceptor(new HardAuthInterceptor())
+                .addInterceptor(loggingInterceptor)
                 .build();
 
         Retrofit retrofitV2 = new Retrofit.Builder()

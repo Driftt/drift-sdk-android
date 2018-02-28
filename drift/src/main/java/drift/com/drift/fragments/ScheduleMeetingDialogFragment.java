@@ -14,7 +14,6 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -30,8 +29,10 @@ import drift.com.drift.adapters.ScheduleMeetingAdapter;
 import drift.com.drift.helpers.ClickListener;
 import drift.com.drift.helpers.ColorHelper;
 import drift.com.drift.helpers.DateHelper;
+import drift.com.drift.helpers.LoggerHelper;
 import drift.com.drift.helpers.RecyclerTouchListener;
 import drift.com.drift.managers.UserManager;
+import drift.com.drift.model.GoogleMeeting;
 import drift.com.drift.model.User;
 import drift.com.drift.model.UserAvailability;
 import drift.com.drift.wrappers.APICallbackWrapper;
@@ -191,6 +192,12 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
             }
         });
 
+        confirmationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                didPressSchedule();
+            }
+        });
 
         User user = UserManager.getInstance().userMap.get(userId);
         if (user != null){
@@ -305,6 +312,22 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
     }
 
     public void didPressSchedule() {
+
+        progressBar.setVisibility(View.VISIBLE);
+
+        ScheduleMeetingWrapper.scheduleMeeting(userId, conversationId, selectedTime.getTime(), new APICallbackWrapper<GoogleMeeting>() {
+            @Override
+            public void onResponse(GoogleMeeting response) {
+                if (response != null) {
+                    LoggerHelper.logMessage(TAG, response.toString());
+                } else {
+
+                }
+            }
+        });
+    }
+
+    public void createMessageForMeeting(GoogleMeeting googleMeeting) {
 
 
 
