@@ -437,6 +437,7 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
                     message.sendStatus = Message.SendStatus.SENT;
                     conversationAdapter.addMessage(recyclerView, message);
                     updateForConversationType();
+                    refreshData();
                 } else {
                     conversationAdapter.updateData(new ArrayList<Message>());
                     textEntryEditText.setText(textToSend);
