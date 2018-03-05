@@ -259,7 +259,7 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
             Calendar cal = Calendar.getInstance();
             TimeZone tz = cal.getTimeZone();
 
-            confirmationTimezoneTextView.setText(tz.getDisplayName());
+            confirmationTimezoneTextView.setText(tz.getID());
             final long ONE_MINUTE_IN_MILLIS = 60000;
             Date endDate = new Date(date.getTime() + (userAvailability.slotDuration * ONE_MINUTE_IN_MILLIS));
 

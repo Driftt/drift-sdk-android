@@ -62,7 +62,7 @@ public class MessageRequestAttributesAppointment {
         Calendar cal = Calendar.getInstance();
         TimeZone tz = cal.getTimeZone();
 
-        endUserTimeZone = tz.getDisplayName();
+        endUserTimeZone = tz.getID();
         agentTimeZone = userAvailability.agentTimezone;
     }
 

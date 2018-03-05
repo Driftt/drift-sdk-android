@@ -514,7 +514,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     meetingDateTextView.setText(dateFormat.format(startDate));
                     Calendar cal = Calendar.getInstance();
                     TimeZone tz = cal.getTimeZone();
-                    meetingTimeZoneTextView.setText(tz.getDisplayName());
+                    meetingTimeZoneTextView.setText(tz.getID());
 
                 }
             }
