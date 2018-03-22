@@ -14,7 +14,7 @@ class APIAuthTokenInterceptor implements Interceptor {
     private static final String TAG = APIAuthTokenInterceptor.class.getSimpleName();
 
     @Override
-    public Response intercept(Interceptor.Chain chain) throws IOException {
+    public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
         Auth auth = Auth.getInstance();
         if (auth != null && auth.getAccessToken() != null) {

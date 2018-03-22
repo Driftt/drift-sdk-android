@@ -32,7 +32,7 @@ public interface APIConversationAPIBuilder {
     Call<ArrayList<Message>> getMessages(@Path("conversationId") Integer conversationId);
 
     @GET("attachments")
-    Call<ArrayList<Attachment>> getAttachments(@Query("id") List<Integer> attachmentIds, @QueryMap Map<String ,Object> imgixOptions);
+    Call<ArrayList<Attachment>> getAttachments(@Query("id") List<Integer> attachmentIds, @QueryMap Map<String, Object> imgixOptions);
 
 //    @POST("conversations/{conversationId}/messages")
 //    Call<Message> postMessage(@Path("conversationId") Integer conversationId, @Body MessageRequest messageRequest);
