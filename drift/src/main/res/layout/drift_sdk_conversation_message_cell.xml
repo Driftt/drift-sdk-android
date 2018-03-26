@@ -131,7 +131,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_meeting_icon"
+            android:src="@drawable/drift_sdk_ic_meeting_icon"
             android:layout_toEndOf="@id/drift_sdk_conversation_message_cell_meeting_view_user_image_view"
             android:layout_below="@id/drift_sdk_conversation_message_cell_meeting_view_user_image_view"
             android:layout_marginStart="-10dp"

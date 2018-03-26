@@ -210,7 +210,7 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
             userTextView.setText(user.getUserName());
             RequestOptions requestOptions = new RequestOptions()
                     .circleCrop()
-                    .placeholder(R.drawable.placeholder);
+                    .placeholder(R.drawable.drift_sdk_placeholder);
 
             Glide.with(getActivity())
                     .load(user.avatarUrl)

@@ -19,7 +19,7 @@
             android:id="@+id/drift_sdk_attachment_view_icon_image_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/attachment_icon"
+            android:src="@drawable/drift_sdk_attachment_icon"
             android:background="@color/drift_sdk_red"/>
 
         <TextView

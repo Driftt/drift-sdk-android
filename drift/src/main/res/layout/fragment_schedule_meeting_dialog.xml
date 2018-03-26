@@ -57,7 +57,7 @@
                     android:id="@+id/drift_sdk_schedule_meeting_fragment_back_chevron"
                     android:layout_width="30dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/back_chevron"
+                    android:src="@drawable/drift_sdk_back_chevron"
                     android:background="@color/drift_sdk_transparent"
                     android:layout_marginStart="10dp"
                     android:scaleType="centerInside"/>

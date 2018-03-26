@@ -13,6 +13,6 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Drift.setupDrift(this, "");
+        Drift.setupDrift(this, "teergsg9bb5d");
     }
 }

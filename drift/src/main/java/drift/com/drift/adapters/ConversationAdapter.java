@@ -366,7 +366,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                     RequestOptions requestOptions = new RequestOptions()
                             .circleCrop()
-                            .placeholder(R.drawable.placeholder);
+                            .placeholder(R.drawable.drift_sdk_placeholder);
 
                     Glide.with(activity)
                             .load(user.avatarUrl)
@@ -408,7 +408,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                 if (user.bot) {
                     ignoreUri = true;
-                    Drawable placeholderDrawable = AppCompatResources.getDrawable(activity, R.drawable.robot);
+                    Drawable placeholderDrawable = AppCompatResources.getDrawable(activity, R.drawable.drift_sdk_robot);
                     Drawable backgroundDrawable = AppCompatResources.getDrawable(activity, R.drawable.drift_sdk_bot_background);
 
                     DrawableCompat.setTint(backgroundDrawable, ColorHelper.getBackgroundColor());
@@ -434,7 +434,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                 RequestOptions requestOptions = new RequestOptions()
                         .circleCrop()
-                        .placeholder(R.drawable.placeholder);
+                        .placeholder(R.drawable.drift_sdk_placeholder);
 
                 Glide.with(activity)
                     .load(uriToLoad)
@@ -492,7 +492,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     if (user != null) {
                         RequestOptions requestOptions = new RequestOptions()
                                 .circleCrop()
-                                .placeholder(R.drawable.placeholder);
+                                .placeholder(R.drawable.drift_sdk_placeholder);
                         Glide.with(activity).load(user.avatarUrl).apply(requestOptions).into(meetingUserImage);
 
                         titleTextView.setText("Scheduled a Meeting with " + user.getUserName());

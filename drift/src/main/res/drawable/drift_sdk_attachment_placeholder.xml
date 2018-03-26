@@ -9,6 +9,6 @@
     </item>
 
     <item >
-        <bitmap android:src="@drawable/drift_splash_logo" android:gravity="center"/>
+        <bitmap android:src="@drawable/drift_sdk_drift_splash_logo" android:gravity="center"/>
     </item>
 </layer-list>
