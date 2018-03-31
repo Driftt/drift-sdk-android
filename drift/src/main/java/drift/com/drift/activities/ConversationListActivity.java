@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -113,10 +114,10 @@ public class ConversationListActivity extends DriftActivity {
         conversationRecyclerView.setAdapter(conversationListAdapter);
 
         if (conversationListAdapter.getItemCount() == 0) {
-            progressBar.setVisibility(View.VISIBLE);
-        } else {
-            progressBar.setVisibility(View.GONE);
+            Toast.makeText(getApplicationContext(), R.string.no_conversations_found, Toast.LENGTH_LONG).show();
         }
+
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override
