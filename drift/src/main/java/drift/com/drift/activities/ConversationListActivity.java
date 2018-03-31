@@ -132,37 +132,41 @@ public class ConversationListActivity extends DriftActivity {
                 @Override
                 public void didLoadUsers(Boolean success) {
                     if (success) {
-
-                        ConversationManager.getInstance().getConversationsForEndUser(auth.endUser.id, new APICallbackWrapper<ArrayList<ConversationExtra>>() {
-                            @Override
-                            public void onResponse(ArrayList<ConversationExtra> response) {
-                                if (response != null) {
-                                    progressBar.setVisibility(View.GONE);
-                                    LoggerHelper.logMessage(TAG, response.toString());
-
-                                    if (response.isEmpty()) {
-                                        emptyState.setVisibility(View.VISIBLE);
-                                    } else {
-                                        emptyState.setVisibility(View.GONE);
-                                    }
-
-                                    conversationListAdapter.updateDate(response);
-                                } else {
-                                    Alert.showAlert(ConversationListActivity.this, "Error", "Failed to load conversations", "Retry", new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            refreshData();
-                                        }
-                                    });
-                                }
-                            }
-                        });
+                        fetchData(auth);
                     } else {
                         LoggerHelper.logMessage(TAG, "Failed to load users");
                     }
                 }
             });
         }
+    }
+
+    private void fetchData(Auth auth) {
+        ConversationManager.getInstance().getConversationsForEndUser(auth.endUser.id, new APICallbackWrapper<ArrayList<ConversationExtra>>() {
+            @Override
+            public void onResponse(ArrayList<ConversationExtra> response) {
+                if (response != null) {
+                    progressBar.setVisibility(View.GONE);
+                    LoggerHelper.logMessage(TAG, response.toString());
+
+                    if (response.isEmpty()) {
+                        emptyState.setVisibility(View.VISIBLE);
+                    } else {
+                        emptyState.setVisibility(View.GONE);
+                    }
+
+                    conversationListAdapter.updateDate(response);
+                } else {
+                    Alert.showAlert(ConversationListActivity.this, getApplicationContext().getString(R.string.error_title),
+                            getApplicationContext().getString(R.string.failed_to_load_conversations), getApplicationContext().getString(R.string.retry), new Runnable() {
+                        @Override
+                        public void run() {
+                            refreshData();
+                        }
+                    });
+                }
+            }
+        });
     }
 
     @Override

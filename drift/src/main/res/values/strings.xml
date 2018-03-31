@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Drift</string>
     <string name="no_conversations_found">No conversations found!</string>
+    <string name="failed_to_load_conversations">Failed to load conversations</string>
+    <string name="error_title">Error</string>
+    <string name="retry">Retry</string>
 </resources>
