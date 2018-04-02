@@ -40,32 +40,32 @@ dependencies {
 To get started with the Drift SDK you need the embed ID from your Drift settings page. This can be accessed [here](https://app.drift.com/settings/livechat) by looking after the drift.load method in the Javascript SDK.
 
 In your Application `onCreate` method call:
-```Java
+```java
 Drift.setupDrift(this, "");
 ```
 
 Once your user has successfully logged into the app registering a user with the device is done by calling register user with a unique identifier, typically the id from your database, and their email address:
 
-```Java
+```java
 Drift.registerUser("123748", "sample@drift.com");
 ```
 
 When your user logs out simply call logout so they stop receiving messages.
 
-```Java
+```java
 Drift.logout();
 ```
 
 
 # Messaging
 
-A user can begin a conversation in response to a campaign or by presenting the conversations list
+A user can begin a conversation in response to a campaign or by presenting the conversations list:
 
-```Java
-  Drift.showConversationActivity();
+```java
+Drift.showConversationActivity();
 ```
 
-Thats it. Your good to go!!
+That's it. You're good to go!!
 
 # Customisation
 
