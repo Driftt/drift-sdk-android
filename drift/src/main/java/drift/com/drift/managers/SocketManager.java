@@ -121,6 +121,8 @@ public class SocketManager {
                 @Override
                 public void onError(final String reason) {
 //                    handleTerminalError(reason);
+                    LoggerHelper.logMessage(TAG, "Socket Error");
+
                 }
             })
             .connect();
