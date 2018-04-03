@@ -2,6 +2,7 @@ package drift.com.drift.model;
 
 import android.net.Uri;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
@@ -12,27 +13,35 @@ import java.util.Date;
 
 public class Attachment {
 
+    @Expose
     @SerializedName("id")
     public Integer id;
 
+    @Expose
     @SerializedName("conversationId")
     public Integer conversationId;
 
+    @Expose
     @SerializedName("fileName")
     public String fileName;
 
+    @Expose
     @SerializedName("mimeType")
     public String mimeType;
 
+    @Expose
     @SerializedName("publicPreviewUrl")
     public String publicPreviewUrl;
 
+    @Expose
     @SerializedName("size")
     public Integer size;
 
+    @Expose
     @SerializedName("createdAt")
     public Date createdAt;
 
+    @Expose
     @SerializedName("publicId")
     String publicId;
 

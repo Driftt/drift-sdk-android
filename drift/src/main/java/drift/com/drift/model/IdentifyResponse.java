@@ -1,5 +1,6 @@
 package drift.com.drift.model;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -7,10 +8,13 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class IdentifyResponse {
+    @Expose
     @SerializedName("id")
     public String id;
+    @Expose
     @SerializedName("userId")
     public String userId;
+    @Expose
     @SerializedName("orgId")
     public Integer orgId;
 

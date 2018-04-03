@@ -1,5 +1,6 @@
 package drift.com.drift.model;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Calendar;
@@ -12,29 +13,29 @@ import java.util.TimeZone;
 
 public class MessageRequestAttributesAppointment {
 
-
+    @Expose
     @SerializedName("id")
     String googleMeetingId;
-
+    @Expose
     @SerializedName("url")
     String googleMeetingURL;
-
+    @Expose
     @SerializedName("availabilitySlot")
     Date dateSlot;
-
+    @Expose
     @SerializedName("slotDuration")
     int slotDuration;
-
+    @Expose
     @SerializedName("agentId")
     int agentId;
-
+    @Expose
     @SerializedName("conversationId")
     int conversationId;
 
-
+    @Expose
     @SerializedName("endUserTimeZone")
     String endUserTimeZone;
-
+    @Expose
     @SerializedName("agentTimeZone")
     String agentTimeZone;
 

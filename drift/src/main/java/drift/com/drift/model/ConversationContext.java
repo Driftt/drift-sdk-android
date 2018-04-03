@@ -5,6 +5,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import drift.com.drift.helpers.LoggerHelper;
@@ -15,6 +16,7 @@ import drift.com.drift.helpers.LoggerHelper;
 
 public class ConversationContext {
 
+    @Expose
     @SerializedName("userAgent")
     String userAgent;
 

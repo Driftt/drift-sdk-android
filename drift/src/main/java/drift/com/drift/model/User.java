@@ -1,5 +1,6 @@
 package drift.com.drift.model;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -7,19 +8,19 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class User {
-
+    @Expose
     @SerializedName("id")
     public Integer id;
-
+    @Expose
     @SerializedName("orgId")
     public Integer orgId;
-
+    @Expose
     @SerializedName("name")
     private String name;
-
+    @Expose
     @SerializedName("avatarUrl")
     public String avatarUrl;
-
+    @Expose
     @SerializedName("bot")
     public Boolean bot;
 

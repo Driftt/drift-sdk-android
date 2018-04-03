@@ -1,5 +1,6 @@
 package drift.com.drift.model;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -7,10 +8,10 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class SocketAuth {
-
+    @Expose
     @SerializedName("user_id")
     public String userId;
-
+    @Expose
     @SerializedName("session_token")
     public String sessionToken;
 }

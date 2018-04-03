@@ -45,10 +45,10 @@ public class APIManager {
 
     public static Gson generateGson(){
 
-        Gson gson = new GsonBuilder()
+        return new GsonBuilder()
                 .registerTypeAdapter(Date.class, new DriftDateAdapter())
+                .excludeFieldsWithoutExposeAnnotation()
                 .create();
-        return gson;
     }
 
     private static void setupRestClient() {

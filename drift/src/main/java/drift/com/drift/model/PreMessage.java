@@ -1,5 +1,6 @@
 package drift.com.drift.model;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -8,9 +9,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class PreMessage {
 
+    @Expose
     @SerializedName("body")
     public String messageBody;
-
+    @Expose
     @SerializedName("sender")
     public User sender;
 }
