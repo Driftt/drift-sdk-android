@@ -1,5 +1,6 @@
 package drift.com.drift.model;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
@@ -15,10 +16,15 @@ import java.util.List;
 
 public class UserAvailability {
 
+    @Expose
     @SerializedName("slotDuration")
     public int slotDuration = 0;
+
+    @Expose
     @SerializedName("agentTimezone")
     public String agentTimezone;
+
+    @Expose
     @SerializedName("slots")
     public List<Date> slots = null;
 

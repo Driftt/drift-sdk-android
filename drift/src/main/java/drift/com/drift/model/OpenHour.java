@@ -1,5 +1,6 @@
 package drift.com.drift.model;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import org.joda.time.DateTimeConstants;
@@ -23,13 +24,13 @@ public class OpenHour {
         WEEKENDS
     }
 
-
+    @Expose
     @SerializedName("opens")
     public String opens;
-
+    @Expose
     @SerializedName("closes")
     public String closes;
-
+    @Expose
     @SerializedName("dayOfWeek")
     public String dayOfWeek;
 

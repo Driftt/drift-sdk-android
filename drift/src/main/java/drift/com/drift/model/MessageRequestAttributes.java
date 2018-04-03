@@ -1,5 +1,6 @@
 package drift.com.drift.model;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
@@ -16,13 +17,13 @@ public class MessageRequestAttributes {
         "appointmentInfo":apointment]
 
      */
-
+    @Expose
     @SerializedName("appointmentInfo")
     MessageRequestAttributesAppointment appointment;
-
+    @Expose
     @SerializedName("scheduleMeetingWith")
     int meetingUserId;
-
+    @Expose
     @SerializedName("scheduleMeetingFlow")
     boolean scheduleMeetingFlow = true;
 

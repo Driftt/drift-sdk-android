@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import drift.com.drift.Drift;
@@ -24,9 +25,11 @@ public class Auth {
         this.accessToken = accessToken;
     }
 
+    @Expose
     @SerializedName("accessToken")
     private String accessToken;
 
+    @Expose
     @SerializedName("endUser")
     public EndUser endUser;
 
