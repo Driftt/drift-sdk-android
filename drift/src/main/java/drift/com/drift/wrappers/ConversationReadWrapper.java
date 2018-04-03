@@ -1,7 +1,5 @@
 package drift.com.drift.wrappers;
 
-import java.util.ArrayList;
-
 import drift.com.drift.api.APIManager;
 import drift.com.drift.helpers.LoggerHelper;
 import okhttp3.ResponseBody;

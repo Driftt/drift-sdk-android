@@ -2,10 +2,6 @@ package drift.com.drift.model;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.text.Editable;
-import android.text.Html;
-import android.text.SpannableStringBuilder;
-import android.text.util.Linkify;
 
 import com.google.gson.annotations.SerializedName;
 

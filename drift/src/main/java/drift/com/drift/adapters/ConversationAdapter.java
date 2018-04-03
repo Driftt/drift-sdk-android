@@ -1,6 +1,5 @@
 package drift.com.drift.adapters;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
@@ -29,8 +28,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-
-import org.joda.time.DateTimeZone;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -249,7 +246,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             if (showDayHeader) {
 
                 if (DateHelper.isSameDay(message.createdAt, new Date())){
-                    dayHeaderTextView.setText("Today");
+                    dayHeaderTextView.setText(R.string.drift_sdk_today);
                 }else {
                     String updatedTime = DateFormat.getDateFormat(activity).format(message.createdAt);
                     dayHeaderTextView.setText(updatedTime);
@@ -374,10 +371,10 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                             .into(meetingViewUserImageView);
 
 
-                    meetingViewTextView.setText("Scheduling a Meeting with " + user.getUserName());
+                    meetingViewTextView.setText(activity.getString(R.string.drift_sdk_scheduling_meeting_with, user.getUserName()));
                 }else{
                     Glide.with(activity).clear(meetingViewUserImageView);
-                    meetingViewTextView.setText("Scheduling Meeting");
+                    meetingViewTextView.setText(R.string.drift_sdk_scheduling_meeting);
                 }
 
                 meetingViewRelativeLayout.setVisibility(View.VISIBLE);
@@ -402,7 +399,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             Boolean ignoreUri = false;
 
             if (message.isMessageFromEndUser()){
-                userTextView.setText("You");
+                userTextView.setText(R.string.drift_sdk_you);
             } else if (user != null) {
                 userTextView.setText(user.getUserName());
 
@@ -427,7 +424,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             } else {
                 //Unknown User
-                userTextView.setText("Unknown User");
+                userTextView.setText(R.string.drift_sdk_unknown_user);
             }
 
             if (!ignoreUri) {
@@ -473,7 +470,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             if (showDayHeader) {
                 dayHeader.setVisibility(View.VISIBLE);
                 if (DateHelper.isSameDay(message.createdAt, new Date())){
-                    dayHeaderTextView.setText("Today");
+                    dayHeaderTextView.setText(R.string.drift_sdk_today);
                 }else {
                     String updatedTime = DateFormat.getDateFormat(activity).format(message.createdAt);
                     dayHeaderTextView.setText(updatedTime);
@@ -495,9 +492,10 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                                 .placeholder(R.drawable.drift_sdk_placeholder);
                         Glide.with(activity).load(user.avatarUrl).apply(requestOptions).into(meetingUserImage);
 
-                        titleTextView.setText("Scheduled a Meeting with " + user.getUserName());
+                        titleTextView.setText(activity.getString(R.string.drift_sdk_scheduled_meeting_with, user.getUserName()));
+
                     } else {
-                        titleTextView.setText("Scheduled Meeting");
+                        titleTextView.setText(R.string.drift_sdk_scheduled_meeting);
                         Glide.with(activity).clear(meetingUserImage);
                     }
 
@@ -508,7 +506,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     String startDateText = DateHelper.formatDateForScheduleTime(startDate);
                     String endDateText = DateHelper.formatDateForScheduleTime(endDate);
 
-                    meetingTimeTextView.setText(startDateText + "-" + endDateText);
+                    meetingTimeTextView.setText(activity.getString(R.string.drift_sdk_dash_divided_strings, startDateText, endDateText));
 
                     java.text.DateFormat dateFormat = java.text.DateFormat.getDateInstance(java.text.DateFormat.FULL);
                     meetingDateTextView.setText(dateFormat.format(startDate));

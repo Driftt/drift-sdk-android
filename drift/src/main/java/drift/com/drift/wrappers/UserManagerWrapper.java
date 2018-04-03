@@ -1,10 +1,8 @@
 package drift.com.drift.wrappers;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import drift.com.drift.api.APIManager;
-import drift.com.drift.model.SocketAuth;
 import drift.com.drift.model.User;
 import retrofit2.Call;
 import retrofit2.Callback;

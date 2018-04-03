@@ -7,7 +7,6 @@
         android:id="@+id/drift_sdk_schedule_meeting_cell_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Test"
         android:textColor="@color/drift_sdk_black"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"

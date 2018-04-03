@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.TimeZone;
 
-import drift.com.drift.helpers.UserPopulationHelper;
-
 /**
  * Created by eoin on 28/07/2017.
  */

@@ -21,8 +21,7 @@ public class OpenHour {
         EVERYDAY,
         WEEKDAYS,
         WEEKENDS
-    };
-
+    }
 
 
     @SerializedName("opens")

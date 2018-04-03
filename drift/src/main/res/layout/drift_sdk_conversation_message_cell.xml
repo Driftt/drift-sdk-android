@@ -156,7 +156,7 @@
             android:id="@+id/drift_sdk_conversation_message_cell_meeting_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Schedule"
+            android:text="@string/drift_sdk_schedule"
             android:textAllCaps="false"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"

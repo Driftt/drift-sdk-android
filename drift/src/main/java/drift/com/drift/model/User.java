@@ -2,8 +2,6 @@ package drift.com.drift.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 /**
  * Created by eoin on 28/07/2017.
  */

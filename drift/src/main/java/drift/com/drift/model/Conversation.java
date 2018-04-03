@@ -1,11 +1,8 @@
 package drift.com.drift.model;
 
-import android.text.format.DateFormat;
-
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by eoin on 28/07/2017.
