@@ -55,7 +55,15 @@ public class ConversationManager {
             public void onResponse(ArrayList<ConversationExtra> response) {
                 if (response != null) {
                     manuallyAddedUnreadMessages = 0;
-                    conversations = response;
+
+                    ArrayList<ConversationExtra> filteredConversationExtras = new ArrayList<>();
+
+                    for (ConversationExtra conversationExtra : response) {
+                        if (conversationExtra.conversation != null && !conversationExtra.conversation.type.equals("EMAIL")){
+                            filteredConversationExtras.add(conversationExtra);
+                        }
+                    }
+                    conversations = filteredConversationExtras;
                 }
 
                 conversationsCallback.onResponse(response);

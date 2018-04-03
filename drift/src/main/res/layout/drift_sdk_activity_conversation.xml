@@ -98,7 +98,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_send_message_button"
+                android:src="@drawable/drift_sdk_ic_send_message_button"
                 android:visibility="gone"
                 android:background="@color/drift_sdk_red"/>
 

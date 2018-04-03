@@ -143,7 +143,7 @@ public class SocketManager {
                     case "MESSAGE":
                         Message message = gson.fromJson(data, Message.class);
 
-                        if (message != null && message.contentType.equals("CHAT") && message.authorType.equals("USER")) {
+                        if (message != null && message.contentType.equals("CHAT")) {
                             LoggerHelper.logMessage(TAG, "Received new Message");
                             PresentationManager.getInstance().didReceiveNewMessage(message);
                         }
