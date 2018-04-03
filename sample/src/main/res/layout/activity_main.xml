@@ -25,7 +25,7 @@
         android:id="@+id/drift_sdk_main_activity_show_conversations"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Show Conversations"
+        android:text="@string/drift_sdk_show_conversations"
         android:layout_gravity="center" />
 
 </android.support.design.widget.CoordinatorLayout>

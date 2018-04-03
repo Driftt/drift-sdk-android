@@ -4,4 +4,16 @@
     <string name="failed_to_load_conversations">Failed to load conversations</string>
     <string name="error_title">Error</string>
     <string name="retry">Retry</string>
+    <string name="drift_sdk_create">Create</string>
+    <string name="drift_sdk_download">Download</string>
+    <string name="drift_sdk_no_network_connection">No network connection</string>
+    <string name="drift_sdk_were_powered_by_drift">We\'re ⚡️ by Drift</string>
+    <string name="drift_sdk_reply">Reply</string>
+    <string name="drift_sdk_schedule">Schedule</string>
+    <string name="drift_sdk_meeting_powered_by_drift">Meeting ⚡️ by Drift</string>
+    <string name="drift_sdk_connection_error">Connection Error</string>
+    <string name="drift_sdk_you_have_no_conversations_lets_talk">You have no conversations\n\nLets talk!</string>
+    <string name="drift_sdk_new_conversation">New Conversation</string>
+    <string name="drift_sdk_dismiss">Dismiss</string>
+    <string name="drift_sdk_open">Open</string>
 </resources>

@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/drift_sdk_image_attachment_download"
-        android:title="Download"
+        android:title="@string/drift_sdk_download"
         app:showAsAction="never"/>
 
 
