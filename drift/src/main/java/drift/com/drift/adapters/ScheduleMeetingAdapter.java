@@ -25,7 +25,7 @@ public class ScheduleMeetingAdapter extends RecyclerView.Adapter<ScheduleMeeting
 
     public enum SelectionType {
         DAY,
-        TIME;
+        TIME
     }
 
     public Date getItemAt(int position){

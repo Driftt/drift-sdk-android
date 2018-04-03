@@ -59,7 +59,7 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
     enum ScheduleMeetingState {
         DAY,
         TIME,
-        CONFIRM;
+        CONFIRM
     }
 
     ScheduleMeetingState scheduleMeetingState = ScheduleMeetingState.DAY;

@@ -12,7 +12,6 @@ import java.util.HashMap;
 
 import drift.com.drift.api.APIManager;
 import drift.com.drift.helpers.LoggerHelper;
-import drift.com.drift.model.Conversation;
 import drift.com.drift.model.Message;
 import drift.com.drift.model.MessageRequest;
 import retrofit2.Call;

@@ -3,10 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/drift/drift.iml" filepath="$PROJECT_DIR$/drift/drift.iml" />
-      <module fileurl="file://$PROJECT_DIR$/drift/drift.iml" filepath="$PROJECT_DIR$/drift/drift.iml" />
       <module fileurl="file://$PROJECT_DIR$/drift-sdk-android.iml" filepath="$PROJECT_DIR$/drift-sdk-android.iml" />
-      <module fileurl="file://$PROJECT_DIR$/drift-sdk-android.iml" filepath="$PROJECT_DIR$/drift-sdk-android.iml" />
-      <module fileurl="file://$PROJECT_DIR$/sample/sample.iml" filepath="$PROJECT_DIR$/sample/sample.iml" />
       <module fileurl="file://$PROJECT_DIR$/sample/sample.iml" filepath="$PROJECT_DIR$/sample/sample.iml" />
     </modules>
   </component>

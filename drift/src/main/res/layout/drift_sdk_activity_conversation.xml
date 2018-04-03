@@ -85,6 +85,7 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:paddingStart="20dp"
+                android:paddingEnd="20dp"
                 android:textSize="14sp"
                 android:inputType="textCapSentences"
                 android:imeActionLabel="Send"

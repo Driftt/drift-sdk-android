@@ -3,14 +3,10 @@ package drift.com.drift.managers;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import drift.com.drift.api.APIManager;
 import drift.com.drift.model.User;
 import drift.com.drift.wrappers.APICallbackWrapper;
 import drift.com.drift.wrappers.UserManagerCallback;
 import drift.com.drift.wrappers.UserManagerWrapper;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by eoin on 04/08/2017.
