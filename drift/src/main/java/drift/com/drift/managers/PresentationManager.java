@@ -187,10 +187,10 @@ public class PresentationManager {
             //We need to get the instance of the LayoutInflater, use the context of this activity
             LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             //Inflate the view from a predefined XML layout
-            View layout = inflater.inflate(drift.com.drift.R.layout.drift_sdk_new_message_view, null);
+            View layout = inflater.inflate(R.layout.drift_sdk_new_message_view, null);
 
 
-            Button closeButton = layout.findViewById(drift.com.drift.R.id.drift_sdk_new_message_close_button);
+            Button closeButton = layout.findViewById(R.id.drift_sdk_new_message_close_button);
             Button openButton = layout.findViewById(R.id.drift_sdk_new_message_open_button);
 
             TextView titleTextView = layout.findViewById(R.id.drift_sdk_new_message_title_text_view);
