@@ -206,7 +206,6 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
-        layoutManager.setAutoMeasureEnabled(false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this, recyclerView, new ClickListener() {
             @Override

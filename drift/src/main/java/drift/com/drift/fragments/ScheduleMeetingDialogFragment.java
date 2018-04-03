@@ -237,7 +237,7 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
 
                 if (response != null) {
                     userAvailability = response;
-                    headerDurationTextView.setText(String.valueOf(response.slotDuration) + " Mins");
+                    headerDurationTextView.setText(getResources().getString(R.string.drift_sdk_schedule_meeting_minutes, response.slotDuration));
                     changeToState(ScheduleMeetingState.DAY);
                 } else {
                     showAlertForFailedToGetAvailability();
@@ -263,7 +263,7 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
             final long ONE_MINUTE_IN_MILLIS = 60000;
             Date endDate = new Date(date.getTime() + (userAvailability.slotDuration * ONE_MINUTE_IN_MILLIS));
 
-            confirmationTimeTextView.setText(DateHelper.formatDateForScheduleTime(date) + " - " + DateHelper.formatDateForScheduleTime(endDate));
+            confirmationTimeTextView.setText(getString(R.string.drift_sdk_dash_divided_strings, DateHelper.formatDateForScheduleTime(date), DateHelper.formatDateForScheduleTime(endDate)));
 
         } else {
             confirmationTimezoneTextView.setText("");
@@ -286,7 +286,7 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
                 }
                 break;
             case DAY:
-                titleTextView.setText("Select a Day");
+                titleTextView.setText(R.string.drift_sdk_select_a_day);
                 backChevron.setVisibility(View.INVISIBLE);
                 if (userAvailability != null) {
                     adapter.setupForDates(userAvailability.getUniqueDates(), ScheduleMeetingAdapter.SelectionType.DAY);
@@ -295,7 +295,7 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
                 confirmationScrollView.setVisibility(View.GONE);
                 break;
             case TIME:
-                titleTextView.setText("Select a Time");
+                titleTextView.setText(R.string.drift_sdk_select_a_time);
                 backChevron.setVisibility(View.VISIBLE);
                 if (userAvailability != null && selectedDate != null) {
                     adapter.setupForDates(userAvailability.getDatesForDay(selectedDate), ScheduleMeetingAdapter.SelectionType.TIME);

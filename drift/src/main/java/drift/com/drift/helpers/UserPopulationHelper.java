@@ -51,7 +51,7 @@ public class UserPopulationHelper {
         } else {
             //Unknown User
             if (textView != null) {
-                textView.setText("Unknown User");
+                textView.setText(R.string.drift_sdk_unknown_user);
             }
         }
 

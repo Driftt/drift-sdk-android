@@ -31,7 +31,7 @@
                 android:id="@+id/drift_sdk_schedule_meeting_fragment_header_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Schedule a meeting"
+                android:text="@string/drift_sdk_schedule_a_meeting"
                 android:layout_alignParentStart="true"
                 android:layout_toStartOf="@id/drift_sdk_schedule_meeting_fragment_duration_text_view"
                 android:textColor="@color/drift_sdk_white"/>

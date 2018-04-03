@@ -236,7 +236,7 @@ public class PresentationManager {
             String text = message.getFormattedString();
 
             if (text == null || text.isEmpty() || text.trim().isEmpty()){
-                subtitleTextView.setText(new String(Character.toChars(0x1F4CE))  + " [Attachment]");
+                subtitleTextView.setText(R.string.drift_sdk_attachment_text);
             } else {
                 subtitleTextView.setText(Html.fromHtml(text));
             }
