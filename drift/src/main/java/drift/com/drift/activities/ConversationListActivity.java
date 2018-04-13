@@ -108,16 +108,22 @@ public class ConversationListActivity extends DriftActivity {
         DrawableCompat.setTint(backgroundDrawable, ColorHelper.getBackgroundColor());
 
 
-        emptyState.setVisibility(View.GONE);
-
         conversationListAdapter = new ConversationListAdapter(this, ConversationManager.getInstance().getConversations());
         conversationRecyclerView.setAdapter(conversationListAdapter);
 
         if (conversationListAdapter.getItemCount() == 0) {
-            Toast.makeText(getApplicationContext(), R.string.no_conversations_found, Toast.LENGTH_LONG).show();
+            if (ConversationManager.getInstance().isApiCallComplete()) {
+                emptyState.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+            } else {
+                progressBar.setVisibility(View.VISIBLE);
+                emptyState.setVisibility(View.GONE);
+            }
+        } else {
+            progressBar.setVisibility(View.GONE);
+            emptyState.setVisibility(View.GONE);
         }
 
-        progressBar.setVisibility(View.GONE);
     }
 
     @Override

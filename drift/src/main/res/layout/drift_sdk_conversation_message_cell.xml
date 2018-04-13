@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -81,7 +82,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/drift_sdk_attachment_placeholder"/>
+                android:background="@drawable/drift_sdk_attachment_placeholder"
+                android:scaleType="center"
+                />
 
 
             <HorizontalScrollView
@@ -108,5 +111,62 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/drift_sdk_conversation_message_cell_schedule_meeting_relative_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/meeting_view_background"
+        android:layout_margin="10dp">
+
+        <ImageView
+            android:id="@+id/drift_sdk_conversation_message_cell_meeting_view_user_image_view"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_alignParentStart="true"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/drift_sdk_ic_meeting_icon"
+            android:layout_toEndOf="@id/drift_sdk_conversation_message_cell_meeting_view_user_image_view"
+            android:layout_below="@id/drift_sdk_conversation_message_cell_meeting_view_user_image_view"
+            android:layout_marginStart="-10dp"
+            android:layout_marginTop="-7dp"
+            />
+
+        <TextView
+            android:id="@+id/drift_sdk_conversation_message_cell_meeting_view_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Schedule a Meeting with Jay Pritchet"
+            android:layout_toEndOf="@id/drift_sdk_conversation_message_cell_meeting_view_user_image_view"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/drift_sdk_black"
+            android:textSize="12sp"
+            />
+
+        <Button
+            android:id="@+id/drift_sdk_conversation_message_cell_meeting_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/drift_sdk_schedule"
+            android:textAllCaps="false"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/drift_sdk_conversation_message_cell_meeting_view_user_image_view"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
+            />
+
+    </RelativeLayout>
 
 </LinearLayout>

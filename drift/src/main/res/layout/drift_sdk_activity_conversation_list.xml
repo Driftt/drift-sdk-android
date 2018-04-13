@@ -31,7 +31,7 @@
                 android:id="@+id/drift_sdk_conversation_list_load_page_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Connection Error"
+                android:text="@string/drift_sdk_connection_error"
                 android:background="@color/drift_sdk_red"
                 android:textColor="@color/drift_sdk_white"
 
@@ -64,7 +64,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="You have no conversations \n\nLet's talk!"
+            android:text="@string/drift_sdk_you_have_no_conversations_lets_talk"
             android:gravity="center"
             android:layout_gravity="center"
             />
@@ -75,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAllCaps="false"
-            android:text="New Conversation"
+            android:text="@string/drift_sdk_new_conversation"
             android:layout_gravity="center"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"

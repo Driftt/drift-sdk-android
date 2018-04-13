@@ -26,12 +26,12 @@ public class UserPopulationHelper {
         if (user != null) {
 
             if (textView != null) {
-                textView.setText(user.name);
+                textView.setText(user.getUserName());
             }
 
             if (user.bot) {
                 ignoreUri = true;
-                Drawable placeholderDrawable = AppCompatResources.getDrawable(context, R.drawable.robot);
+                Drawable placeholderDrawable = AppCompatResources.getDrawable(context, R.drawable.drift_sdk_robot);
                 Drawable backgroundDrawable = AppCompatResources.getDrawable(context, R.drawable.drift_sdk_bot_background);
 
                 DrawableCompat.setTint(backgroundDrawable, ColorHelper.getBackgroundColor());
@@ -51,7 +51,7 @@ public class UserPopulationHelper {
         } else {
             //Unknown User
             if (textView != null) {
-                textView.setText("Unknown User");
+                textView.setText(R.string.drift_sdk_unknown_user);
             }
         }
 
@@ -59,7 +59,7 @@ public class UserPopulationHelper {
 
             RequestOptions requestOptions = new RequestOptions()
                     .circleCrop()
-                    .placeholder(R.drawable.placeholder);
+                    .placeholder(R.drawable.drift_sdk_placeholder);
 
 
             Glide.with(context)

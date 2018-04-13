@@ -2,11 +2,8 @@ package drift.com.drift.model;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.text.Editable;
-import android.text.Html;
-import android.text.SpannableStringBuilder;
-import android.text.util.Linkify;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -23,19 +20,31 @@ import drift.com.drift.helpers.TextHelper;
 
 public class MessageRequest {
 
-
+    @Expose
     @SerializedName("body")
     public String body;
+    @Expose
     @SerializedName("type")
     public String type = "CHAT";
+    @Expose
     @SerializedName("authorId")
     public int authorId;
+    @Expose
     @SerializedName("attachments")
     public List<Integer> attachments;
-
+    @Expose
     @SerializedName("context")
     public ConversationContext conversationContext;
+    @Expose
+    @SerializedName("attributes")
+    MessageRequestAttributes attributes;
 
+
+    public MessageRequest(GoogleMeeting googleMeeting, UserAvailability userAvailability, int meetingUserId, int conversationId, Date timeSlot){
+        this.body = "";
+        this.type = "CHAT";
+        attributes = new MessageRequestAttributes(googleMeeting, userAvailability, meetingUserId, conversationId, timeSlot);
+    }
 
     public MessageRequest(String body, int authorId, @Nullable Integer attachmentId, Context context){
 

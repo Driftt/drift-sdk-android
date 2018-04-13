@@ -87,7 +87,7 @@ public class ConversationListAdapter extends RecyclerView.Adapter<ConversationLi
             Conversation conversation = conversationExtra.conversation;
 
             if (conversation.preview == null || conversation.preview.isEmpty() || conversation.preview.trim().isEmpty()){
-                conversationPreviewTextView.setText(new String(Character.toChars(0x1F4CE))  + " [Attachment]");
+                conversationPreviewTextView.setText(R.string.drift_sdk_attachment_text);
             } else {
                 String preview = conversation.preview;
                 conversationPreviewTextView.setText(preview);
@@ -106,7 +106,7 @@ public class ConversationListAdapter extends RecyclerView.Adapter<ConversationLi
 
             if (conversationExtra.lastMessage != null) {
                 if (conversationExtra.lastMessage.isMessageFromEndUser()) {
-                    userNameTextView.setText("You");
+                    userNameTextView.setText(R.string.drift_sdk_you);
                 } else {
 
                     User user = UserManager.getInstance().userMap.get(conversationExtra.lastMessage.authorId);
@@ -120,7 +120,7 @@ public class ConversationListAdapter extends RecyclerView.Adapter<ConversationLi
                 unreadCountTextView.setVisibility(View.GONE);
             }else{
                 if (conversationExtra.unreadMessages > 100) {
-                    unreadCountTextView.setText("99+");
+                    unreadCountTextView.setText(R.string.drift_sdk_99_plus);
                 } else {
                     unreadCountTextView.setText(String.valueOf(conversationExtra.unreadMessages));
                 }

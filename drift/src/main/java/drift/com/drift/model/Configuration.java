@@ -3,6 +3,7 @@ package drift.com.drift.model;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import org.joda.time.DateTime;
@@ -15,8 +16,6 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.TimeZone;
 
-import drift.com.drift.helpers.UserPopulationHelper;
-
 /**
  * Created by eoin on 28/07/2017.
  */
@@ -26,39 +25,43 @@ public class Configuration {
     public enum WidgetStatus {ON, AWAY}
     public enum WidgetMode{ MANUAL, AUTO}
 
-
+    @Expose
     @SerializedName("inboxId")
     public Integer inboxId;
 
+    @Expose
     @SerializedName("refreshRate")
     public Integer refreshRate;
 
-    @SerializedName("inboxEmailAddress")
-    public String inboxEmailAddress;
-
+    @Expose
     @SerializedName("authClientId")
     public String authClientId;
+
+    @Expose
     @SerializedName("redirectUri")
     public String redirectUri;
-    @SerializedName("organizationName")
-    public String organizationName;
-    @SerializedName("organizationUrl")
-    public Object organizationUrl;
+
+    @Expose
     @SerializedName("theme")
     public Theme theme;
-    @SerializedName("chatEnabled")
-    public Boolean chatEnabled;
-    @SerializedName("leadChatEnabled")
-    public Boolean leadChatEnabled;
+
+    @Expose
     @SerializedName("enabled")
     public Boolean enabled;
+
+    @Expose
     @SerializedName("widgetStatus")
     public String widgetStatus;
+
+    @Expose
     @SerializedName("widgetMode")
     public String widgetMode;
+
+    @Expose
     @SerializedName("showBranding")
     public Boolean showBranding;
 
+    @Expose
     @SerializedName("team")
     public ArrayList<User> team;
 

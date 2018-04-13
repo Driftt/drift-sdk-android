@@ -4,6 +4,7 @@ import drift.com.drift.managers.AttachmentManager;
 import drift.com.drift.managers.ConversationManager;
 import drift.com.drift.managers.MessageManager;
 import drift.com.drift.managers.PresentationManager;
+import drift.com.drift.managers.SocketManager;
 import drift.com.drift.managers.UserManager;
 import drift.com.drift.model.Auth;
 import drift.com.drift.model.Embed;
@@ -17,5 +18,6 @@ public class LogoutHelper {
         AttachmentManager.getInstance().clearCache();
         Auth.deleteAuth();
         Embed.deleteEmbed();
+        SocketManager.getInstance().disconnect();
     }
 }

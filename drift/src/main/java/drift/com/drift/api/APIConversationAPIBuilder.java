@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import drift.com.drift.model.Attachment;
-import drift.com.drift.model.Conversation;
 import drift.com.drift.model.ConversationExtra;
 import drift.com.drift.model.Message;
 
@@ -24,22 +23,12 @@ import retrofit2.http.QueryMap;
 
 public interface APIConversationAPIBuilder {
 
-
-    @GET("conversations/{conversationId}")
-    Call<Conversation> getConversation(@Path("conversationId") Integer converationId);
-
     @GET("conversations/{conversationId}/messages")
     Call<ArrayList<Message>> getMessages(@Path("conversationId") Integer conversationId);
 
     @GET("attachments")
     Call<ArrayList<Attachment>> getAttachments(@Query("id") List<Integer> attachmentIds, @QueryMap Map<String, Object> imgixOptions);
 
-//    @POST("conversations/{conversationId}/messages")
-//    Call<Message> postMessage(@Path("conversationId") Integer conversationId, @Body MessageRequest messageRequest);
-//
-//    @Multipart
-//    @POST("attachments")
-//    Call<Attachment> uploadAttachment(@Part("conversationId") RequestBody description, @Part MultipartBody.Part file);
 
     @GET("conversations/end_users/{endUserId}/extra")
     Call<ArrayList<ConversationExtra>> getConversationsForEndUser(@Path("endUserId") int endUserId);
@@ -48,7 +37,7 @@ public interface APIConversationAPIBuilder {
     Call<Message> postMessage(@Path("conversationId") Integer conversationId, @Body MessageRequest messageRequest);
 
     @POST("messages")
-    Call<Message> createConversation(@Body HashMap<String, String> payload);
+    Call<Message> createConversation(@Body HashMap<String, Object> payload);
 
     @POST("https://conversation2.api.drift.com/messages/{messageId}/read")
     Call<ResponseBody> markMessageAsRead(@Path("messageId") Integer messageId);

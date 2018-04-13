@@ -23,10 +23,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import drift.com.drift.R;
 import drift.com.drift.adapters.ConversationAdapter;
+import drift.com.drift.fragments.ScheduleMeetingDialogFragment;
 import drift.com.drift.helpers.Alert;
 import drift.com.drift.helpers.ClickListener;
 import drift.com.drift.helpers.ColorHelper;
@@ -41,7 +41,6 @@ import drift.com.drift.managers.MessageManager;
 import drift.com.drift.model.Attachment;
 import drift.com.drift.model.Auth;
 import drift.com.drift.model.Configuration;
-import drift.com.drift.model.Conversation;
 import drift.com.drift.model.Embed;
 import drift.com.drift.model.Message;
 import drift.com.drift.model.MessageRequest;
@@ -71,6 +70,8 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
 
     @Nullable
     User userForWelcomeMessage;
+    @Nullable
+    String welcomeMessage;
 
     ProgressBar progressBar;
 
@@ -205,7 +206,6 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
-        layoutManager.setAutoMeasureEnabled(false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this, recyclerView, new ClickListener() {
             @Override
@@ -291,8 +291,10 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
                 Embed embed = Embed.getInstance();
                 if (embed != null && embed.configuration != null){
                     if (embed.configuration.isOrgCurrentlyOpen()) {
+                        welcomeMessage = embed.configuration.theme.welcomeMessage;
                         driftWelcomeMessage.setText(embed.configuration.theme.welcomeMessage);
                     } else {
+                        welcomeMessage = embed.configuration.theme.awayMessage;
                         driftWelcomeMessage.setText(embed.configuration.theme.awayMessage);
                     }
                     updateWelcomeImage(embed.configuration);
@@ -347,7 +349,22 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
 
     public void didReceiveNewMessage(Message message) {
 
-        conversationAdapter.addMessage(recyclerView, message);
+
+        Auth auth = Auth.getInstance();
+        if (auth != null && message.authorId == auth.endUser.id && message.contentType.equals("CHAT") && (message.attributes == null || message.attributes.appointmentInfo == null)&& !message.fakeMessage){
+            LoggerHelper.logMessage(TAG, "Ignoring own message");
+            return;
+        }
+
+
+        int originalCount = conversationAdapter.getItemCount();
+        ArrayList<Message> newMessages = MessageManager.getInstance().addMessageToConversation(conversationId, message);
+        if (newMessages.size() == originalCount + 1 && (message.attributes == null || message.attributes.appointmentInfo == null)) {
+            conversationAdapter.updateDataAddingInOneMessage(newMessages, recyclerView);
+        } else {
+            conversationAdapter.updateData(newMessages);
+        }
+
         MessageReadHelper.markMessageAsReadAlongWithPrevious(message);
     }
 
@@ -396,7 +413,12 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
 
         progressBar.setVisibility(View.VISIBLE);
 
-        MessageManager.getInstance().createConversation(textToSend, new APICallbackWrapper<Message>() {
+        Integer welcomeUserId = null;
+        if (userForWelcomeMessage != null){
+            welcomeUserId = userForWelcomeMessage.id;
+        }
+
+        MessageManager.getInstance().createConversation(textToSend, welcomeMessage, welcomeUserId, new APICallbackWrapper<Message>() {
             @Override
             public void onResponse(Message response) {
 
@@ -409,6 +431,7 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
                     message.sendStatus = Message.SendStatus.SENT;
                     conversationAdapter.addMessage(recyclerView, message);
                     updateForConversationType();
+                    refreshData();
                 } else {
                     conversationAdapter.updateData(new ArrayList<Message>());
                     textEntryEditText.setText(textToSend);
@@ -431,5 +454,9 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
 
         LoggerHelper.logMessage(TAG, "Did load attachments: " + attachments.size());
         conversationAdapter.updateForAttachments(attachments);
+    }
+
+    public void didPressScheduleMeetingFor(int userId) {
+        ScheduleMeetingDialogFragment.newInstance(userId, conversationId).show(getSupportFragmentManager(), ScheduleMeetingDialogFragment.class.getSimpleName());
     }
 }

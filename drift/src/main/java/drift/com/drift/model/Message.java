@@ -1,5 +1,6 @@
 package drift.com.drift.model;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -19,46 +20,63 @@ public class Message {
         FAILED
     }
 
+    @Expose
     @SerializedName("id")
     public Integer id;
+    @Expose
     @SerializedName("inboxId")
     public Integer inboxId;
+    @Expose
     @SerializedName("type")
     public String type;
+    @Expose
     @SerializedName("orgId")
     public Integer orgId;
+    @Expose
     @SerializedName("conversationId")
     public Integer conversationId;
+    @Expose
     @SerializedName("authorType")
     public String authorType;
+    @Expose
     @SerializedName("subject")
     public String subject;
+    @Expose
     @SerializedName("body")
     public String body;
+    @Expose
     @SerializedName("uuid")
     public String uuid;
+    @Expose
     @SerializedName("originalHtml")
     public String originalHtml;
+    @Expose
     @SerializedName("originalText")
     public String originalText;
+    @Expose
     @SerializedName("conversationEvent")
     public String conversationEvent;
-
+    @Expose
     @SerializedName("contentType")
     public String contentType;
-
+    @Expose
     @SerializedName("authorId")
     public int authorId = 0;
-
+    @Expose
     @SerializedName("createdAt")
     public Date createdAt;
-
+    @Expose
     @SerializedName("attachments")
     public ArrayList<Integer> attachmentIds;
-
+    @Expose
+    @SerializedName("attributes")
+    public MessageAttributes attributes;
 
     String formattedString;
 
+    public boolean preMessage = false;
+
+    public boolean fakeMessage = false;
 
     public SendStatus sendStatus = SendStatus.SENT;
 

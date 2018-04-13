@@ -19,7 +19,7 @@
             android:id="@+id/drift_sdk_conversation_activity_status_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="No network connection"
+            android:text="@string/drift_sdk_no_network_connection"
             android:background="@color/drift_sdk_red"
             android:textColor="@color/drift_sdk_white"
             android:textSize="12sp"
@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:padding="10dp"
-            android:text="We're ⚡️ by Drift"
+            android:text="@string/drift_sdk_were_powered_by_drift"
             android:textColor="@color/drift_sdk_textColor"
             android:textSize="10sp"
             android:textAlignment="center"
@@ -55,19 +55,20 @@
             android:layout_marginTop="-3dp"
             android:background="@drawable/drift_sdk_conversation_activity_bottom_shadow" />
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:animateLayoutChanges="true">
+            android:animateLayoutChanges="true"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
 
 
             <ImageView
                 android:id="@+id/drift_sdk_conversation_activity_plus_button"
                 android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
                 android:background="@color/drift_sdk_red"
@@ -79,26 +80,27 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Reply"
+                android:hint="@string/drift_sdk_reply"
                 android:gravity="center_vertical"
                 android:background="@color/drift_sdk_transparent"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:paddingStart="20dp"
+                android:paddingEnd="20dp"
                 android:textSize="14sp"
-                android:inputType="textCapSentences"
                 android:imeActionLabel="Send"
                 android:imeOptions="actionSend"
+                android:inputType="textCapSentences|textMultiLine|textAutoComplete"
                 />
 
 
             <ImageView
                 android:id="@+id/drift_sdk_conversation_activity_send_button"
                 android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_send_message_button"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom"
+                android:scaleType="centerInside"
+                android:src="@drawable/drift_sdk_ic_send_message_button"
                 android:visibility="gone"
                 android:background="@color/drift_sdk_red"/>
 

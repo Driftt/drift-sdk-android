@@ -23,12 +23,18 @@ public class ConversationManager {
 
     private int manuallyAddedUnreadMessages = 0;
 
+    private boolean apiCallComplete = false;
+
     public ArrayList<ConversationExtra> getConversations() {
         return conversations;
     }
 
     public void manuallyAddUnreadCount(){
         manuallyAddedUnreadMessages += 1;
+    }
+
+    public boolean isApiCallComplete() {
+        return apiCallComplete;
     }
 
     public int getUnreadCountForUser() {
@@ -46,6 +52,7 @@ public class ConversationManager {
 
     public void clearCache(){
         conversations = new ArrayList<>();
+        apiCallComplete = false;
     }
 
     public void getConversationsForEndUser(int endUserId, final APICallbackWrapper<ArrayList<ConversationExtra>> conversationsCallback) {
@@ -53,9 +60,18 @@ public class ConversationManager {
         ConversationListWrapper.getConversationsForEndUser(endUserId, new APICallbackWrapper<ArrayList<ConversationExtra>>() {
             @Override
             public void onResponse(ArrayList<ConversationExtra> response) {
+                apiCallComplete = true;
                 if (response != null) {
                     manuallyAddedUnreadMessages = 0;
-                    conversations = response;
+
+                    ArrayList<ConversationExtra> filteredConversationExtras = new ArrayList<>();
+
+                    for (ConversationExtra conversationExtra : response) {
+                        if (conversationExtra.conversation != null && !conversationExtra.conversation.type.equals("EMAIL")){
+                            filteredConversationExtras.add(conversationExtra);
+                        }
+                    }
+                    conversations = filteredConversationExtras;
                 }
 
                 conversationsCallback.onResponse(response);

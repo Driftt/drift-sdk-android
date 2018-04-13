@@ -45,40 +45,21 @@ public class APIManager {
 
     public static Gson generateGson(){
 
-//        Type token = new TypeToken<RealmList<RealmInt>>(){}.getType();
-
-        Gson gson = new GsonBuilder()
-//                .setExclusionStrategies(new ExclusionStrategy() {
-//                    @Override
-//                    public boolean shouldSkipField(FieldAttributes f) {
-//                        return f.getDeclaringClass().equals(RealmObject.class);
-//                    }
-//
-//                    @Override
-//                    public boolean shouldSkipClass(Class<?> clazz) {
-//                        return false;
-//                    }
-//                })
+        return new GsonBuilder()
                 .registerTypeAdapter(Date.class, new DriftDateAdapter())
-//                .registerTypeAdapter(token, new IntegerListAdapter())
+                .excludeFieldsWithoutExposeAnnotation()
                 .create();
-        return gson;
     }
 
     private static void setupRestClient() {
 
 
         Gson gson = generateGson();
-//        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-//        if (!BuildConfig.DEBUG) {
-//            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
-//        } else {
-//            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-//        }
+        OkHttpClient baseOkHttpClient = new OkHttpClient();
 
-        OkHttpClient customerClient = new OkHttpClient.Builder()
+
+        OkHttpClient customerClient = baseOkHttpClient.newBuilder()
                 .addInterceptor(new APIAuthTokenInterceptor())
-//                .addInterceptor(new HardAuthInterceptor())
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -89,9 +70,8 @@ public class APIManager {
 
         REST_CUSTOMER_CLIENT = retrofit.create(APICustomerAPIBuilder.class);
 
-        OkHttpClient conversationClient = new OkHttpClient.Builder()
+        OkHttpClient conversationClient = baseOkHttpClient.newBuilder()
                 .addInterceptor(new APIAuthTokenInterceptor())
-//                .addInterceptor(new HardAuthInterceptor())
                 .build();
 
         Retrofit retrofitV2 = new Retrofit.Builder()
@@ -103,7 +83,7 @@ public class APIManager {
         REST_CONVERSATION_CLIENT = retrofitV2.create(APIConversationAPIBuilder.class);
 
 
-        OkHttpClient authlessClient = new OkHttpClient.Builder()
+        OkHttpClient authlessClient = baseOkHttpClient.newBuilder()
                 .build();
 
         Retrofit retrofitV3 = new Retrofit.Builder()

@@ -5,8 +5,8 @@
     <!-- "Mark Favorite", should appear as action button if possible -->
     <item
         android:id="@+id/drift_sdk_create_conversation_action"
-        android:icon="@drawable/ic_action_create"
-        android:title="Create"
+        android:icon="@drawable/drift_sdk_ic_action_create"
+        android:title="@string/drift_sdk_create"
         app:showAsAction="always"/>
 
 

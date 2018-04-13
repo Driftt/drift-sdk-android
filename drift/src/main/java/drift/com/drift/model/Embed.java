@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import drift.com.drift.Drift;
@@ -30,13 +31,15 @@ public class Embed {
         return _embed;
     }
 
+    @Expose
     @SerializedName("id")
     public String id;
 
+    @Expose
     @SerializedName("orgId")
     public Integer orgId;
 
-
+    @Expose
     @SerializedName("configuration")
     public Configuration configuration;
 

@@ -31,7 +31,7 @@ You can then add drift as a dependency in your app build.gradle file
 
 ```
 dependencies {
-	compile 'com.github.driftt:drift-sdk-android:v1.0.7'
+	compile 'com.github.driftt:drift-sdk-android:v1.1.0'
 }
 ```
 

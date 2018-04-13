@@ -1,0 +1,207 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="drift.com.drift.fragments.ScheduleMeetingDialogFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/drift_sdk_schedule_meeting_fragment_header_relative_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/drift_sdk_red"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/drift_sdk_schedule_meeting_fragment_duration_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="30 mins"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:textColor="@color/drift_sdk_white"
+                />
+
+            <TextView
+                android:id="@+id/drift_sdk_schedule_meeting_fragment_header_title_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/drift_sdk_schedule_a_meeting"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@id/drift_sdk_schedule_meeting_fragment_duration_text_view"
+                android:textColor="@color/drift_sdk_white"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/drift_sdk_white"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="20dp">
+
+                <ImageButton
+                    android:id="@+id/drift_sdk_schedule_meeting_fragment_back_chevron"
+                    android:layout_width="30dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/drift_sdk_back_chevron"
+                    android:background="@color/drift_sdk_transparent"
+                    android:layout_marginStart="10dp"
+                    android:scaleType="centerInside"/>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+
+                <ImageView
+                    android:id="@+id/drift_sdk_schedule_meeting_fragment_user_image_view"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"/>
+
+                <TextView
+                    android:id="@+id/drift_sdk_schedule_meeting_fragment_user_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Eoin O'Connell"
+                    android:layout_marginStart="5dp"/>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="40dp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/drift_sdk_schedule_meeting_fragment_title_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Select a Date"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/drift_sdk_black" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/drift_sdk_recycler_view_divider"
+                />
+
+        </LinearLayout>
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:minHeight="300dp"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/drift_sdk_schedule_meeting_fragment_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+            <ScrollView
+                android:id="@+id/drift_sdk_schedule_meeting_fragment_confirmation_scroll_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/drift_sdk_white"
+                    android:orientation="vertical"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    >
+
+
+                    <TextView
+                        android:id="@+id/drift_sdk_schedule_meeting_fragment_confirmation_time_text_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/drift_sdk_black"
+                        tools:text="09:30 - 10:00"
+                        android:gravity="center"
+                        android:layout_marginTop="30dp"/>
+
+                    <TextView
+                        android:id="@+id/drift_sdk_schedule_meeting_fragment_confirmation_date_text_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/drift_sdk_black"
+                        tools:text="09:30 - 10:00"
+                        android:gravity="center"
+                        android:layout_marginTop="15dp"/>
+
+                    <TextView
+                        android:id="@+id/drift_sdk_schedule_meeting_fragment_confirmation_timezone_text_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/drift_sdk_black"
+                        tools:text="09:30 - 10:00"
+                        android:gravity="center"
+                        android:layout_marginTop="15dp"/>
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <Button
+                        android:id="@+id/drift_sdk_schedule_meeting_fragment_confirmation_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/drift_sdk_schedule"
+                        android:textAllCaps="false"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:textColor="@color/drift_sdk_white"
+                        android:background="@drawable/drift_sdk_schedule_meeting_confirmation_button"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginTop="30dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:padding="10dp"
+                        android:text="@string/drift_sdk_meeting_powered_by_drift"
+                        android:textColor="@color/drift_sdk_textColor"
+                        android:textSize="12sp"
+                        android:textAlignment="center"
+                        android:layout_marginBottom="10dp"
+                        />
+
+                </LinearLayout>
+
+            </ScrollView>
+
+            <ProgressBar
+                android:id="@+id/drift_sdk_schedule_meeting_fragment_progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+
+        </FrameLayout>
+    </LinearLayout>
+
+</FrameLayout>
