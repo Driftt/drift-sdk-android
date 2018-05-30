@@ -39,7 +39,7 @@ dependencies {
 
 To get started with the Drift SDK you need the embed ID from your Drift settings page. This can be accessed [here](https://app.drift.com/settings/livechat) by looking after the drift.load method in the Javascript SDK.
 
-For devices running API level 19 you will need to call ```ProviderInstaller.installIfNeeded(this);``` in your initial activity before registering with Drift due to a change in certificates you will . 
+For devices running API level 19 you will need to call ```ProviderInstaller.installIfNeeded(this);``` in your initial activity before registering with Drift due to a change in certificates. 
 
 In your Application `onCreate` method call:
 ```java
