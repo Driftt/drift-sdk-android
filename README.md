@@ -31,7 +31,7 @@ You can then add drift as a dependency in your app build.gradle file
 
 ```
 dependencies {
-	compile 'com.github.driftt:drift-sdk-android:v1.1.0'
+	compile 'com.github.driftt:drift-sdk-android:v1.1.1'
 }
 ```
 
@@ -65,6 +65,12 @@ A user can begin a conversation in response to a campaign or by presenting the c
 
 ```java
 Drift.showConversationActivity();
+```
+
+You can also go directly to create a new conversation using:
+
+```java
+Drift.showCreateConversationActivity();
 ```
 
 That's it. You're good to go!!

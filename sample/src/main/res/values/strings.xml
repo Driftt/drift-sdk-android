@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">drift-sdk-android</string>
     <string name="drift_sdk_show_conversations">Show Conversations</string>
+    <string name="drift_sdk_create_conversation">Create Conversation</string>
 </resources>
