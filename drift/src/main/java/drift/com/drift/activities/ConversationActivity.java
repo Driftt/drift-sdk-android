@@ -111,6 +111,10 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
                 .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
     }
 
+    public static void showCreateConversationFromContext(Context context) {
+        Intent intent = intentForCreateConversation(context);
+        context.startActivity(intent);
+    }
 
     int conversationId = -1;
     int endUserId = -1;

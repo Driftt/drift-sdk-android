@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button conversationButton;
 
+    Button createConversationButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +28,18 @@ public class MainActivity extends AppCompatActivity {
 
 
         conversationButton = findViewById(R.id.drift_sdk_main_activity_show_conversations);
-
+        createConversationButton = findViewById(R.id.drift_sdk_main_activity_create_conversations);
         conversationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Drift.showConversationActivity();
+            }
+        });
+
+        createConversationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Drift.showCreateConversationActivity();
             }
         });
 
