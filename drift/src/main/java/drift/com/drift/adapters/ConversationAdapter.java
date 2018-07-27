@@ -40,6 +40,7 @@ import drift.com.drift.activities.ConversationActivity;
 import drift.com.drift.activities.ImageViewerActivity;
 import drift.com.drift.helpers.ColorHelper;
 import drift.com.drift.helpers.DateHelper;
+import drift.com.drift.helpers.GlideHelper;
 import drift.com.drift.managers.AttachmentManager;
 import drift.com.drift.managers.UserManager;
 import drift.com.drift.model.AppointmentInfo;
@@ -275,16 +276,12 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     if (attachments.size() == 1) {
                         final Attachment attachment = attachments.get(0);
                         if (attachment.isImage()) {
-                            final ArrayList<String> images = new ArrayList<>();
 
                             multipleAttachmentScrollView.setVisibility(View.GONE);
                             singleAttachmentImageView.setVisibility(View.VISIBLE);
 
 
-                            images.add(attachment.generateDownloadURL());   ///Load full image when in viewer
-
                             DisplayMetrics displayMetrics = activity.getResources().getDisplayMetrics();
-
 
                             RequestOptions requestOptions = new RequestOptions()
                                     .centerCrop()
@@ -293,7 +290,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
 
                             Glide.with(activity)
-                                    .load(attachment.getURL())
+                                    .load(GlideHelper.getAttachmentURLForGlide(attachment.getURL()))
                                     .apply(requestOptions)
                                     .into(singleAttachmentImageView);
 

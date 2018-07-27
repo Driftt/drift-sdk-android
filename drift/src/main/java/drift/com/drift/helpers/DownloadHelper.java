@@ -9,6 +9,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import drift.com.drift.model.Attachment;
+import drift.com.drift.model.Auth;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
 
@@ -28,7 +29,7 @@ public class DownloadHelper {
     }
 
     public static void downloadAttachment(Context context, Attachment attachment){
-        final Uri imageUri = Uri.parse(attachment.generateDownloadURL());
+        final Uri imageUri = Uri.parse(attachment.getURL());
 
         downloadUri(context, imageUri, attachment.fileName);
     }
@@ -36,6 +37,12 @@ public class DownloadHelper {
     public static void downloadUri(Context context, Uri uri, String fileName) {
         DownloadManager downloadManager = (DownloadManager)context.getSystemService(DOWNLOAD_SERVICE);
         DownloadManager.Request request = new DownloadManager.Request(uri);
+
+        Auth auth = Auth.getInstance();
+
+        if (auth != null) {
+            request.addRequestHeader("Authorization", "bearer " + auth.getAccessToken());
+        }
 
         request.setTitle(fileName);
 

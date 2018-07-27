@@ -30,10 +30,6 @@ public class Attachment {
     public String mimeType;
 
     @Expose
-    @SerializedName("publicPreviewUrl")
-    public String publicPreviewUrl;
-
-    @Expose
     @SerializedName("size")
     public Integer size;
 
@@ -41,29 +37,11 @@ public class Attachment {
     @SerializedName("createdAt")
     public Date createdAt;
 
-    @Expose
-    @SerializedName("publicId")
-    String publicId;
-
     public boolean isImage(){
         return mimeType.equalsIgnoreCase("image/jpeg") || mimeType.equalsIgnoreCase("image/png") || mimeType.equalsIgnoreCase("image/gif") || mimeType.equalsIgnoreCase("image/jpg");
     }
 
-    public String generateDownloadURL(){
-        return "https://conversation.api.driftt.com/attachments/public/" + publicId +"/data";
+    public String getURL(){
+        return "https://conversation.api.driftt.com/attachments/" + id +"/data";
     }
-
-    public Uri getURL() {
-        if (isImage()) {
-            if (publicPreviewUrl != null) {
-                return Uri.parse(publicPreviewUrl);
-            } else {
-                return Uri.parse(generateDownloadURL());
-            }
-        }else{
-            return Uri.parse(generateDownloadURL());
-        }
-    }
-
-
 }

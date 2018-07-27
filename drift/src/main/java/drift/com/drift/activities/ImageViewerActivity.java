@@ -22,16 +22,17 @@ import com.bumptech.glide.request.target.Target;
 
 import drift.com.drift.R;
 import drift.com.drift.helpers.DownloadHelper;
+import drift.com.drift.helpers.GlideHelper;
 import drift.com.drift.helpers.StatusBarColorizer;
 
 public class ImageViewerActivity extends DriftActivity {
 
     ImageView imageView;
     ProgressBar progressBar;
-    Uri imageUri;
+    String imageUri;
     private static String IMAGE_URI = "DRIFT_IMAGE_URI";
 
-    public static Intent intentForUri(Context context, Uri imageUri) {
+    public static Intent intentForUri(Context context, String imageUri) {
 
         Bundle data = new Bundle();
         data.putString(IMAGE_URI, imageUri.toString());
@@ -60,11 +61,11 @@ public class ImageViewerActivity extends DriftActivity {
                 return;
             }
 
-            imageUri = Uri.parse(imageUriAsString);
+            imageUri = imageUriAsString;
         }
 
         Glide.with(this)
-                .load(imageUri)
+                .load(GlideHelper.getAttachmentURLForGlide(imageUri))
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object o, Target<Drawable> target, boolean b) {
@@ -99,7 +100,7 @@ public class ImageViewerActivity extends DriftActivity {
 
         if (id == R.id.drift_sdk_image_attachment_download) {
 
-            DownloadHelper.downloadUri(this, imageUri, "DriftImageDownload");
+            DownloadHelper.downloadUri(this, Uri.parse(imageUri), "DriftImageDownload");
 
 
             return true;

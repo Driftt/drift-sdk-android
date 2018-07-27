@@ -71,8 +71,6 @@ public class AttachmentView extends LinearLayout {
             public void onClick(View view) {
 
                 if (attachment.isImage()){
-                    ArrayList<String> images = new ArrayList<>();
-                    images.add(attachment.generateDownloadURL());
 
                     Intent intent = ImageViewerActivity.intentForUri(activity, attachment.getURL());
                     activity.startActivity(intent);
@@ -91,21 +89,6 @@ public class AttachmentView extends LinearLayout {
 
                                 }
                             });
-
-
-                    Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-                    sendIntent.setDataAndType(Uri.parse(attachment.generateDownloadURL()), attachment.mimeType);
-                    final Intent chooser = Intent.createChooser(sendIntent, "Open File with");
-                    // Verify the original intent will resolve to at least one activity
-                    if (sendIntent.resolveActivity(getContext().getPackageManager()) != null) {
-
-                        builder.setNegativeButton("Open In", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                getContext().startActivity(chooser);
-                            }
-                        });
-                    }
 
                     builder.create().show();
                 }
