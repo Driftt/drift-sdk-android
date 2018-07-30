@@ -17,7 +17,6 @@ public class LogoutHelper {
         MessageManager.getInstance().clearCache();
         AttachmentManager.getInstance().clearCache();
         Auth.deleteAuth();
-        Embed.deleteEmbed();
         SocketManager.getInstance().disconnect();
     }
 }
