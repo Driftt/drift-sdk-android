@@ -70,7 +70,6 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
 
     @Nullable
     User userForWelcomeMessage;
-    @Nullable
     String welcomeMessage;
 
     ProgressBar progressBar;
@@ -295,11 +294,11 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
                 Embed embed = Embed.getInstance();
                 if (embed != null && embed.configuration != null){
                     if (embed.configuration.isOrgCurrentlyOpen()) {
-                        welcomeMessage = embed.configuration.theme.welcomeMessage;
-                        driftWelcomeMessage.setText(embed.configuration.theme.welcomeMessage);
+                        welcomeMessage = embed.configuration.theme.getWelcomeMessage();
+                        driftWelcomeMessage.setText(embed.configuration.theme.getWelcomeMessage());
                     } else {
-                        welcomeMessage = embed.configuration.theme.awayMessage;
-                        driftWelcomeMessage.setText(embed.configuration.theme.awayMessage);
+                        welcomeMessage = embed.configuration.theme.getAwayMessage();
+                        driftWelcomeMessage.setText(embed.configuration.theme.getAwayMessage());
                     }
                     updateWelcomeImage(embed.configuration);
 

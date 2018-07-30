@@ -5,6 +5,8 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.Nullable;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 import drift.com.drift.activities.ConversationActivity;
 import drift.com.drift.activities.ConversationListActivity;
 import drift.com.drift.helpers.ApplicationLifecycleHelper;
@@ -24,6 +26,8 @@ public class Drift {
 
     public static Drift setupDrift(Application application, String embedId) {
         _drift = new Drift(application);
+
+        JodaTimeAndroid.init(application);
 
         application.registerActivityLifecycleCallbacks(_drift.applicationLifecycleHelper);
         DriftManager.getInstance().getDataFromEmbeds(embedId);

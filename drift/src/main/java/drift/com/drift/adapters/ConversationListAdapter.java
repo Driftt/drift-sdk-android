@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +21,7 @@ import drift.com.drift.helpers.UserPopulationHelper;
 import drift.com.drift.managers.UserManager;
 import drift.com.drift.model.Conversation;
 import drift.com.drift.model.ConversationExtra;
+import drift.com.drift.model.PreMessage;
 import drift.com.drift.model.User;
 
 
@@ -104,15 +107,20 @@ public class ConversationListAdapter extends RecyclerView.Adapter<ConversationLi
             }
 
 
-            if (conversationExtra.lastMessage != null) {
-                if (conversationExtra.lastMessage.isMessageFromEndUser()) {
-                    userNameTextView.setText(R.string.drift_sdk_you);
-                } else {
+            if (conversationExtra.lastAgentMessage != null) {
+                User user = UserManager.getInstance().userMap.get(conversationExtra.lastAgentMessage.authorId);
+                UserPopulationHelper.populateTextAndImageFromUser(context, user, userNameTextView, userImageView);
+            } else if (conversationExtra.lastMessage != null
+                    && conversationExtra.lastMessage.attributes != null
+                    && conversationExtra.lastMessage.attributes.preMessages != null
+                    && !conversationExtra.lastMessage.attributes.preMessages.isEmpty()) {
 
-                    User user = UserManager.getInstance().userMap.get(conversationExtra.lastMessage.authorId);
-                    UserPopulationHelper.populateTextAndImageFromUser(context, user, userNameTextView, userImageView);
-
-                }
+                PreMessage preMessage = conversationExtra.lastMessage.attributes.preMessages.get(0);
+                User user = UserManager.getInstance().userMap.get(preMessage.sender.id);
+                UserPopulationHelper.populateTextAndImageFromUser(context, user, userNameTextView, userImageView);
+            } else {
+                Glide.with(context).clear(userImageView);
+                userNameTextView.setText("");
             }
 
 
