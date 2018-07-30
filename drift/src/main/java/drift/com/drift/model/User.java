@@ -22,7 +22,7 @@ public class User {
     public String avatarUrl;
     @Expose
     @SerializedName("bot")
-    public Boolean bot;
+    public Boolean bot = false;
 
     public String getUserName() {
 

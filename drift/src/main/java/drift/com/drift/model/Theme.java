@@ -1,5 +1,7 @@
 package drift.com.drift.model;
 
+import android.support.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -25,10 +27,10 @@ public class Theme {
     public String textColor;
     @Expose
     @SerializedName("welcomeMessage")
-    public String welcomeMessage;
+    private String welcomeMessage;
     @Expose
     @SerializedName("awayMessage")
-    public String awayMessage;
+    private String awayMessage;
     @Expose
     @SerializedName("userListMode")
     public String userListMode;
@@ -55,4 +57,19 @@ public class Theme {
         }
     }
 
+    @NonNull
+    public String getWelcomeMessage() {
+        if (welcomeMessage == null || welcomeMessage.isEmpty()){
+            return "How can we help out? We are here for you!";
+        }
+        return welcomeMessage;
+    }
+
+    @NonNull
+    public String getAwayMessage() {
+        if (awayMessage == null || awayMessage.isEmpty()) {
+            return "We’re not currently online right now but if you leave a message, we’ll get back to you as soon as possible!";
+        }
+        return awayMessage;
+    }
 }
