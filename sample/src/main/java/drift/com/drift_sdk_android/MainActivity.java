@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        Drift.registerUser("123743810", "eoin+app@8bytes.ie");
+        Drift.registerUser("", "");
         conversationButton = findViewById(R.id.drift_sdk_main_activity_show_conversations);
         createConversationButton = findViewById(R.id.drift_sdk_main_activity_create_conversations);
         conversationButton.setOnClickListener(new View.OnClickListener() {
