@@ -14,4 +14,8 @@ public class SocketAuth {
     @Expose
     @SerializedName("session_token")
     public String sessionToken;
+
+    @Expose
+    @SerializedName("org_id")
+    public int orgId;
 }
