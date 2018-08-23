@@ -1,5 +1,7 @@
 package drift.com.drift.socket;
 
+import android.support.annotation.Nullable;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -49,7 +51,7 @@ public class Socket {
 
         @Override
         public void onMessage(WebSocket webSocket, String text) {
-            LoggerHelper.logMessage(TAG, "WebSocket onOpen: {} " + text);
+//            Log.d(TAG, "WebSocket onOpen: {} " + text);
 
             try {
 
@@ -146,10 +148,10 @@ public class Socket {
     private final LinkedBlockingQueue<RequestBody> sendBuffer = new LinkedBlockingQueue<>();
 
     private final Set<ISocketCloseCallback> socketCloseCallbacks = Collections
-        .newSetFromMap(new HashMap<ISocketCloseCallback, Boolean>());
+            .newSetFromMap(new HashMap<ISocketCloseCallback, Boolean>());
 
     private final Set<ISocketOpenCallback> socketOpenCallbacks = Collections
-        .newSetFromMap(new HashMap<ISocketOpenCallback, Boolean>());
+            .newSetFromMap(new HashMap<ISocketOpenCallback, Boolean>());
 
     private Timer timer = null;
 
@@ -316,20 +318,59 @@ public class Socket {
         }
     }
 
-    public void removeAllChannels() {
+    Channel getChannel(String topic) {
+        for (Channel channel : channels) {
+            if (channel.getTopic().equalsIgnoreCase(topic)) {
+                return channel;
+            }
+        }
+        return null;
+    }
+
+    @Nullable
+    public Channel getChannelOrCreate(String topic) {
         synchronized (channels) {
-            channels.clear();
+            Channel currentChannel = getChannel(topic);
+
+            if (currentChannel != null) {
+                ChannelState state = currentChannel.getState();
+                if (state == ChannelState.JOINED || state == ChannelState.JOINING){
+                    return null;
+                } else {
+                    remove(currentChannel);
+                }
+            } else {
+                LoggerHelper.logMessage("SocketManager", "Channel Null: " + channels.size());
+            }
+
+            LoggerHelper.logMessage("SocketManager", "Channel Will Join: " + topic);
+
+            return chan(topic, null);
+        }
+    }
+
+    public void leaveAllChannels() {
+        synchronized (channels) {
+            try {
+
+                for (Channel channel : channels) {
+                    channel.leave();
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     @Override
     public String toString() {
         return "PhoenixSocket{" +
-            "endpointUri='" + endpointUri + '\'' +
-            ", channels(" + channels.size() + ")=" + channels +
-            ", refNo=" + refNo +
-            ", webSocket=" + webSocket +
-            '}';
+                "endpointUri='" + endpointUri + '\'' +
+                ", channels(" + channels.size() + ")=" + channels +
+                ", refNo=" + refNo +
+                ", webSocket=" + webSocket +
+                '}';
     }
 
     synchronized String makeRef() {
@@ -378,7 +419,12 @@ public class Socket {
                 }
             }
         };
-        timer.schedule(Socket.this.reconnectTimerTask, RECONNECT_INTERVAL_MS);
+        try {
+            timer.schedule(Socket.this.reconnectTimerTask, RECONNECT_INTERVAL_MS);
+        } catch (Throwable t) {
+            LoggerHelper.logMessage(TAG, "Failed to schedule reconnection timer: " + t.getMessage());
+            t.printStackTrace();
+        }
     }
 
     private void startHeartbeatTimer() {

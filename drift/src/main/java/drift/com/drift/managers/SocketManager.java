@@ -59,8 +59,8 @@ public class SocketManager {
             if (socket != null && socket.isConnected()) {
                 socket.disconnect();
             }
-
-            socket = new Socket("wss://chat.api.drift.com/ws/websocket?session_token=" + auth.sessionToken);
+            String url = getSocketURL(auth.orgId, auth.sessionToken);
+            socket = new Socket(url);
 
             socket.onOpen(new ISocketOpenCallback() {
                 @Override
@@ -121,7 +121,7 @@ public class SocketManager {
                 @Override
                 public void onError(final String reason) {
 //                    handleTerminalError(reason);
-                    LoggerHelper.logMessage(TAG, "Socket Error");
+                    LoggerHelper.logMessage(TAG, "Socket Error: " + reason);
 
                 }
             })
@@ -159,6 +159,14 @@ public class SocketManager {
             }
         };
         mainHandler.post(myRunnable);
+    }
+
+    private String getSocketURL(int orgId, String socketAuth) {
+        return "wss://chat.api.drift.com/ws/websocket?session_token=" + socketAuth;
+    }
+
+    private int computeShardId(int orgId){
+        return orgId % 50; //WS_NUM_SHARDS
     }
 
 }

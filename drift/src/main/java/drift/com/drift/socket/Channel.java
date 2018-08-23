@@ -286,5 +286,7 @@ public class Channel {
         this.joinPush.send();
     }
 
-
+    public ChannelState getState() {
+        return state;
+    }
 }
