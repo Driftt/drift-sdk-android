@@ -47,6 +47,12 @@
 -keep class android.support.v7.** { *; }
 -keep interface android.support.v7.** { *; }
 
+# For enumeration classes, see http://proguard.sourceforge.net/manual/examples.html#enumerations
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
 #Joda Lib
 -dontwarn org.joda.convert.**
 -dontwarn org.joda.time.**
