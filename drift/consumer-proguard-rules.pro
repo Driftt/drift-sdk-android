@@ -47,5 +47,12 @@
 -keep class android.support.v7.** { *; }
 -keep interface android.support.v7.** { *; }
 
+#Joda Lib
+-dontwarn org.joda.convert.**
+-dontwarn org.joda.time.**
+-keep class org.joda.time.** { *; }
+-keep interface org.joda.time.** { *; }
+-keep class net.danlew.** { *; }
+
 #Drift Models
 -keep class drift.com.drift.model.** { *; }
