@@ -5,7 +5,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 group = 'com.github.8bytes'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     buildToolsVersion '27.0.3'
 
     lintOptions {
@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -34,17 +34,17 @@ dependencies {
     })
 
 
-
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:recyclerview-v7:27.1.1'
-    implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.android.support:support-v4:28.0.0'
 
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.github.dsrees:JavaPhoenixClient:0.1.3'
 
     implementation 'com.github.bumptech.glide:glide:4.8.0'
 
-    implementation 'net.danlew:android.joda:2.9.9'
+    implementation 'net.danlew:android.joda:2.10.1'
     testImplementation 'junit:junit:4.12'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
 }

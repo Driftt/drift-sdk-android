@@ -6,19 +6,23 @@ import android.os.Looper;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+
+import org.phoenixframework.PhxChannel;
+import org.phoenixframework.PhxMessage;
+import org.phoenixframework.PhxSocket;
+
+import java.util.Map;
 
 import drift.com.drift.api.APIManager;
 import drift.com.drift.helpers.LoggerHelper;
 import drift.com.drift.model.Message;
 import drift.com.drift.model.SocketAuth;
-import drift.com.drift.socket.Channel;
-import drift.com.drift.socket.Envelope;
-import drift.com.drift.socket.IErrorCallback;
-import drift.com.drift.socket.IMessageCallback;
-import drift.com.drift.socket.ISocketCloseCallback;
-import drift.com.drift.socket.ISocketOpenCallback;
-import drift.com.drift.socket.Socket;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function0;
+import kotlin.jvm.functions.Function1;
+import kotlin.jvm.functions.Function2;
+import okhttp3.OkHttpClient;
+import okhttp3.Response;
 
 
 /**
@@ -33,8 +37,8 @@ public class SocketManager {
 
     private final Gson gson = APIManager.generateGson();
 
-    private Socket socket;
-    private Channel channel;
+    private PhxSocket socket;
+    private PhxChannel channel;
 
     public static SocketManager getInstance() {
         return _socketManager;
@@ -60,79 +64,112 @@ public class SocketManager {
                 socket.disconnect();
             }
             String url = getSocketURL(auth.orgId, auth.sessionToken);
-            socket = new Socket(url);
+            socket = new PhxSocket(url, null, new OkHttpClient());
 
-            socket.onOpen(new ISocketOpenCallback() {
+            socket.onOpen(new Function0<Unit>() {
                 @Override
-                public void onOpen() {
+                public Unit invoke() {
+
                     LoggerHelper.logMessage(TAG, "Connected");
-                    channel = socket.chan("user:" + auth.userId, null);
+                    channel = socket.channel("user:" + auth.userId, null);
 
-                    try {
-                        channel.join().receive("ok", new IMessageCallback() {
-                            @Override
-                            public void onMessage(final Envelope envelope) {
-                                LoggerHelper.logMessage(TAG, "You have joined '" + envelope.getEvent() + "'");
-                            }
-                        });
-                        channel.on("change", new IMessageCallback() {
-                            @Override
-                            public void onMessage(final Envelope envelope) {
 
-                                LoggerHelper.logMessage(TAG, envelope.getEvent());
 
-                                if (envelope.getPayload().isJsonObject()) {
-                                    JsonObject payload = envelope.getPayload().getAsJsonObject();
-                                    JsonElement bodyElement = payload.get("body");
-                                    if (bodyElement.isJsonObject()) {
-                                        JsonObject body = bodyElement.getAsJsonObject();
-                                        JsonElement objectElement = body.get("object");
-                                        if (objectElement.isJsonObject()) {
-                                            JsonObject object = objectElement.getAsJsonObject();
-                                            JsonElement typeElement = object.get("type");
-                                            String type = typeElement.getAsString();
+                    channel.on("change", new Function1<PhxMessage, Unit>() {
+                        @Override
+                        public Unit invoke(PhxMessage phxMessage) {
 
-                                            JsonElement dataElement = body.get("data");
-                                            if (dataElement.isJsonObject()) {
-                                                JsonObject data = dataElement.getAsJsonObject();
-                                                processEnvelopeData(type, data);
-                                                return;
+                            LoggerHelper.logMessage(TAG, phxMessage.getEvent());
+
+                            LoggerHelper.logMessage(TAG, phxMessage.getPayload().toString());
+
+                            if (phxMessage.getPayload().containsKey("body")){
+
+                                Object body = phxMessage.getPayload().get("body");
+                                LoggerHelper.logMessage(TAG, "Body " + body.toString());
+
+                                if (body instanceof Map<?, ?>){
+
+                                    if (((Map) body).containsKey("object")){
+
+                                        Object object = ((Map) body).get("object");
+                                        LoggerHelper.logMessage(TAG, "Object " + object.toString());
+                                        if (object instanceof Map<?, ?>) {
+
+                                            if (((Map) object).containsKey("type") && ((Map) body).containsKey("data")) {
+                                                Object type = ((Map) object).get("type");
+                                                Object data = ((Map) body).get("data");
+
+
+                                                LoggerHelper.logMessage(TAG, "Type " + type.toString());
+                                                LoggerHelper.logMessage(TAG, "Data " + data.toString());
+                                                if (type instanceof String && data instanceof Map<?,?>){
+
+                                                    processEnvelopeData((String) type, (Map) data);
+                                                    return Unit.INSTANCE;
+                                                }
+
                                             }
                                         }
                                     }
+
+
                                 }
 
-                                LoggerHelper.logMessage(TAG, "Failed to parse envelope! " + envelope.getPayload());
+
+
                             }
-                        });
-                    } catch (Exception e) {
-                        LoggerHelper.logMessage(TAG, "Failed to join channel ");
-                    }
 
+                            LoggerHelper.logMessage(TAG, "Failed to parse envelope! " + phxMessage.getPayload());
+
+                            return Unit.INSTANCE;
+                        }
+                    });
+
+
+                    channel.join(null, null)
+                    .receive("ok", new Function1<PhxMessage, Unit>() {
+                        @Override
+                        public Unit invoke(PhxMessage phxMessage) {
+                            LoggerHelper.logMessage(TAG, "You have joined '" + phxMessage.getEvent() + "'");
+
+                            return Unit.INSTANCE;
+                        }
+                    });
+
+                    return Unit.INSTANCE;
                 }
-            })
-            .onClose(new ISocketCloseCallback() {
+            });
+
+            socket.onClose(new Function0<Unit>() {
                 @Override
-                public void onClose() {
+                public Unit invoke() {
                     LoggerHelper.logMessage(TAG, "Closed Socket");
+                    return Unit.INSTANCE;
                 }
-            })
-            .onError(new IErrorCallback() {
-                @Override
-                public void onError(final String reason) {
-//                    handleTerminalError(reason);
-                    LoggerHelper.logMessage(TAG, "Socket Error: " + reason);
+            });
 
+
+            socket.onError(new Function2<Throwable, Response, Unit>() {
+                @Override
+                public Unit invoke(Throwable throwable, Response response) {
+                    throwable.printStackTrace();
+                    LoggerHelper.logMessage(TAG, "Socket Error: " + response);
+
+
+                    return Unit.INSTANCE;
                 }
-            })
-            .connect();
+            });
+
+            socket.connect();
+
 
         } catch (Exception e) {
             LoggerHelper.logMessage(TAG, "Failed to connect");
         }
     }
 
-    private void processEnvelopeData(final String type, final JsonObject data) {
+    private void processEnvelopeData(final String type, final Map<String, Object> data) {
 
 
         Handler mainHandler = new Handler(Looper.getMainLooper());
@@ -143,7 +180,9 @@ public class SocketManager {
 
                 switch (type) {
                     case "MESSAGE":
-                        Message message = gson.fromJson(data, Message.class);
+                        JsonElement jsonData = gson.toJsonTree(data);
+
+                        Message message = gson.fromJson(jsonData, Message.class);
 
                         if (message != null && message.contentType.equals("CHAT")) {
                             LoggerHelper.logMessage(TAG, "Received new Message");
@@ -162,10 +201,10 @@ public class SocketManager {
     }
 
     private String getSocketURL(int orgId, String socketAuth) {
-        return "wss://chat.api.drift.com/ws/websocket?session_token=" + socketAuth;
+        return "wss://" + String.valueOf(orgId) + "-" + String.valueOf(computeShardId(orgId)) + ".chat.api.drift.com/ws/websocket?session_token=" + socketAuth;
     }
 
-    private int computeShardId(int orgId){
+    private static int computeShardId(int orgId){
         return orgId % 50; //WS_NUM_SHARDS
     }
 

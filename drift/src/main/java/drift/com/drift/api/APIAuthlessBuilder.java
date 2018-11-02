@@ -20,7 +20,7 @@ public interface APIAuthlessBuilder {
     @POST("https://event.api.drift.com/identify")
     Call<IdentifyResponse> postIdentify(@Body HashMap<String, Object> json);
 
-    @POST("https://chat.api.drift.com/api/auth")
-    Call<SocketAuth> postSocketAuth(@Body HashMap<String, Object> json);
+    @POST("https://{orgId}-{shardId}.chat.api.drift.com/api/auth")
+    Call<SocketAuth> postSocketAuth(@Path("orgId") int orgId, @Path("shardId") int shardId, @Body HashMap<String, Object> json);
 
 }

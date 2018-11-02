@@ -76,7 +76,7 @@ public class DriftManager {
         });
     }
 
-    private void getAuth(Embed embed, IdentifyResponse identifyResponse, String email) {
+    private void getAuth(final Embed embed, IdentifyResponse identifyResponse, String email) {
 
         DriftManagerWrapper.getAuth(identifyResponse.orgId, identifyResponse.userId, email, embed.configuration.redirectUri, embed.configuration.authClientId, new APICallbackWrapper<Auth>() {
             @Override
@@ -84,14 +84,14 @@ public class DriftManager {
                 if (response != null) {
                     response.saveAuth();
                     LoggerHelper.logMessage(TAG, response.toString());
-                    getSocketAuth(response.getAccessToken());
+                    getSocketAuth(embed.orgId, response.getAccessToken());
                 }
             }
         });
     }
 
-    private void getSocketAuth(String accessToken) {
-        DriftManagerWrapper.getSocketAuth(accessToken, new APICallbackWrapper<SocketAuth>() {
+    private void getSocketAuth(int orgId, String accessToken) {
+        DriftManagerWrapper.getSocketAuth(orgId, accessToken, new APICallbackWrapper<SocketAuth>() {
             @Override
             public void onResponse(SocketAuth response) {
                 if (response != null) {

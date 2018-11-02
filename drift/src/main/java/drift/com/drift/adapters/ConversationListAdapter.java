@@ -90,7 +90,7 @@ public class ConversationListAdapter extends RecyclerView.Adapter<ConversationLi
             Conversation conversation = conversationExtra.conversation;
 
             if (conversation.preview == null || conversation.preview.isEmpty() || conversation.preview.trim().isEmpty()){
-                conversationPreviewTextView.setText(R.string.drift_sdk_attachment_text);
+                conversationPreviewTextView.setText(new String(Character.toChars(0x1F4CE)) + " [Attachment]");
             } else {
                 String preview = conversation.preview;
                 conversationPreviewTextView.setText(preview);
