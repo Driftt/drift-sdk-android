@@ -3,6 +3,7 @@ package drift.com.drift.wrappers;
 import java.util.HashMap;
 
 import drift.com.drift.api.APIManager;
+import drift.com.drift.managers.SocketManager;
 import drift.com.drift.model.Auth;
 import drift.com.drift.model.Embed;
 import drift.com.drift.model.IdentifyResponse;
@@ -97,13 +98,13 @@ public class DriftManagerWrapper {
         });
     }
 
-    public static void getSocketAuth(String accessToken, final APICallbackWrapper<SocketAuth> callback){
+    public static void getSocketAuth(int orgId, String accessToken, final APICallbackWrapper<SocketAuth> callback){
 
         HashMap<String, Object> jsonPayload = new HashMap<>();
 
         jsonPayload.put("access_token", accessToken);
 
-        APIManager.getAuthlessClient().postSocketAuth(jsonPayload).enqueue(new Callback<SocketAuth>() {
+        APIManager.getAuthlessClient().postSocketAuth(orgId, computeShardId(orgId), jsonPayload).enqueue(new Callback<SocketAuth>() {
             @Override
             public void onResponse(Call<SocketAuth> call, Response<SocketAuth> response) {
                 if((response.code() != 200 && response.code() != 201) || response.body() == null) {
@@ -119,5 +120,10 @@ public class DriftManagerWrapper {
             }
         });
     }
+
+    private static int computeShardId(int orgId){
+        return orgId % 50; //WS_NUM_SHARDS
+    }
+
 
 }
