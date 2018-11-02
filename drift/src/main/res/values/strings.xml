@@ -28,7 +28,6 @@
 
     <string name="drift_sdk_schedule_meeting_minutes">%d Mins</string>
     <string name="drift_sdk_dash_divided_strings">%s - %s</string>
-    <string name="drift_sdk_attachment_text">📎 [Attachment]</string>
     <string name="drift_sdk_scheduling_meeting_with">Scheduling a Meeting with %s</string>
     <string name="drift_sdk_scheduled_meeting_with">Scheduled a Meeting with %s</string>
 

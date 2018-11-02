@@ -29,8 +29,12 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     implementation project(":drift")
+    implementation 'com.google.android.gms:play-services-base:16.0.1'
 
     implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.android.support:animated-vector-drawable:28.0.0'
+    implementation 'com.android.support:support-media-compat:28.0.0'
     implementation 'com.android.support:design:28.0.0'
     testImplementation 'junit:junit:4.12'
 }
