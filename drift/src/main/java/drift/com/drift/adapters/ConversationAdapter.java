@@ -42,9 +42,12 @@ import drift.com.drift.helpers.ColorHelper;
 import drift.com.drift.helpers.DateHelper;
 import drift.com.drift.helpers.GlideHelper;
 import drift.com.drift.managers.AttachmentManager;
+import drift.com.drift.managers.DriftManager;
 import drift.com.drift.managers.UserManager;
 import drift.com.drift.model.AppointmentInfo;
 import drift.com.drift.model.Attachment;
+import drift.com.drift.model.Auth;
+import drift.com.drift.model.EndUser;
 import drift.com.drift.model.Message;
 import drift.com.drift.model.MessageAttributes;
 import drift.com.drift.model.User;
@@ -396,7 +399,28 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             Boolean ignoreUri = false;
 
             if (message.isMessageFromEndUser()){
-                userTextView.setText(R.string.drift_sdk_you);
+
+                Auth auth = Auth.getInstance();
+                if (auth != null && auth.endUser != null) {
+                    EndUser endUser = auth.endUser;
+
+                    if (endUser.name != null && !endUser.name.isEmpty()) {
+                        userTextView.setText(endUser.name);
+                    } else if (endUser.email != null && !endUser.email.isEmpty()) {
+                        userTextView.setText(endUser.email);
+                    } else {
+                        userTextView.setText(R.string.drift_sdk_you);
+                    }
+                    if (endUser.avatarUrl != null) {
+                        uriToLoad = Uri.parse(endUser.avatarUrl);
+                    }
+
+                } else {
+                    userTextView.setText(R.string.drift_sdk_you);
+                }
+
+
+
             } else if (user != null) {
                 userTextView.setText(user.getUserName());
 
