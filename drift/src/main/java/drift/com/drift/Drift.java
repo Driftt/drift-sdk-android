@@ -10,6 +10,7 @@ import net.danlew.android.joda.JodaTimeAndroid;
 import drift.com.drift.activities.ConversationActivity;
 import drift.com.drift.activities.ConversationListActivity;
 import drift.com.drift.helpers.ApplicationLifecycleHelper;
+import drift.com.drift.helpers.LoggerListener;
 import drift.com.drift.helpers.LogoutHelper;
 import drift.com.drift.managers.DriftManager;
 
@@ -17,8 +18,9 @@ public class Drift {
 
     private static Drift _drift = null;
     private Context context;
-    private Boolean debugMode = false;
     private ApplicationLifecycleHelper applicationLifecycleHelper = new ApplicationLifecycleHelper();
+
+    public LoggerListener mLoggerListener;
 
     private Drift(Context context) {
         this.context = context;
@@ -39,10 +41,14 @@ public class Drift {
         DriftManager.getInstance().registerUser(userId, email);
     }
 
-    public static Boolean isDebug() {
-        return _drift.debugMode;
+    public static void setLoggerListener(LoggerListener loggerListener){
+        _drift.mLoggerListener = loggerListener;
     }
 
+    @Nullable
+    public static LoggerListener loggerListener() {
+        return _drift.mLoggerListener;
+    }
 
     public static void showConversationActivity() {
         ConversationListActivity.showFromContext(_drift.context);
