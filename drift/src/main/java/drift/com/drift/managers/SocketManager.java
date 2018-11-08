@@ -66,6 +66,14 @@ public class SocketManager {
             String url = getSocketURL(auth.orgId, auth.sessionToken);
             socket = new PhxSocket(url, null, new OkHttpClient());
 
+            socket.setLogger(new Function1<String, Unit>() {
+                @Override
+                public Unit invoke(String s) {
+                    LoggerHelper.logMessage("Drift Socket", s);
+                    return Unit.INSTANCE;
+                }
+            });
+
             socket.onOpen(new Function0<Unit>() {
                 @Override
                 public Unit invoke() {
