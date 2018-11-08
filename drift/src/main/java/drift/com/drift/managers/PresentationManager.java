@@ -220,13 +220,9 @@ public class PresentationManager {
                 @Override
                 public void onClick(View v) {
 
-                    if (otherMessages != 0) {
-                        Drift.showConversationActivity();
-                    } else {
-                        int conversationId = message.conversationId;
-                        Intent intent = ConversationActivity.intentForConversation(activity, conversationId);
-                        activity.startActivity(intent);
-                    }
+                    int conversationId = message.conversationId;
+                    Intent intent = ConversationActivity.intentForConversation(activity, conversationId);
+                    activity.startActivity(intent);
                     closePopupView();
                 }
             });
