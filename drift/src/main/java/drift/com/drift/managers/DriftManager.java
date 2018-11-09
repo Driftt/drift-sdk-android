@@ -41,7 +41,7 @@ public class DriftManager {
             public void onResponse(Embed response) {
                 if (response != null) {
                     response.saveEmbed();
-                    LoggerHelper.logMessage(TAG, response.configuration.toString());
+                    LoggerHelper.logMessage(TAG, "Get Embed Success");
 
                     if (registerInformation != null) {
                         registerUser(registerInformation.userId, registerInformation.email);
@@ -74,9 +74,10 @@ public class DriftManager {
             @Override
             public void onResponse(IdentifyResponse response) {
                 if ( response != null ) {
-                    LoggerHelper.logMessage(TAG, response.toString());
+                    LoggerHelper.logMessage(TAG, "Identify Complete");
                     getAuth(embed, response, email);
                 } else {
+                    LoggerHelper.logMessage(TAG, "Identify Failed");
                     loadingUser = false;
                 }
             }
@@ -90,9 +91,10 @@ public class DriftManager {
             public void onResponse(Auth response) {
                 if (response != null) {
                     response.saveAuth();
-                    LoggerHelper.logMessage(TAG, response.toString());
+                    LoggerHelper.logMessage(TAG, "Auth Complete");
                     getSocketAuth(embed.orgId, response.getAccessToken());
                 } else {
+                    LoggerHelper.logMessage(TAG, "Auth Failed");
                     loadingUser = false;
                 }
             }
@@ -104,10 +106,12 @@ public class DriftManager {
             @Override
             public void onResponse(SocketAuth response) {
                 if (response != null) {
-                    LoggerHelper.logMessage(TAG, response.toString());
+                    LoggerHelper.logMessage(TAG, "Socket Auth Complete");
                     SocketManager.getInstance().connect(response);
-                    loadingUser = false;
+                } else {
+                    LoggerHelper.logMessage(TAG, "Socket Auth Failed");
                 }
+                loadingUser = false;
             }
         });
     }

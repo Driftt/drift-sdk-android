@@ -30,6 +30,7 @@ public class Drift {
 
     public static Drift setupDrift(Application application, String embedId) {
         _drift = new Drift(application);
+        LoggerHelper.logMessage("LIFECYCLE", "Setup Drift SDK");
 
         JodaTimeAndroid.init(application);
 
@@ -41,9 +42,10 @@ public class Drift {
 
     public static void registerUser(String userId, String email) {
         if (!isConnected()) {
+            LoggerHelper.logMessage("LIFECYCLE", "Registering User");
             DriftManager.getInstance().registerUser(userId, email);
         } else {
-            LoggerHelper.logMessage("Drift_SDK", "Not Registering User, already connected");
+            LoggerHelper.logMessage("LIFECYCLE", "Not Registering User, already connected");
         }
     }
 
@@ -69,6 +71,7 @@ public class Drift {
     }
 
     public static void logout(){
+        LoggerHelper.logMessage("LIFECYCLE", "Logout");
         LogoutHelper.logout();
     }
 
