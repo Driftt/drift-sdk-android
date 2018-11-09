@@ -10,9 +10,11 @@ import net.danlew.android.joda.JodaTimeAndroid;
 import drift.com.drift.activities.ConversationActivity;
 import drift.com.drift.activities.ConversationListActivity;
 import drift.com.drift.helpers.ApplicationLifecycleHelper;
+import drift.com.drift.helpers.LoggerHelper;
 import drift.com.drift.helpers.LoggerListener;
 import drift.com.drift.helpers.LogoutHelper;
 import drift.com.drift.managers.DriftManager;
+import drift.com.drift.managers.SocketManager;
 
 public class Drift {
 
@@ -38,7 +40,15 @@ public class Drift {
     }
 
     public static void registerUser(String userId, String email) {
-        DriftManager.getInstance().registerUser(userId, email);
+        if (!isConnected()) {
+            DriftManager.getInstance().registerUser(userId, email);
+        } else {
+            LoggerHelper.logMessage("Drift_SDK", "Not Registering User, already connected");
+        }
+    }
+
+    public static Boolean isConnected() {
+        return DriftManager.getInstance().loadingUser || SocketManager.getInstance().isConnected();
     }
 
     public static void setLoggerListener(LoggerListener loggerListener){

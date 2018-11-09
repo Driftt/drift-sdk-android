@@ -56,6 +56,14 @@ public class SocketManager {
         }
     }
 
+    public boolean isConnected(){
+
+        if (socket != null) {
+            return socket.isConnected();
+        }
+        return false;
+    }
+
     public void connect(final SocketAuth auth) {
 
         try {
@@ -120,12 +128,7 @@ public class SocketManager {
                                             }
                                         }
                                     }
-
-
                                 }
-
-
-
                             }
 
                             LoggerHelper.logMessage(TAG, "Failed to parse envelope! " + phxMessage.getPayload());

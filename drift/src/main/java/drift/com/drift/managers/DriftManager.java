@@ -21,12 +21,14 @@ public class DriftManager {
 
     private static DriftManager _driftManager = new DriftManager();
 
-    @Nullable RegisterInformation registerInformation = null;
+    @Nullable
+    private RegisterInformation registerInformation = null;
+
+    public Boolean loadingUser = false;
 
     public static DriftManager getInstance() {
         return _driftManager;
     }
-
 
     public void getDataFromEmbeds(String embedId) {
         Embed embed = Embed.getInstance();
@@ -50,7 +52,6 @@ public class DriftManager {
         });
     }
 
-
     public void registerUser(String userId, final String email) {
 
         final Embed embed = Embed.getInstance();
@@ -61,16 +62,22 @@ public class DriftManager {
             return;
         }
 
+        if (loadingUser) {
+            return;
+        }
+
         registerInformation = null;
 
         ///Post Identify
-
+        loadingUser = true;
         DriftManagerWrapper.postIdentity(embed.orgId, userId, email, new APICallbackWrapper<IdentifyResponse>() {
             @Override
             public void onResponse(IdentifyResponse response) {
                 if ( response != null ) {
                     LoggerHelper.logMessage(TAG, response.toString());
                     getAuth(embed, response, email);
+                } else {
+                    loadingUser = false;
                 }
             }
         });
@@ -85,6 +92,8 @@ public class DriftManager {
                     response.saveAuth();
                     LoggerHelper.logMessage(TAG, response.toString());
                     getSocketAuth(embed.orgId, response.getAccessToken());
+                } else {
+                    loadingUser = false;
                 }
             }
         });
@@ -97,6 +106,7 @@ public class DriftManager {
                 if (response != null) {
                     LoggerHelper.logMessage(TAG, response.toString());
                     SocketManager.getInstance().connect(response);
+                    loadingUser = false;
                 }
             }
         });
