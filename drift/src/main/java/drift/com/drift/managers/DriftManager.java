@@ -21,12 +21,14 @@ public class DriftManager {
 
     private static DriftManager _driftManager = new DriftManager();
 
-    @Nullable RegisterInformation registerInformation = null;
+    @Nullable
+    private RegisterInformation registerInformation = null;
+
+    public Boolean loadingUser = false;
 
     public static DriftManager getInstance() {
         return _driftManager;
     }
-
 
     public void getDataFromEmbeds(String embedId) {
         Embed embed = Embed.getInstance();
@@ -39,7 +41,7 @@ public class DriftManager {
             public void onResponse(Embed response) {
                 if (response != null) {
                     response.saveEmbed();
-                    LoggerHelper.logMessage(TAG, response.configuration.toString());
+                    LoggerHelper.logMessage(TAG, "Get Embed Success");
 
                     if (registerInformation != null) {
                         registerUser(registerInformation.userId, registerInformation.email);
@@ -49,7 +51,6 @@ public class DriftManager {
             }
         });
     }
-
 
     public void registerUser(String userId, final String email) {
 
@@ -61,16 +62,23 @@ public class DriftManager {
             return;
         }
 
+        if (loadingUser) {
+            return;
+        }
+
         registerInformation = null;
 
         ///Post Identify
-
+        loadingUser = true;
         DriftManagerWrapper.postIdentity(embed.orgId, userId, email, new APICallbackWrapper<IdentifyResponse>() {
             @Override
             public void onResponse(IdentifyResponse response) {
                 if ( response != null ) {
-                    LoggerHelper.logMessage(TAG, response.toString());
+                    LoggerHelper.logMessage(TAG, "Identify Complete");
                     getAuth(embed, response, email);
+                } else {
+                    LoggerHelper.logMessage(TAG, "Identify Failed");
+                    loadingUser = false;
                 }
             }
         });
@@ -83,8 +91,11 @@ public class DriftManager {
             public void onResponse(Auth response) {
                 if (response != null) {
                     response.saveAuth();
-                    LoggerHelper.logMessage(TAG, response.toString());
+                    LoggerHelper.logMessage(TAG, "Auth Complete");
                     getSocketAuth(embed.orgId, response.getAccessToken());
+                } else {
+                    LoggerHelper.logMessage(TAG, "Auth Failed");
+                    loadingUser = false;
                 }
             }
         });
@@ -95,9 +106,12 @@ public class DriftManager {
             @Override
             public void onResponse(SocketAuth response) {
                 if (response != null) {
-                    LoggerHelper.logMessage(TAG, response.toString());
+                    LoggerHelper.logMessage(TAG, "Socket Auth Complete");
                     SocketManager.getInstance().connect(response);
+                } else {
+                    LoggerHelper.logMessage(TAG, "Socket Auth Failed");
                 }
+                loadingUser = false;
             }
         });
     }

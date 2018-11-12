@@ -10,15 +10,19 @@ import net.danlew.android.joda.JodaTimeAndroid;
 import drift.com.drift.activities.ConversationActivity;
 import drift.com.drift.activities.ConversationListActivity;
 import drift.com.drift.helpers.ApplicationLifecycleHelper;
+import drift.com.drift.helpers.LoggerHelper;
+import drift.com.drift.helpers.LoggerListener;
 import drift.com.drift.helpers.LogoutHelper;
 import drift.com.drift.managers.DriftManager;
+import drift.com.drift.managers.SocketManager;
 
 public class Drift {
 
     private static Drift _drift = null;
     private Context context;
-    private Boolean debugMode = false;
     private ApplicationLifecycleHelper applicationLifecycleHelper = new ApplicationLifecycleHelper();
+
+    public LoggerListener mLoggerListener;
 
     private Drift(Context context) {
         this.context = context;
@@ -26,6 +30,7 @@ public class Drift {
 
     public static Drift setupDrift(Application application, String embedId) {
         _drift = new Drift(application);
+        LoggerHelper.logMessage("LIFECYCLE", "Setup Drift SDK");
 
         JodaTimeAndroid.init(application);
 
@@ -36,13 +41,26 @@ public class Drift {
     }
 
     public static void registerUser(String userId, String email) {
-        DriftManager.getInstance().registerUser(userId, email);
+        if (!isConnected()) {
+            LoggerHelper.logMessage("LIFECYCLE", "Registering User");
+            DriftManager.getInstance().registerUser(userId, email);
+        } else {
+            LoggerHelper.logMessage("LIFECYCLE", "Not Registering User, already connected");
+        }
     }
 
-    public static Boolean isDebug() {
-        return _drift.debugMode;
+    public static Boolean isConnected() {
+        return DriftManager.getInstance().loadingUser || SocketManager.getInstance().isConnected();
     }
 
+    public static void setLoggerListener(LoggerListener loggerListener){
+        _drift.mLoggerListener = loggerListener;
+    }
+
+    @Nullable
+    public static LoggerListener loggerListener() {
+        return _drift.mLoggerListener;
+    }
 
     public static void showConversationActivity() {
         ConversationListActivity.showFromContext(_drift.context);
@@ -53,6 +71,7 @@ public class Drift {
     }
 
     public static void logout(){
+        LoggerHelper.logMessage("LIFECYCLE", "Logout");
         LogoutHelper.logout();
     }
 

@@ -4,6 +4,8 @@ import android.app.Application;
 import android.util.Log;
 
 import drift.com.drift.Drift;
+import drift.com.drift.helpers.LoggerListener;
+
 import com.google.android.gms.security.ProviderInstaller;
 
 
@@ -18,6 +20,13 @@ public class App extends Application {
         super.onCreate();
         updateAndroidSecurityProvider();
         Drift.setupDrift(this, "");
+
+        Drift.setLoggerListener(new LoggerListener() {
+            @Override
+            public void logMessage(String message) {
+                Log.d("DRIFT_SDK", message);
+            }
+        });
     }
 
 
