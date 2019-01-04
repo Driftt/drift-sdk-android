@@ -354,7 +354,7 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
 
 
         Auth auth = Auth.getInstance();
-        if (auth != null && message.authorId == auth.endUser.id && message.contentType.equals("CHAT") && (message.attributes == null || message.attributes.appointmentInfo == null)&& !message.fakeMessage){
+        if (auth != null && message.authorId.equals(auth.endUser.id) && message.contentType.equals("CHAT") && (message.attributes == null || message.attributes.appointmentInfo == null) && !message.fakeMessage){
             LoggerHelper.logMessage(TAG, "Ignoring own message");
             return;
         }
