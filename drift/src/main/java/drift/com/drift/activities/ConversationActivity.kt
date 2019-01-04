@@ -391,8 +391,8 @@ class ConversationActivity : DriftActivity(), AttachmentCallback {
     companion object {
 
         private val TAG = ConversationActivity::class.java.simpleName
-        private val CONVERSATION_ID = "DRIFT_CONVERSATION_ID_PARAM"
-        private val CONVERSATION_TYPE = "DRIFT_CONVERSATION_TYPE_PARAM"
+        private const val CONVERSATION_ID = "DRIFT_CONVERSATION_ID_PARAM"
+        private const val CONVERSATION_TYPE = "DRIFT_CONVERSATION_TYPE_PARAM"
 
         fun intentForConversation(context: Context, conversationId: Int): Intent {
 
