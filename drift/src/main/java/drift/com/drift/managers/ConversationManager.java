@@ -55,7 +55,7 @@ public class ConversationManager {
         apiCallComplete = false;
     }
 
-    public void getConversationsForEndUser(int endUserId, final APICallbackWrapper<ArrayList<ConversationExtra>> conversationsCallback) {
+    public void getConversationsForEndUser(Long endUserId, final APICallbackWrapper<ArrayList<ConversationExtra>> conversationsCallback) {
 
         ConversationListWrapper.getConversationsForEndUser(endUserId, new APICallbackWrapper<ArrayList<ConversationExtra>>() {
             @Override

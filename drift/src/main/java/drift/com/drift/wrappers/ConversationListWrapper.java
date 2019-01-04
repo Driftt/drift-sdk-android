@@ -21,7 +21,7 @@ public class ConversationListWrapper {
 
     private static String TAG = ConversationListWrapper.class.getSimpleName();
 
-    public static void getConversationsForEndUser(int endUserId, final APICallbackWrapper<ArrayList<ConversationExtra>> callback){
+    public static void getConversationsForEndUser(Long endUserId, final APICallbackWrapper<ArrayList<ConversationExtra>> callback){
 
         APIManager.getConversationClient().getConversationsForEndUser (endUserId).enqueue(new Callback<ArrayList<ConversationExtra>>() {
             @Override

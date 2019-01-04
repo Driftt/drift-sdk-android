@@ -115,8 +115,8 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
         context.startActivity(intent);
     }
 
-    int conversationId = -1;
-    int endUserId = -1;
+    private int conversationId = -1;
+    private Long endUserId = -1L;
     private ConversationType conversationType = ConversationType.CONTINUE;
 
 
