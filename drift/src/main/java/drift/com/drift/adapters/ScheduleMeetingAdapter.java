@@ -1,6 +1,5 @@
 package drift.com.drift.adapters;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import androidx.recyclerview.widget.RecyclerView;
 import drift.com.drift.R;
 import drift.com.drift.helpers.DateHelper;
 

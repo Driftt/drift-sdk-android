@@ -1,6 +1,6 @@
 package drift.com.drift.wrappers;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.text.Editable;
 import android.text.Html;
 import android.text.SpannableStringBuilder;

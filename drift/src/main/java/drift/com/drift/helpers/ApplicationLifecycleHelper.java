@@ -3,7 +3,7 @@ package drift.com.drift.helpers;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import drift.com.drift.managers.PresentationManager;
 import drift.com.drift.model.Auth;

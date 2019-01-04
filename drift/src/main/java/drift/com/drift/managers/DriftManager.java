@@ -1,7 +1,7 @@
 package drift.com.drift.managers;
 
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import drift.com.drift.helpers.LoggerHelper;
 import drift.com.drift.helpers.LogoutHelper;
 import drift.com.drift.model.Auth;

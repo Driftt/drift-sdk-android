@@ -3,7 +3,7 @@ package drift.com.drift;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
