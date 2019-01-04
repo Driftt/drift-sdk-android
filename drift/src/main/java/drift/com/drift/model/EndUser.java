@@ -11,7 +11,7 @@ public class EndUser {
 
     @Expose
     @SerializedName("id")
-    public Integer id;
+    public Long id;
 
     @Expose
     @SerializedName("orgId")
@@ -26,16 +26,8 @@ public class EndUser {
     public String email;
 
     @Expose
-    @SerializedName("timeZone")
-    public String timeZone;
-
-    @Expose
     @SerializedName("avatarUrl")
     public String avatarUrl;
-
-    @Expose
-    @SerializedName("externalId")
-    public String externalId;
 
     @Expose
     @SerializedName("type")

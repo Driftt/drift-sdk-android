@@ -108,7 +108,7 @@ public class ConversationListAdapter extends RecyclerView.Adapter<ConversationLi
 
 
             if (conversationExtra.lastAgentMessage != null) {
-                User user = UserManager.getInstance().userMap.get(conversationExtra.lastAgentMessage.authorId);
+                User user = UserManager.getInstance().getUserForId(conversationExtra.lastAgentMessage.authorId.intValue());
                 UserPopulationHelper.populateTextAndImageFromUser(context, user, userNameTextView, userImageView);
             } else if (conversationExtra.lastMessage != null
                     && conversationExtra.lastMessage.attributes != null
@@ -116,7 +116,7 @@ public class ConversationListAdapter extends RecyclerView.Adapter<ConversationLi
                     && !conversationExtra.lastMessage.attributes.preMessages.isEmpty()) {
 
                 PreMessage preMessage = conversationExtra.lastMessage.attributes.preMessages.get(0);
-                User user = UserManager.getInstance().userMap.get(preMessage.sender.id);
+                User user = UserManager.getInstance().getUserForId(preMessage.sender.id);
                 UserPopulationHelper.populateTextAndImageFromUser(context, user, userNameTextView, userImageView);
             } else {
                 Glide.with(context).clear(userImageView);

@@ -356,7 +356,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             if (message.attributes != null && message.attributes.presentSchedule != null){
 
-                User user = UserManager.getInstance().userMap.get(message.attributes.presentSchedule);
+                User user = UserManager.getInstance().getUserForId(message.attributes.presentSchedule);
 
                 if(user != null){
 
@@ -389,7 +389,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }
 
 
-            setupForUser(message, UserManager.getInstance().userMap.get(message.authorId));
+            setupForUser(message, UserManager.getInstance().getUserForId(message.authorId.intValue()));
 
         }
 
@@ -505,7 +505,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 if (message.attributes.appointmentInfo != null && message.attributes.appointmentInfo.agentId != null) {
                     AppointmentInfo appointmentInformation = message.attributes.appointmentInfo;
 
-                    User user = UserManager.getInstance().userMap.get(appointmentInformation.agentId);
+                    User user = UserManager.getInstance().getUserForId(appointmentInformation.agentId);
 
                     if (user != null) {
                         RequestOptions requestOptions = new RequestOptions()

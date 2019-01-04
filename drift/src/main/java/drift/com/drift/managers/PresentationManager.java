@@ -79,7 +79,7 @@ public class PresentationManager {
         }
     }
 
-    public void checkForUnreadMessagesToShow(int orgId, final int endUserId){
+    public void checkForUnreadMessagesToShow(int orgId, final Long endUserId){
 
         LoggerHelper.logMessage(TAG, "Checking for Messages to show");
         UserManager.getInstance().getUsersIfWeNeedTo(orgId, new UserManagerCallback() {
@@ -139,7 +139,7 @@ public class PresentationManager {
 
     private void showPopupForMessage(final Message message, final int otherMessages) {
 
-        User user = UserManager.getInstance().userMap.get(message.authorId);
+        User user = UserManager.getInstance().getUserForId(message.authorId.intValue());
         Auth auth = Auth.getInstance();
         if (user != null) {
             showPopupForMessage(user, message, otherMessages);
@@ -147,7 +147,7 @@ public class PresentationManager {
             UserManager.getInstance().getUsers(auth.endUser.orgId, new UserManagerCallback() {
                 @Override
                 public void didLoadUsers(Boolean success) {
-                    User user = UserManager.getInstance().userMap.get(message.authorId);
+                    User user = UserManager.getInstance().getUserForId(message.authorId.intValue());
                     showPopupForMessage(user, message, otherMessages);
                 }
             });

@@ -205,7 +205,7 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
             }
         });
 
-        User user = UserManager.getInstance().userMap.get(userId);
+        User user = UserManager.getInstance().getUserForId(userId);
         if (user != null){
             userTextView.setText(user.getUserName());
             RequestOptions requestOptions = new RequestOptions()
