@@ -7,7 +7,6 @@ import drift.com.drift.managers.PresentationManager;
 import drift.com.drift.managers.SocketManager;
 import drift.com.drift.managers.UserManager;
 import drift.com.drift.model.Auth;
-import drift.com.drift.model.Embed;
 
 public class LogoutHelper {
     public static void logout(){

@@ -42,7 +42,6 @@ import drift.com.drift.helpers.ColorHelper;
 import drift.com.drift.helpers.DateHelper;
 import drift.com.drift.helpers.GlideHelper;
 import drift.com.drift.managers.AttachmentManager;
-import drift.com.drift.managers.DriftManager;
 import drift.com.drift.managers.UserManager;
 import drift.com.drift.model.AppointmentInfo;
 import drift.com.drift.model.Attachment;
