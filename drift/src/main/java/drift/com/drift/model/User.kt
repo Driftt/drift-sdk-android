@@ -10,10 +10,10 @@ import com.google.gson.annotations.SerializedName
 class User {
     @Expose
     @SerializedName("id")
-    var id: Int? = null
+    var id: Int = 0
     @Expose
     @SerializedName("orgId")
-    var orgId: Int? = null
+    var orgId: Int = 0
     @Expose
     @SerializedName("name")
     private val name: String? = null

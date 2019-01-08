@@ -1,11 +1,8 @@
 package drift.com.drift.managers
 
-import java.util.ArrayList
 import java.util.HashMap
 
 import drift.com.drift.model.User
-import drift.com.drift.wrappers.APICallbackWrapper
-import drift.com.drift.wrappers.UserManagerCallback
 import drift.com.drift.wrappers.UserManagerWrapper
 
 /**
@@ -24,7 +21,7 @@ class UserManager {
         return userMap[userId]
     }
 
-    fun getUsers(orgId: Int, userManagerCallback: UserManagerCallback) {
+    fun getUsers(orgId: Int, userManagerCallback: (success: Boolean) -> Unit) {
 
         UserManagerWrapper.getUsers(orgId) { response ->
             if (response != null) {
@@ -32,17 +29,17 @@ class UserManager {
                 for (user in response) {
                     userMap[user.id] = user
                 }
-                userManagerCallback.didLoadUsers(true)
+                userManagerCallback(true)
             } else {
-                userManagerCallback.didLoadUsers(false)
+                userManagerCallback(false)
             }
         }
     }
 
-    fun getUsersIfWeNeedTo(orgId: Int, userManagerCallback: UserManagerCallback) {
+    fun getUsersIfWeNeedTo(orgId: Int, userManagerCallback: (success: Boolean) -> Unit) {
 
         if (!userMap.isEmpty()) {
-            userManagerCallback.didLoadUsers(true)
+            userManagerCallback(true)
             return
         }
 
@@ -50,9 +47,6 @@ class UserManager {
     }
 
     companion object {
-
-        private val TAG = UserManager::class.java.simpleName
-
         val instance = UserManager()
     }
 }

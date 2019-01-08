@@ -42,7 +42,7 @@ class ConversationManager {
         isApiCallComplete = false
     }
 
-    fun getConversationsForEndUser(endUserId: Long?, conversationsCallback: APICallbackWrapper<ArrayList<ConversationExtra>>) {
+    fun getConversationsForEndUser(endUserId: Long?, conversationsCallback: (response: ArrayList<ConversationExtra>?) -> Unit) {
 
         ConversationListWrapper.getConversationsForEndUser(endUserId) { response ->
             isApiCallComplete = true
@@ -59,14 +59,12 @@ class ConversationManager {
                 conversations = filteredConversationExtras
             }
 
-            conversationsCallback.onResponse(response)
+            conversationsCallback(response)
         }
 
     }
 
     companion object {
-
-        private val TAG = ConversationManager::class.java.simpleName
 
         val instance = ConversationManager()
     }

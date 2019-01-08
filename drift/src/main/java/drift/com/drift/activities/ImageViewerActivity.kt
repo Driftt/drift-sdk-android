@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
@@ -26,9 +25,9 @@ import drift.com.drift.helpers.StatusBarColorizer
 
 class ImageViewerActivity : DriftActivity() {
 
-    internal var imageView: ImageView
-    internal var progressBar: ProgressBar
-    internal var imageUri: String
+    private lateinit var imageView: ImageView
+    private lateinit var progressBar: ProgressBar
+    private lateinit var imageUri: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,7 +85,6 @@ class ImageViewerActivity : DriftActivity() {
 
             DownloadHelper.downloadUri(this, Uri.parse(imageUri), "DriftImageDownload")
 
-
             return true
         } else {
             return super.onOptionsItemSelected(item)
@@ -94,7 +92,7 @@ class ImageViewerActivity : DriftActivity() {
     }
 
     companion object {
-        private val IMAGE_URI = "DRIFT_IMAGE_URI"
+        private const val IMAGE_URI = "DRIFT_IMAGE_URI"
 
         fun intentForUri(context: Context, imageUri: String): Intent {
 
