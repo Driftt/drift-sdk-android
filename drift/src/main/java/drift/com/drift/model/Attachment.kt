@@ -15,7 +15,7 @@ class Attachment {
 
     @Expose
     @SerializedName("id")
-    var id: Int? = null
+    var id: Int = 0
 
     @Expose
     @SerializedName("conversationId")

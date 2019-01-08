@@ -74,8 +74,8 @@ class AttachmentView(context: Context, attrs: AttributeSet?) : LinearLayout(cont
                 val builder = AlertDialog.Builder(context)
                 builder.setTitle(attachment.fileName)
                         .setMessage("Download File?")
-                        .setPositiveButton("Download") { dialog, id -> DownloadHelper.downloadAttachment(context, attachment) }
-                        .setNeutralButton("Cancel") { dialog, id -> }
+                        .setPositiveButton("Download") { _, _ -> DownloadHelper.downloadAttachment(context, attachment) }
+                        .setNeutralButton("Cancel") { _, _ -> }
 
                 builder.create().show()
             }

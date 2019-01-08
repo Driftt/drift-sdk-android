@@ -37,7 +37,7 @@ class DownloadHelper {
                     _downloadHelper = DownloadHelper()
                 }
 
-                return _downloadHelper
+                return _downloadHelper!!
             }
 
         fun downloadAttachment(context: Context, attachment: Attachment) {
@@ -53,7 +53,7 @@ class DownloadHelper {
             val auth = Auth.instance
 
             if (auth != null) {
-                request.addRequestHeader("Authorization", "bearer " + auth!!.accessToken)
+                request.addRequestHeader("Authorization", "bearer " + auth.accessToken)
             }
 
             request.setTitle(fileName)

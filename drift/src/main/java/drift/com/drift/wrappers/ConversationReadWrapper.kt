@@ -15,38 +15,20 @@ object ConversationReadWrapper {
 
     private val TAG = ConversationReadWrapper::class.java.simpleName
 
-    fun markMessageAsRead(messageId: Int, callback: APICallbackWrapper<Boolean>) {
+    fun markMessageAsReadAlongWithPrevious(messageId: Int, callback: (response: Boolean) -> Unit) {
 
-        APIManager.conversationClient!!.markMessageAsRead(messageId).enqueue(object : Callback<ResponseBody> {
+        APIManager.conversationClient.markMessageAsReadAlongWithPreviousMessages(messageId).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.code() == 204) {
-                    callback.onResponse(true)
+                    callback(true)
                 } else {
-                    callback.onResponse(false)
+                    callback(false)
                 }
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 LoggerHelper.logMessage(TAG, t.localizedMessage)
-                callback.onResponse(false)
-            }
-        })
-    }
-
-    fun markMessageAsReadAlongWithPrevious(messageId: Int, callback: APICallbackWrapper<Boolean>) {
-
-        APIManager.conversationClient!!.markMessageAsReadAlongWithPreviousMessages(messageId).enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                if (response.code() == 204) {
-                    callback.onResponse(true)
-                } else {
-                    callback.onResponse(false)
-                }
-            }
-
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                LoggerHelper.logMessage(TAG, t.localizedMessage)
-                callback.onResponse(false)
+                callback(false)
             }
         })
     }

@@ -18,27 +18,25 @@ import retrofit2.Response
 
 object DriftManagerWrapper {
 
-    private val TAG = DriftManagerWrapper::class.java.simpleName
+    fun getEmbed(embedId: String, callback: (response: Embed?) -> Unit) {
 
-    fun getEmbed(embedId: String, callback: APICallbackWrapper<Embed>) {
-
-        APIManager.authlessClient!!.getEmbed(embedId, "30000").enqueue(object : Callback<Embed> {
+        APIManager.authlessClient.getEmbed(embedId, "30000").enqueue(object : Callback<Embed> {
             override fun onResponse(call: Call<Embed>, response: Response<Embed>) {
                 if (response.code() != 200 && response.code() != 201 || response.body() == null) {
-                    callback.onResponse(null)
+                    callback(null)
                 } else {
-                    callback.onResponse(response.body())
+                    callback(response.body())
                 }
             }
 
             override fun onFailure(call: Call<Embed>, t: Throwable) {
-                callback.onResponse(null)
+                callback(null)
             }
         })
     }
 
 
-    fun postIdentity(orgId: Int, userId: String, email: String, callback: APICallbackWrapper<IdentifyResponse>) {
+    fun postIdentity(orgId: Int, userId: String, email: String, callback: (response: IdentifyResponse?) -> Unit) {
 
         val jsonPayload = HashMap<String, Any>()
 
@@ -50,22 +48,22 @@ object DriftManagerWrapper {
         jsonPayload["attributes"] = inlineEmailAttributes
 
 
-        APIManager.authlessClient!!.postIdentify(jsonPayload).enqueue(object : Callback<IdentifyResponse> {
+        APIManager.authlessClient.postIdentify(jsonPayload).enqueue(object : Callback<IdentifyResponse> {
             override fun onResponse(call: Call<IdentifyResponse>, response: Response<IdentifyResponse>) {
                 if (response.code() != 200 && response.code() != 201 || response.body() == null) {
-                    callback.onResponse(null)
+                    callback(null)
                 } else {
-                    callback.onResponse(response.body())
+                    callback(response.body())
                 }
             }
 
             override fun onFailure(call: Call<IdentifyResponse>, t: Throwable) {
-                callback.onResponse(null)
+                callback(null)
             }
         })
     }
 
-    fun getAuth(orgId: Int, userId: String, email: String, redirectUri: String, clientId: String, callback: APICallbackWrapper<Auth>) {
+    fun getAuth(orgId: Int, userId: String, email: String, redirectUri: String, clientId: String, callback: (response: Auth?) -> Unit) {
 
         val jsonPayload = HashMap<String, Any>()
 
@@ -77,38 +75,38 @@ object DriftManagerWrapper {
         jsonPayload["client_id"] = clientId
 
 
-        APIManager.customerClient!!.getAuth(jsonPayload).enqueue(object : Callback<Auth> {
+        APIManager.customerClient.getAuth(jsonPayload).enqueue(object : Callback<Auth> {
             override fun onResponse(call: Call<Auth>, response: Response<Auth>) {
                 if (response.code() != 200 && response.code() != 201 || response.body() == null) {
-                    callback.onResponse(null)
+                    callback(null)
                 } else {
-                    callback.onResponse(response.body())
+                    callback(response.body())
                 }
             }
 
             override fun onFailure(call: Call<Auth>, t: Throwable) {
-                callback.onResponse(null)
+                callback(null)
             }
         })
     }
 
-    fun getSocketAuth(orgId: Int, accessToken: String, callback: APICallbackWrapper<SocketAuth>) {
+    fun getSocketAuth(orgId: Int, accessToken: String, callback: (response: SocketAuth?) -> Unit) {
 
         val jsonPayload = HashMap<String, Any>()
 
         jsonPayload["access_token"] = accessToken
 
-        APIManager.authlessClient!!.postSocketAuth(orgId, computeShardId(orgId), jsonPayload).enqueue(object : Callback<SocketAuth> {
+        APIManager.authlessClient.postSocketAuth(orgId, computeShardId(orgId), jsonPayload).enqueue(object : Callback<SocketAuth> {
             override fun onResponse(call: Call<SocketAuth>, response: Response<SocketAuth>) {
                 if (response.code() != 200 && response.code() != 201 || response.body() == null) {
-                    callback.onResponse(null)
+                    callback(null)
                 } else {
-                    callback.onResponse(response.body())
+                    callback(response.body())
                 }
             }
 
             override fun onFailure(call: Call<SocketAuth>, t: Throwable) {
-                callback.onResponse(null)
+                callback(null)
             }
         })
     }

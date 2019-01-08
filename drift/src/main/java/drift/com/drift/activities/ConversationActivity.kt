@@ -41,9 +41,8 @@ import drift.com.drift.model.Embed
 import drift.com.drift.model.Message
 import drift.com.drift.model.MessageRequest
 import drift.com.drift.model.User
-import drift.com.drift.wrappers.AttachmentCallback
 
-class ConversationActivity : DriftActivity(), AttachmentCallback {
+class ConversationActivity : DriftActivity() {
 
 
     private lateinit var textEntryEditText: EditText
@@ -152,7 +151,9 @@ class ConversationActivity : DriftActivity(), AttachmentCallback {
             }
         })
 
-        AttachmentManager.instance.setAttachmentLoadHandle(this)
+        AttachmentManager.instance.setAttachmentLoadHandle {
+            didLoadAttachments(it)
+        }
 
         val layoutManager = LinearLayoutManager(this)
         layoutManager.reverseLayout = true
@@ -368,7 +369,7 @@ class ConversationActivity : DriftActivity(), AttachmentCallback {
         }
     }
 
-    override fun didLoadAttachments(attachments: ArrayList<Attachment>) {
+    private fun didLoadAttachments(attachments: ArrayList<Attachment>) {
         LoggerHelper.logMessage(TAG, "Did load attachments: " + attachments.size)
         conversationAdapter.updateForAttachments(attachments)
     }

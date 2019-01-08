@@ -23,7 +23,7 @@ object ConversationListWrapper {
 
     fun getConversationsForEndUser(endUserId: Long?, callback: (response: ArrayList<ConversationExtra>?) -> Unit) {
 
-        APIManager.conversationClient!!.getConversationsForEndUser(endUserId).enqueue(object : Callback<ArrayList<ConversationExtra>> {
+        APIManager.conversationClient.getConversationsForEndUser(endUserId).enqueue(object : Callback<ArrayList<ConversationExtra>> {
             override fun onResponse(call: Call<ArrayList<ConversationExtra>>, response: Response<ArrayList<ConversationExtra>>) {
                 if (response.code() != 200 && response.code() != 201 || response.body() == null) {
                     callback(null)

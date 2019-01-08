@@ -18,25 +18,25 @@ object AttachmentWrapper {
 
     private val TAG = AttachmentWrapper::class.java.simpleName
 
-    fun getAttachments(attachmentIds: List<Int>, callback: APICallbackWrapper<ArrayList<Attachment>>) {
+    fun getAttachments(attachmentIds: List<Int>, callback: (response: ArrayList<Attachment>?) -> Unit) {
 
         val imgixOptions = HashMap<String, Any>()
 
         imgixOptions["img_auto"] = "compress"
 
 
-        APIManager.conversationClient!!.getAttachments(attachmentIds, imgixOptions).enqueue(object : Callback<ArrayList<Attachment>> {
+        APIManager.conversationClient.getAttachments(attachmentIds, imgixOptions).enqueue(object : Callback<ArrayList<Attachment>> {
             override fun onResponse(call: Call<ArrayList<Attachment>>, response: Response<ArrayList<Attachment>>) {
                 if (response.code() != 200 && response.code() != 201 || response.body() == null) {
-                    callback.onResponse(null)
+                    callback(null)
                 } else {
-                    callback.onResponse(response.body())
+                    callback(response.body())
                 }
             }
 
             override fun onFailure(call: Call<ArrayList<Attachment>>, t: Throwable) {
                 LoggerHelper.logMessage(TAG, t.localizedMessage)
-                callback.onResponse(null)
+                callback(null)
             }
         })
     }

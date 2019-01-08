@@ -2,7 +2,6 @@ package drift.com.drift.managers
 
 import java.util.ArrayList
 import drift.com.drift.model.ConversationExtra
-import drift.com.drift.wrappers.APICallbackWrapper
 import drift.com.drift.wrappers.ConversationListWrapper
 
 /**

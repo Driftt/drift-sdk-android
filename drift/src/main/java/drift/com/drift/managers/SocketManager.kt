@@ -3,20 +3,13 @@ package drift.com.drift.managers
 
 import android.os.Handler
 import android.os.Looper
-
-import com.google.gson.Gson
-import com.google.gson.JsonElement
-
 import org.phoenixframework.PhxChannel
-import org.phoenixframework.PhxMessage
 import org.phoenixframework.PhxSocket
-
 import drift.com.drift.api.APIManager
 import drift.com.drift.helpers.LoggerHelper
 import drift.com.drift.model.Message
 import drift.com.drift.model.SocketAuth
 import okhttp3.OkHttpClient
-import okhttp3.Response
 
 
 /**
@@ -58,18 +51,18 @@ class SocketManager {
             val url = getSocketURL(auth.orgId, auth.sessionToken)
             socket = PhxSocket(url, null, OkHttpClient())
 
-            socket!!.logger = fun(s: String): Unit {
+            socket?.logger = fun(s: String): Unit {
                 LoggerHelper.logMessage("Drift Socket", s)
                 return Unit
             }
 
-            socket!!.onOpen {
+            socket?.onOpen {
                 LoggerHelper.logMessage(TAG, "Connected")
-                channel = socket!!.channel("user:" + auth.userId!!, null)
+                channel = socket?.channel("user:" + auth.userId!!, null)
 
 
 
-                channel!!.on("change") { phxMessage ->
+                channel?.on("change") { phxMessage ->
                     LoggerHelper.logMessage(TAG, phxMessage.event)
 
                     LoggerHelper.logMessage(TAG, phxMessage.payload.toString())
@@ -95,8 +88,7 @@ class SocketManager {
                                         LoggerHelper.logMessage(TAG, "Type " + type!!.toString())
                                         LoggerHelper.logMessage(TAG, "Data " + data!!.toString())
                                         if (type is String && data is Map<*, *>) {
-
-                                            processEnvelopeData(type as String?, data as Map<*, *>?)
+                                            processEnvelopeData(type, data as Map<String, Any>)
                                             return@on Unit
                                         }
 
@@ -105,38 +97,28 @@ class SocketManager {
                             }
                         }
                     }
-
                     LoggerHelper.logMessage(TAG, "Failed to parse envelope! " + phxMessage.payload)
-
-                    Unit
                 }
 
 
-                channel!!.join(null, null)
-                        .receive("ok") { phxMessage ->
+                channel?.join(null, null)
+                        ?.receive("ok") { phxMessage ->
                             LoggerHelper.logMessage(TAG, "You have joined '" + phxMessage.event + "'")
 
                             Unit
                         }
-
-                Unit
             }
 
-            socket!!.onClose {
+            socket?.onClose {
                 LoggerHelper.logMessage(TAG, "Closed Socket")
-                Unit
             }
 
-
-            socket!!.onError { throwable, response ->
-                throwable.printStackTrace()
+            socket?.onError { throwable, response ->
+                throwable?.printStackTrace()
                 LoggerHelper.logMessage(TAG, "Socket Error: $response")
-
-
-                Unit
             }
 
-            socket!!.connect()
+            socket?.connect()
 
 
         } catch (e: Exception) {

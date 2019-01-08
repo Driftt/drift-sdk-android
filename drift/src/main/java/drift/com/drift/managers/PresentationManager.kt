@@ -1,13 +1,9 @@
 package drift.com.drift.managers
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.os.Handler
 import androidx.core.graphics.drawable.DrawableCompat
 import android.text.Html
-import android.util.DisplayMetrics
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -27,11 +23,8 @@ import drift.com.drift.helpers.LoggerHelper
 import drift.com.drift.helpers.MessageReadHelper
 import drift.com.drift.helpers.UserPopulationHelper
 import drift.com.drift.model.Auth
-import drift.com.drift.model.ConversationExtra
 import drift.com.drift.model.User
 import drift.com.drift.model.Message
-import drift.com.drift.wrappers.APICallbackWrapper
-import drift.com.drift.wrappers.UserManagerCallback
 
 /**
  * Created by eoin on 23/08/2017.
@@ -54,15 +47,9 @@ class PresentationManager {
         val activity = Drift.currentActivity
 
         if (activity is ConversationActivity) {
-
-            val conversationActivity = activity as ConversationActivity
-            conversationActivity.didReceiveNewMessage(message)
-
+            activity.didReceiveNewMessage(message)
         } else if (activity is ConversationListActivity) {
-
-            val conversationListActivity = activity as ConversationListActivity
-            conversationListActivity.didReceiveNewMessage()
-
+            activity.didReceiveNewMessage()
         } else if (message.authorType == "USER") {
 
             showPopupForMessage(message, ConversationManager.instance.unreadCountForUser - 1)
@@ -73,8 +60,8 @@ class PresentationManager {
     fun checkForUnreadMessagesToShow(orgId: Int, endUserId: Long?) {
 
         LoggerHelper.logMessage(TAG, "Checking for Messages to show")
-        UserManager.instance.getUsersIfWeNeedTo(orgId, UserManagerCallback {
-            ConversationManager.instance.getConversationsForEndUser(endUserId, APICallbackWrapper<ArrayList<ConversationExtra>> { response ->
+        UserManager.instance.getUsersIfWeNeedTo(orgId) {
+            ConversationManager.instance.getConversationsForEndUser(endUserId) { response ->
                 if (response != null) {
 
                     showMessagePopupFromManager()
@@ -82,8 +69,8 @@ class PresentationManager {
                 } else {
                     LoggerHelper.logMessage(TAG, "Failed to get conversation extras")
                 }
-            })
-        })
+            }
+        }
     }
 
     fun checkWeNeedToReshowMessagePopover() {
@@ -105,8 +92,8 @@ class PresentationManager {
         for (conversationExtra in ConversationManager.instance.conversations) {
             if (conversationExtra.unreadMessages != 0) {
                 if (conversationExtra.lastAgentMessage != null) {
-                    unreadMessages.add(conversationExtra.lastAgentMessage)
-                    unreadMessageCount += conversationExtra.unreadMessages!!
+                    unreadMessages.add(conversationExtra.lastAgentMessage!!)
+                    unreadMessageCount += conversationExtra.unreadMessages
                 }
             }
         }
@@ -122,11 +109,11 @@ class PresentationManager {
         val auth = Auth.instance
         if (user != null) {
             showPopupForMessage(user, message, otherMessages)
-        } else if (auth != null && auth!!.endUser != null && auth!!.endUser!!.orgId != null) {
-            UserManager.instance.getUsers(auth!!.endUser!!.orgId!!, UserManagerCallback {
-                val user = UserManager.instance.getUserForId(message.authorId!!.toInt())
-                showPopupForMessage(user, message, otherMessages)
-            })
+        } else if (auth?.endUser?.orgId != null) {
+            UserManager.instance.getUsers(auth.endUser?.orgId!!) {
+                val newUser = UserManager.instance.getUserForId(message.authorId!!.toInt())
+                showPopupForMessage(newUser, message, otherMessages)
+            }
         }
 
     }
@@ -192,7 +179,7 @@ class PresentationManager {
             openButton.setOnClickListener {
                 val conversationId = message.conversationId!!
                 val intent = ConversationActivity.intentForConversation(activity, conversationId)
-                activity!!.startActivity(intent)
+                activity.startActivity(intent)
                 closePopupView()
             }
 
@@ -209,7 +196,7 @@ class PresentationManager {
             updateUnreadCount(unreadTextView, otherMessages)
 
 
-            val displayMetrics = activity!!.getResources().getDisplayMetrics()
+            val displayMetrics = activity.resources.displayMetrics
 
             var width = displayMetrics.widthPixels
 

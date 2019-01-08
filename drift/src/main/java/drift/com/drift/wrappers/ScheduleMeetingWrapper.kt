@@ -20,7 +20,7 @@ object ScheduleMeetingWrapper {
 
     fun getUserAvailability(userId: Int, callback: (response: UserAvailability?) -> Unit) {
 
-        APIManager.customerClient!!.getUserAvailability(userId).enqueue(object : Callback<UserAvailability> {
+        APIManager.customerClient.getUserAvailability(userId).enqueue(object : Callback<UserAvailability> {
             override fun onResponse(call: Call<UserAvailability>, response: Response<UserAvailability>) {
                 if (response.code() != 200 && response.code() != 201 || response.body() == null) {
                     callback(null)
@@ -40,7 +40,7 @@ object ScheduleMeetingWrapper {
 
         val body = RequestBody.create(MediaType.parse("application/json"), timestamp.toString())
 
-        APIManager.customerClient!!.scheduleMeeting(userId, conversationId, body).enqueue(object : Callback<GoogleMeeting> {
+        APIManager.customerClient.scheduleMeeting(userId, conversationId, body).enqueue(object : Callback<GoogleMeeting> {
             override fun onResponse(call: Call<GoogleMeeting>, response: Response<GoogleMeeting>) {
                 if (response.code() != 200 && response.code() != 201 || response.body() == null) {
                     callback(null)

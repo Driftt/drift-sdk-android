@@ -10,6 +10,7 @@ import com.google.gson.annotations.SerializedName
 
 import drift.com.drift.Drift
 import drift.com.drift.helpers.Preferences
+import kotlin.coroutines.experimental.coroutineContext
 
 /**
  * Created by eoin on 28/07/2017.
@@ -29,10 +30,10 @@ class Embed {
     @SerializedName("configuration")
     var configuration: Configuration? = null
 
-    fun saveEmbed() {
+    fun saveEmbed(context: Context) {
         val gson = Gson()
         val stringAuth = gson.toJson(this)
-        val prefs = Drift.getContext().getSharedPreferences(Preferences.EMBED_STORE, Context.MODE_PRIVATE)
+        val prefs = context.getSharedPreferences(Preferences.EMBED_STORE, Context.MODE_PRIVATE)
         prefs.edit().putString(Preferences.EMBED_CACHE, stringAuth).apply()
         _embed = this
     }
@@ -51,17 +52,17 @@ class Embed {
                 return _embed
             }
 
-        private fun loadEmbed(): Embed? {
+        private fun loadEmbed(context: Context): Embed? {
 
-            val prefs = Drift.getContext().getSharedPreferences(Preferences.EMBED_STORE, Context.MODE_PRIVATE)
+            val prefs = context.getSharedPreferences(Preferences.EMBED_STORE, Context.MODE_PRIVATE)
             val authJSON = prefs.getString(Preferences.EMBED_CACHE, null) ?: return null
 
             val gson = GsonBuilder().create()
             return gson.fromJson(authJSON, Embed::class.java)
         }
 
-        fun deleteEmbed() {
-            val prefs = Drift.getContext().getSharedPreferences(Preferences.EMBED_STORE, Context.MODE_PRIVATE)
+        fun deleteEmbed(context: Context) {
+            val prefs = context.getSharedPreferences(Preferences.EMBED_STORE, Context.MODE_PRIVATE)
             prefs.edit().remove(Preferences.EMBED_CACHE).apply()
             _embed = null
         }

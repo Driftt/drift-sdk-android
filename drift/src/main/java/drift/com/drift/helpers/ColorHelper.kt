@@ -11,10 +11,10 @@ object ColorHelper {
         get() {
 
             val embed = Embed.instance
-            if (embed != null && embed!!.configuration != null && embed!!.configuration!!.theme != null) {
-                var colorString = embed!!.configuration!!.theme!!.foregroundColor
-                if (colorString!!.get(0) != '#') {
-                    colorString = "#" + colorString!!
+            if (embed?.configuration?.theme != null) {
+                var colorString = embed.configuration?.theme?.foregroundColor ?: ""
+                if (colorString[0] != '#') {
+                    colorString = "#$colorString"
                 }
 
                 return Color.parseColor(colorString)
@@ -27,10 +27,10 @@ object ColorHelper {
         get() {
 
             val embed = Embed.instance
-            if (embed != null && embed!!.configuration != null && embed!!.configuration!!.theme != null) {
-                var colorString = embed!!.configuration!!.theme!!.backgroundColor
-                if (colorString!!.get(0) != '#') {
-                    colorString = "#" + colorString!!
+            if (embed?.configuration?.theme != null) {
+                var colorString = embed.configuration?.theme?.backgroundColor ?: ""
+                if (colorString[0] != '#') {
+                    colorString = "#$colorString"
                 }
 
                 return Color.parseColor(colorString)

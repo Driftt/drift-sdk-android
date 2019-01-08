@@ -1,12 +1,9 @@
 package drift.com.drift.managers
 
 import java.util.ArrayList
-import java.util.Collections
 import java.util.HashMap
 import drift.com.drift.helpers.LoggerHelper
 import drift.com.drift.model.Attachment
-import drift.com.drift.wrappers.APICallbackWrapper
-import drift.com.drift.wrappers.AttachmentCallback
 import drift.com.drift.wrappers.AttachmentWrapper
 
 /**
@@ -19,14 +16,14 @@ class AttachmentManager {
 
     private var inflightAttachmentRequests = ArrayList<Int>()
 
-    private var attachmentCallback: AttachmentCallback? = null
+    private var attachmentCallback: ((response: ArrayList<Attachment>) -> Unit)? = null
 
     fun clearCache() {
         attachmentMap = HashMap()
         inflightAttachmentRequests = ArrayList()
     }
 
-    fun setAttachmentLoadHandle(attachmentLoadHandle: AttachmentCallback) {
+    fun setAttachmentLoadHandle(attachmentLoadHandle: (response: ArrayList<Attachment>) -> Unit) {
         attachmentCallback = attachmentLoadHandle
     }
 
@@ -34,7 +31,7 @@ class AttachmentManager {
         attachmentCallback = null
     }
 
-    fun getAttachment(attachmentId: Int?): Attachment? {
+    fun getAttachment(attachmentId: Int): Attachment? {
 
         val attachment = attachmentMap[attachmentId]
 
@@ -63,13 +60,11 @@ class AttachmentManager {
                     attachmentMap[attachment.id] = attachment
                 }
                 //Call callback
+                attachmentCallback?.invoke(response)
+
             } else {
                 //Remove in flight so we can retry
                 inflightAttachmentRequests.removeAll(attachmentIds)
-            }
-
-            if (attachmentCallback != null) {
-                attachmentCallback!!.didLoadAttachments(response)
             }
         }
     }

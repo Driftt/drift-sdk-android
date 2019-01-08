@@ -15,13 +15,9 @@ object APIManager {
     private val API_CUSTOMER_URL = "https://customer.api.drift.com/"
     private val API_CONVERSATION_URL = "https://conversation.api.drift.com/"
 
-    var conversationClient: APIConversationAPIBuilder? = null
-        private set
-    var customerClient: APICustomerAPIBuilder? = null
-        private set
-    var authlessClient: APIAuthlessBuilder? = null
-        private set
-
+    lateinit var conversationClient: APIConversationAPIBuilder
+    lateinit var customerClient: APICustomerAPIBuilder
+    lateinit var authlessClient: APIAuthlessBuilder
 
     init {
         setupRestClient()

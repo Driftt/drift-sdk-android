@@ -20,7 +20,7 @@ object UserPopulationHelper {
     fun populateTextAndImageFromUser(context: Context, user: User?, textView: TextView?, imageView: ImageView) {
 
         var uriToLoad: Uri? = null
-        var ignoreUri: Boolean? = false
+        var ignoreUri = false
         if (user != null) {
 
             if (textView != null) {
@@ -51,7 +51,7 @@ object UserPopulationHelper {
             textView?.setText(R.string.drift_sdk_unknown_user)
         }
 
-        if ((!ignoreUri)!!) {
+        if (!ignoreUri) {
 
             val requestOptions = RequestOptions()
                     .circleCrop()

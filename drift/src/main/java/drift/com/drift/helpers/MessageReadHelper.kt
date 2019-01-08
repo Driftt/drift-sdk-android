@@ -9,26 +9,11 @@ object MessageReadHelper {
 
     var TAG = MessageReadHelper::class.java.simpleName
 
-    fun markMessageAsRead(message: Message?) {
-
-        if (message == null) {
-            return
-        }
-
-        ConversationReadWrapper.markMessageAsRead(message.id!!) { response ->
-            if (!response) {
-                LoggerHelper.logMessage(TAG, "Failed to mark conversation as read: " + message.id!!)
-            }
-        }
-    }
-
     fun markMessageAsReadAlongWithPrevious(message: Message?) {
 
-        if (message == null || message.id == null) {
-            return
-        }
+        val messageId = message?.id ?: return
 
-        ConversationReadWrapper.markMessageAsReadAlongWithPrevious(message.id!!) { response ->
+        ConversationReadWrapper.markMessageAsReadAlongWithPrevious(messageId) { response ->
             if (!response) {
                 LoggerHelper.logMessage(TAG, "Failed to mark conversation as read: " + message.id!!)
             }
