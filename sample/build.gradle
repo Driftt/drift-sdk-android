@@ -30,15 +30,16 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     implementation project(":drift")
-    implementation 'com.google.android.gms:play-services-base:16.0.1'
+    testImplementation 'junit:junit:4.12'
 
+
+    implementation 'com.google.android.gms:play-services-base:16.0.1'
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.vectordrawable:vectordrawable-animated:1.0.0'
     implementation 'androidx.media:media:1.1.0-alpha01'
     implementation 'com.google.android.material:material:1.0.0'
-    testImplementation 'junit:junit:4.12'
-    compile "androidx.core:core-ktx:+"
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.core:core-ktx:1.0.1"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 repositories {
     mavenCentral()

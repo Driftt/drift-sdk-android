@@ -8,7 +8,7 @@ import androidx.appcompat.app.AlertDialog
 class Alert {
     companion object {
 
-        fun showAlert(activity: Activity?, title: String, message: String, positiveTitle: String, block: Runnable?) {
+        fun showAlert(activity: Activity?, title: String, message: String, positiveTitle: String, block: (() -> Unit)?) {
             if (activity == null || activity.isFinishing) {
                 return
             }
@@ -16,7 +16,7 @@ class Alert {
             builder.setMessage(message)
             builder.setTitle(title)
                     .setPositiveButton(positiveTitle) { _, _ ->
-                        block?.run()
+                        block?.invoke()
                     }
                     .setNegativeButton("Cancel") { _, _ -> }.create().show()
         }

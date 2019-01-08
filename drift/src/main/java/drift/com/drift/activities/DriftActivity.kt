@@ -46,7 +46,7 @@ open class DriftActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        networkChangeReciever.updateNetowrkState(this)
+        networkChangeReciever.updateNetworkState(this)
     }
 
     private fun networkDidUpdate() {

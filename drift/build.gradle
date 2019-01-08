@@ -43,7 +43,7 @@ dependencies {
     implementation 'com.github.8bytes:JavaPhoenixClient:228bcd6e09'
 
     implementation 'com.github.bumptech.glide:glide:4.8.0'
-    annotationProcessor 'androidx.annotation:annotation:1.0.0'
+    annotationProcessor 'androidx.annotation:annotation:1.0.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
 
     implementation 'net.danlew:android.joda:2.10.1.1'

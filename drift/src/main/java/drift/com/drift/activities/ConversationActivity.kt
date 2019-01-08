@@ -8,7 +8,6 @@ import android.content.IntentFilter
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
@@ -20,14 +19,12 @@ import android.widget.Toast
 
 import java.util.ArrayList
 
-import androidx.appcompat.app.ActionBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import drift.com.drift.R
 import drift.com.drift.adapters.ConversationAdapter
 import drift.com.drift.fragments.ScheduleMeetingDialogFragment
 import drift.com.drift.helpers.Alert
-import drift.com.drift.helpers.ClickListener
 import drift.com.drift.helpers.ColorHelper
 import drift.com.drift.helpers.DownloadHelper
 import drift.com.drift.helpers.LoggerHelper
@@ -44,29 +41,25 @@ import drift.com.drift.model.Embed
 import drift.com.drift.model.Message
 import drift.com.drift.model.MessageRequest
 import drift.com.drift.model.User
-import drift.com.drift.wrappers.APICallbackWrapper
 import drift.com.drift.wrappers.AttachmentCallback
 
 class ConversationActivity : DriftActivity(), AttachmentCallback {
 
 
-    internal var textEntryEditText: EditText
-    internal var sendButtonImageView: ImageView
-    internal var plusButtonImageView: ImageView
-    internal var recyclerView: RecyclerView
-    internal var statusTextView: TextView
-    internal var driftWelcomeMessage: TextView
-    internal var driftWelcomeImageView: ImageView
-    internal var welcomeMessageLinearLayout: LinearLayout
+    private lateinit var textEntryEditText: EditText
+    private lateinit var sendButtonImageView: ImageView
+    private lateinit var plusButtonImageView: ImageView
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var statusTextView: TextView
+    private lateinit var driftWelcomeMessage: TextView
+    private lateinit var driftWelcomeImageView: ImageView
+    private lateinit var welcomeMessageLinearLayout: LinearLayout
+    private lateinit var progressBar: ProgressBar
+    private lateinit var conversationAdapter: ConversationAdapter
 
-    internal var driftBrandTextView: TextView
-
-    internal var userForWelcomeMessage: User? = null
-    internal var welcomeMessage: String
-
-    internal var progressBar: ProgressBar
-
-    internal var conversationAdapter: ConversationAdapter
+    private lateinit var driftBrandTextView: TextView
+    private var userForWelcomeMessage: User? = null
+    private var welcomeMessage: String? = null
 
     private val downloadReceiver = object : BroadcastReceiver() {
 
@@ -122,8 +115,8 @@ class ConversationActivity : DriftActivity(), AttachmentCallback {
         }
 
         val auth = Auth.instance
-        if (auth != null && auth!!.endUser != null) {
-            endUserId = auth!!.endUser!!.id
+        if (auth?.endUser != null) {
+            endUserId = auth.endUser?.id
         } else {
             //No Auth
             Toast.makeText(this, "We're sorry, an unknown error occurred", Toast.LENGTH_LONG).show()
@@ -133,11 +126,11 @@ class ConversationActivity : DriftActivity(), AttachmentCallback {
         sendButtonImageView.setBackgroundColor(ColorHelper.backgroundColor)
 
         val actionBar = supportActionBar
-        actionBar?.setTitle("Conversation")
+        actionBar?.title = "Conversation"
 
         sendButtonImageView.setOnClickListener { didPressSendButton() }
 
-        textEntryEditText.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
+        textEntryEditText.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEND) {
                 didPressSendButton()
                 return@OnEditorActionListener true
@@ -151,7 +144,7 @@ class ConversationActivity : DriftActivity(), AttachmentCallback {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable) {
-                if (s.length != 0) {
+                if (s.isNotEmpty()) {
                     sendButtonImageView.visibility = View.VISIBLE
                 } else {
                     sendButtonImageView.visibility = View.GONE
@@ -164,12 +157,12 @@ class ConversationActivity : DriftActivity(), AttachmentCallback {
         val layoutManager = LinearLayoutManager(this)
         layoutManager.reverseLayout = true
         recyclerView.layoutManager = layoutManager
-        recyclerView.addOnItemTouchListener(RecyclerTouchListener(this, recyclerView, ClickListener { view, position ->
+        recyclerView.addOnItemTouchListener(RecyclerTouchListener(this, recyclerView) { _, position ->
             val message = conversationAdapter.getItemAt(position)
-            if (message != null && message.sendStatus == Message.SendStatus.FAILED) {
+            if (message.sendStatus == Message.SendStatus.FAILED) {
                 resendMessage(message)
             }
-        }))
+        })
 
         conversationAdapter = ConversationAdapter(this, MessageManager.instance.getMessagesForConversationId(conversationId))
         recyclerView.adapter = conversationAdapter
@@ -204,7 +197,7 @@ class ConversationActivity : DriftActivity(), AttachmentCallback {
 
         if (conversationId != -1) {
 
-            MessageManager.instance.getMessagesForConversation(conversationId, APICallbackWrapper<ArrayList<Message>> { response ->
+            MessageManager.instance.getMessagesForConversation(conversationId) { response ->
                 if (response != null) {
                     progressBar.visibility = View.GONE
                     LoggerHelper.logMessage(TAG, response.toString())
@@ -227,28 +220,28 @@ class ConversationActivity : DriftActivity(), AttachmentCallback {
                     AttachmentManager.instance.loadAttachments(attachmentIds)
 
                 } else {
-                    LoggerHelper.logMessage(TAG, "Failed to load users")
+                    LoggerHelper.logMessage(TAG, "Failed to load messages")
                 }
-            })
+            }
         }
     }
 
-    internal fun updateForConversationType() {
+    private fun updateForConversationType() {
         when (conversationType) {
             ConversationActivity.ConversationType.CREATE -> {
 
                 val embed = Embed.instance
-                if (embed != null && embed!!.configuration != null) {
-                    if (embed!!.configuration!!.isOrgCurrentlyOpen) {
-                        welcomeMessage = embed!!.configuration!!.theme!!.getWelcomeMessage()
-                        driftWelcomeMessage.setText(embed!!.configuration!!.theme!!.getWelcomeMessage())
+                if (embed?.configuration != null) {
+                    welcomeMessage = if (embed.configuration?.isOrgCurrentlyOpen == true) {
+                        embed.configuration?.theme?.getWelcomeMessage() ?: ""
                     } else {
-                        welcomeMessage = embed!!.configuration!!.theme!!.getAwayMessage()
-                        driftWelcomeMessage.setText(embed!!.configuration!!.theme!!.getAwayMessage())
+                        embed.configuration?.theme?.getAwayMessage() ?: ""
                     }
-                    updateWelcomeImage(embed!!.configuration)
+                    driftWelcomeMessage.text = welcomeMessage
 
-                    if (embed!!.configuration!!.showBranding!!) {
+                    updateWelcomeImage(embed.configuration)
+
+                    if (embed.configuration?.showBranding == true) {
                         driftBrandTextView.visibility = View.VISIBLE
                     } else {
                         driftBrandTextView.visibility = View.GONE
@@ -262,7 +255,7 @@ class ConversationActivity : DriftActivity(), AttachmentCallback {
         }
     }
 
-    fun updateWelcomeImage(configuration: Configuration?) {
+    private fun updateWelcomeImage(configuration: Configuration?) {
 
 
         if (userForWelcomeMessage == null) {
@@ -280,7 +273,7 @@ class ConversationActivity : DriftActivity(), AttachmentCallback {
         statusTextView.visibility = View.VISIBLE
     }
 
-    internal fun didPressSendButton() {
+    private fun didPressSendButton() {
 
         when (conversationType) {
             ConversationActivity.ConversationType.CONTINUE -> sendMessage()
@@ -293,7 +286,7 @@ class ConversationActivity : DriftActivity(), AttachmentCallback {
 
 
         val auth = Auth.instance
-        if (auth != null && message.authorId === auth!!.endUser!!.id && message.contentType == "CHAT" && (message.attributes == null || message.attributes!!.appointmentInfo == null) && !message.fakeMessage) {
+        if (auth != null && message.authorId === auth.endUser!!.id && message.contentType == "CHAT" && (message.attributes == null || message.attributes!!.appointmentInfo == null) && !message.fakeMessage) {
             LoggerHelper.logMessage(TAG, "Ignoring own message")
             return
         }
@@ -310,7 +303,7 @@ class ConversationActivity : DriftActivity(), AttachmentCallback {
         MessageReadHelper.markMessageAsReadAlongWithPrevious(message)
     }
 
-    internal fun sendMessage() {
+    private fun sendMessage() {
 
         val messageRequest = MessageRequest(textEntryEditText.text.toString(), endUserId, null, this)
         val message = messageRequest.messageFromRequest(conversationId)
@@ -319,18 +312,18 @@ class ConversationActivity : DriftActivity(), AttachmentCallback {
     }
 
 
-    internal fun resendMessage(message: Message?) {
+    private fun resendMessage(message: Message) {
 
-        val messageRequest = MessageRequest(message!!.body, endUserId, null, this)
+        val messageRequest = MessageRequest(message.body ?: "", endUserId, null, this)
         sendMessageRequest(messageRequest, message)
 
     }
 
-    internal fun sendMessageRequest(messageRequest: MessageRequest, message: Message) {
+    private fun sendMessageRequest(messageRequest: MessageRequest, message: Message) {
         message.sendStatus = Message.SendStatus.SENDING
         conversationAdapter.updateMessage(message)
 
-        MessageManager.instance.sendMessageForConversationId(conversationId, messageRequest, APICallbackWrapper<Message> { response ->
+        MessageManager.instance.sendMessageForConversationId(conversationId, messageRequest) { response ->
             if (response != null) {
                 message.sendStatus = Message.SendStatus.SENT
                 MessageManager.instance.removeMessageFromFailedCache(message, conversationId)
@@ -340,10 +333,10 @@ class ConversationActivity : DriftActivity(), AttachmentCallback {
                 MessageManager.instance.addMessageFailedToConversation(message, conversationId)
                 conversationAdapter.updateData(MessageManager.instance.getMessagesForConversationId(conversationId))
             }
-        })
+        }
     }
 
-    internal fun createConversation() {
+    private fun createConversation() {
 
         val textToSend = textEntryEditText.text.toString()
         val messageRequest = MessageRequest(textToSend, endUserId, null, this)
@@ -356,7 +349,7 @@ class ConversationActivity : DriftActivity(), AttachmentCallback {
             welcomeUserId = userForWelcomeMessage!!.id
         }
 
-        MessageManager.instance.createConversation(textToSend, welcomeMessage, welcomeUserId, APICallbackWrapper<Message> { response ->
+        MessageManager.instance.createConversation(textToSend, welcomeMessage, welcomeUserId) { response ->
             progressBar.visibility = View.GONE
 
             if (response != null) {
@@ -372,14 +365,10 @@ class ConversationActivity : DriftActivity(), AttachmentCallback {
                 textEntryEditText.setText(textToSend)
                 Alert.showAlert(this@ConversationActivity, "Error", "Failed to create conversation", "Retry") { didPressSendButton() }
             }
-        })
+        }
     }
 
-    override fun didLoadAttachments(attachments: ArrayList<Attachment>?) {
-        if (attachments == null) {
-            return
-        }
-
+    override fun didLoadAttachments(attachments: ArrayList<Attachment>) {
         LoggerHelper.logMessage(TAG, "Did load attachments: " + attachments.size)
         conversationAdapter.updateForAttachments(attachments)
     }

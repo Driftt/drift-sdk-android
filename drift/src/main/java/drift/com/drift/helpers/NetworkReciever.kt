@@ -15,18 +15,18 @@ class NetworkReciever : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         val connected = !intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, false)
-        notifyEventBusOfNetworkChange(connected)
+        notifyEventBusOfNetworkChange(context, connected)
     }
 
-    fun updateNetowrkState(context: Context) {
-        notifyEventBusOfNetworkChange(isInternetConnected(context))
+    fun updateNetworkState(context: Context) {
+        notifyEventBusOfNetworkChange(context, isInternetConnected(context))
     }
 
-    private fun notifyEventBusOfNetworkChange(connected: Boolean) {
+    private fun notifyEventBusOfNetworkChange(context: Context, connected: Boolean) {
         LoggerHelper.logMessage(TAG, "Network Changed: Connected: " + connected.toString())
 
         val networkChanged = Intent(Notification.NETWORK_STATE_CHANGED)
-        LocalBroadcastManager.getInstance(Drift.getContext()).sendBroadcast(networkChanged)
+        LocalBroadcastManager.getInstance(context).sendBroadcast(networkChanged)
     }
 
     companion object {

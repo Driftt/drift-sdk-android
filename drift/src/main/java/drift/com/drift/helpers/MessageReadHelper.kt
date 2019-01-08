@@ -2,7 +2,6 @@ package drift.com.drift.helpers
 
 
 import drift.com.drift.model.Message
-import drift.com.drift.wrappers.APICallbackWrapper
 import drift.com.drift.wrappers.ConversationReadWrapper
 
 

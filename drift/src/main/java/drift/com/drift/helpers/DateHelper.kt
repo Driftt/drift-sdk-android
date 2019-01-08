@@ -1,5 +1,6 @@
 package drift.com.drift.helpers
 
+import android.content.Context
 import android.text.format.DateFormat
 
 import java.text.SimpleDateFormat
@@ -20,24 +21,24 @@ object DateHelper {
         return fmt.format(dateOne) == fmt.format(dateTwo)
     }
 
-    fun formatDateForConversation(date: Date?): String {
+    fun formatDateForConversation(context: Context, date: Date?): String {
 
         if (date == null){
             return ""
         }
 
         return if (isSameDay(date, Date())) {
-            DateFormat.getTimeFormat(Drift.getContext()).format(date)
+            DateFormat.getTimeFormat(context).format(date)
         } else {
-            DateFormat.getDateFormat(Drift.getContext()).format(date)
+            DateFormat.getDateFormat(context).format(date)
         }
     }
 
-    fun formatDateForScheduleDay(date: Date): String {
-        return DateFormat.getDateFormat(Drift.getContext()).format(date)
+    fun formatDateForScheduleDay(context: Context, date: Date): String {
+        return DateFormat.getDateFormat(context).format(date)
     }
 
-    fun formatDateForScheduleTime(date: Date): String {
-        return DateFormat.getTimeFormat(Drift.getContext()).format(date)
+    fun formatDateForScheduleTime(context: Context, date: Date): String {
+        return DateFormat.getTimeFormat(context).format(date)
     }
 }
