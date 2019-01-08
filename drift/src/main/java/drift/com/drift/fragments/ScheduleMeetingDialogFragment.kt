@@ -136,7 +136,7 @@ class ScheduleMeetingDialogFragment : DialogFragment() {
         backChevron.setColorFilter(ColorHelper.backgroundColor)
 
 
-        adapter = ScheduleMeetingAdapter()
+        adapter = ScheduleMeetingAdapter(requireContext())
         recyclerView.adapter = adapter
 
         val layoutManager = LinearLayoutManager(activity)

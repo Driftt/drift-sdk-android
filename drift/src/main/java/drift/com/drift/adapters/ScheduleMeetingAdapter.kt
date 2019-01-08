@@ -1,5 +1,6 @@
 package drift.com.drift.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +17,7 @@ import drift.com.drift.helpers.DateHelper
  * Created by eoin on 27/02/2018.
  */
 
-internal class ScheduleMeetingAdapter : RecyclerView.Adapter<ScheduleMeetingAdapter.ScheduleMeetingCell>() {
+internal class ScheduleMeetingAdapter(private val context: Context) : RecyclerView.Adapter<ScheduleMeetingAdapter.ScheduleMeetingCell>() {
 
     private var dates: List<Date> = ArrayList()
 
@@ -49,8 +50,8 @@ internal class ScheduleMeetingAdapter : RecyclerView.Adapter<ScheduleMeetingAdap
         val currentDate = dates[position]
 
         when (selectionType) {
-            ScheduleMeetingAdapter.SelectionType.DAY -> holder.titleTextView.text = DateHelper.formatDateForScheduleDay(currentDate)
-            ScheduleMeetingAdapter.SelectionType.TIME -> holder.titleTextView.text = DateHelper.formatDateForScheduleTime(currentDate)
+            ScheduleMeetingAdapter.SelectionType.DAY -> holder.titleTextView.text = DateHelper.formatDateForScheduleDay(context, currentDate)
+            ScheduleMeetingAdapter.SelectionType.TIME -> holder.titleTextView.text = DateHelper.formatDateForScheduleTime(context, currentDate)
         }
 
     }

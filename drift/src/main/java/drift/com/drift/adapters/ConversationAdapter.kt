@@ -466,8 +466,8 @@ class ConversationAdapter(private val activity: ConversationActivity, messages: 
                     val startDate = appointmentInformation.availabilitySlot
                     val endDate = Date(startDate!!.time + appointmentInformation.slotDuration!! * 60000)
 
-                    val startDateText = DateHelper.formatDateForScheduleTime(startDate)
-                    val endDateText = DateHelper.formatDateForScheduleTime(endDate)
+                    val startDateText = DateHelper.formatDateForScheduleTime(activity, startDate)
+                    val endDateText = DateHelper.formatDateForScheduleTime(activity, endDate)
 
                     meetingTimeTextView.text = activity.getString(R.string.drift_sdk_dash_divided_strings, startDateText, endDateText)
 

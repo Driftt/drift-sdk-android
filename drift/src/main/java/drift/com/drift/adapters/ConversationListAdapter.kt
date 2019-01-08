@@ -6,23 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-
-
 import java.util.ArrayList
-import java.util.Date
-
 import androidx.recyclerview.widget.RecyclerView
-
 import com.bumptech.glide.Glide
-
 import drift.com.drift.R
 import drift.com.drift.helpers.DateHelper
 import drift.com.drift.helpers.UserPopulationHelper
 import drift.com.drift.managers.UserManager
 import drift.com.drift.model.Conversation
 import drift.com.drift.model.ConversationExtra
-import drift.com.drift.model.PreMessage
-import drift.com.drift.model.User
 
 
 internal class ConversationListAdapter(private val context: Context, private var conversationExtraList: List<ConversationExtra>?) : RecyclerView.Adapter<ConversationListAdapter.ConversationListCell>() {
@@ -78,7 +70,7 @@ internal class ConversationListAdapter(private val context: Context, private var
 
                 val updatedAt = conversation.updatedAt
 
-                conversationTimeTextView.text = DateHelper.formatDateForConversation(updatedAt)
+                conversationTimeTextView.text = DateHelper.formatDateForConversation(context, updatedAt)
 
             } else {
                 conversationTimeTextView.text = ""
