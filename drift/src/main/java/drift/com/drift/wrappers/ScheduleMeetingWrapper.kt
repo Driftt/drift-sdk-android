@@ -18,40 +18,40 @@ object ScheduleMeetingWrapper {
 
     private val TAG = ScheduleMeetingWrapper::class.java.simpleName
 
-    fun getUserAvailability(userId: Int, callback: APICallbackWrapper<UserAvailability>) {
+    fun getUserAvailability(userId: Int, callback: (response: UserAvailability?) -> Unit) {
 
         APIManager.customerClient!!.getUserAvailability(userId).enqueue(object : Callback<UserAvailability> {
             override fun onResponse(call: Call<UserAvailability>, response: Response<UserAvailability>) {
                 if (response.code() != 200 && response.code() != 201 || response.body() == null) {
-                    callback.onResponse(null)
+                    callback(null)
                 } else {
-                    callback.onResponse(response.body())
+                    callback(response.body())
                 }
             }
 
             override fun onFailure(call: Call<UserAvailability>, t: Throwable) {
                 LoggerHelper.logMessage(TAG, t.localizedMessage)
-                callback.onResponse(null)
+                callback(null)
             }
         })
     }
 
-    fun scheduleMeeting(userId: Int, conversationId: Int, timestamp: Double, callback: APICallbackWrapper<GoogleMeeting>) {
+    fun scheduleMeeting(userId: Int, conversationId: Int, timestamp: Double, callback: (response: GoogleMeeting?) -> Unit) {
 
         val body = RequestBody.create(MediaType.parse("application/json"), timestamp.toString())
 
         APIManager.customerClient!!.scheduleMeeting(userId, conversationId, body).enqueue(object : Callback<GoogleMeeting> {
             override fun onResponse(call: Call<GoogleMeeting>, response: Response<GoogleMeeting>) {
                 if (response.code() != 200 && response.code() != 201 || response.body() == null) {
-                    callback.onResponse(null)
+                    callback(null)
                 } else {
-                    callback.onResponse(response.body())
+                    callback(response.body())
                 }
             }
 
             override fun onFailure(call: Call<GoogleMeeting>, t: Throwable) {
                 LoggerHelper.logMessage(TAG, t.localizedMessage)
-                callback.onResponse(null)
+                callback(null)
             }
         })
     }

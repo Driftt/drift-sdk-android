@@ -17,8 +17,6 @@ import android.widget.TextView
 
 import java.util.Calendar
 import java.util.Date
-import java.util.TimeZone
-
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,7 +28,6 @@ import com.bumptech.glide.request.RequestOptions
 import drift.com.drift.R
 import drift.com.drift.adapters.ScheduleMeetingAdapter
 import drift.com.drift.helpers.Alert
-import drift.com.drift.helpers.ClickListener
 import drift.com.drift.helpers.ColorHelper
 import drift.com.drift.helpers.DateHelper
 import drift.com.drift.helpers.LoggerHelper
@@ -38,11 +35,8 @@ import drift.com.drift.helpers.RecyclerTouchListener
 import drift.com.drift.managers.MessageManager
 import drift.com.drift.managers.UserManager
 import drift.com.drift.model.GoogleMeeting
-import drift.com.drift.model.Message
 import drift.com.drift.model.MessageRequest
-import drift.com.drift.model.User
 import drift.com.drift.model.UserAvailability
-import drift.com.drift.wrappers.APICallbackWrapper
 import drift.com.drift.wrappers.ScheduleMeetingWrapper
 
 
@@ -146,28 +140,23 @@ class ScheduleMeetingDialogFragment : DialogFragment() {
         dividerItemDecoration.setDrawable(ContextCompat.getDrawable(activity!!, R.drawable.drift_sdk_recycler_view_divider)!!)
         recyclerView.addItemDecoration(dividerItemDecoration)
 
-        recyclerView.addOnItemTouchListener(RecyclerTouchListener(activity, recyclerView, ClickListener { view, position ->
+        recyclerView.addOnItemTouchListener(RecyclerTouchListener(requireContext(), recyclerView) { _, position ->
             val chosenDate = adapter.getItemAt(position)
-            if (chosenDate != null) {
-
-                when (scheduleMeetingState) {
-                    ScheduleMeetingDialogFragment.ScheduleMeetingState.DAY -> {
-                        selectedDate = chosenDate
-                        changeToState(ScheduleMeetingState.TIME)
-                    }
-                    ScheduleMeetingDialogFragment.ScheduleMeetingState.TIME -> {
-                        selectedTime = chosenDate
-                        changeToState(ScheduleMeetingState.CONFIRM)
-                    }
-
-                    ScheduleMeetingDialogFragment.ScheduleMeetingState.CONFIRM//Can't hapen
-                    -> {
-                    }
+            when (scheduleMeetingState) {
+                ScheduleMeetingDialogFragment.ScheduleMeetingState.DAY -> {
+                    selectedDate = chosenDate
+                    changeToState(ScheduleMeetingState.TIME)
+                }
+                ScheduleMeetingDialogFragment.ScheduleMeetingState.TIME -> {
+                    selectedTime = chosenDate
+                    changeToState(ScheduleMeetingState.CONFIRM)
                 }
 
-
+                ScheduleMeetingDialogFragment.ScheduleMeetingState.CONFIRM//Can't hapen
+                -> {
+                }
             }
-        }))
+        })
 
         backChevron.setOnClickListener { didPressBackChevron() }
 
@@ -175,13 +164,13 @@ class ScheduleMeetingDialogFragment : DialogFragment() {
 
         val user = UserManager.instance.getUserForId(userId)
         if (user != null) {
-            userTextView.setText(user!!.userName)
+            userTextView.text = user.userName
             val requestOptions = RequestOptions()
                     .circleCrop()
                     .placeholder(R.drawable.drift_sdk_placeholder)
 
             Glide.with(activity!!)
-                    .load(user!!.avatarUrl)
+                    .load(user.avatarUrl)
                     .apply(requestOptions)
                     .into(userImageView)
         } else {
@@ -194,7 +183,7 @@ class ScheduleMeetingDialogFragment : DialogFragment() {
         return view
     }
 
-    fun setupAvailabilityCall() {
+    private fun setupAvailabilityCall() {
 
         progressBar.visibility = View.VISIBLE
         //TODO: Cancel call on back
@@ -211,23 +200,23 @@ class ScheduleMeetingDialogFragment : DialogFragment() {
         }
     }
 
-    fun setupForSelectedDate(date: Date) {
+    private fun setupForSelectedDate(date: Date) {
 
 
         recyclerView.visibility = View.GONE
         confirmationScrollView.visibility = View.VISIBLE
 
 
-        confirmationDateTextView.text = DateHelper.formatDateForScheduleDay(date)
+        confirmationDateTextView.text = DateHelper.formatDateForScheduleDay(requireContext(), date)
         if (userAvailability != null) {
             val cal = Calendar.getInstance()
             val tz = cal.timeZone
 
             confirmationTimezoneTextView.text = tz.id
-            val ONE_MINUTE_IN_MILLIS: Long = 60000
-            val endDate = Date(date.time + userAvailability!!.slotDuration * ONE_MINUTE_IN_MILLIS)
+            val oneMinuteInMillis: Long = 60000
+            val endDate = Date(date.time + userAvailability!!.slotDuration * oneMinuteInMillis)
 
-            confirmationTimeTextView.text = getString(R.string.drift_sdk_dash_divided_strings, DateHelper.formatDateForScheduleTime(date), DateHelper.formatDateForScheduleTime(endDate))
+            confirmationTimeTextView.text = getString(R.string.drift_sdk_dash_divided_strings, DateHelper.formatDateForScheduleTime(requireContext(), date), DateHelper.formatDateForScheduleTime(requireContext(), endDate))
 
         } else {
             confirmationTimezoneTextView.text = ""
@@ -236,7 +225,7 @@ class ScheduleMeetingDialogFragment : DialogFragment() {
 
     }
 
-    fun changeToState(state: ScheduleMeetingState) {
+    private fun changeToState(state: ScheduleMeetingState) {
 
         scheduleMeetingState = state
 
@@ -246,7 +235,7 @@ class ScheduleMeetingDialogFragment : DialogFragment() {
                 titleTextView.text = ""
                 backChevron.visibility = View.VISIBLE
                 if (selectedTime != null) {
-                    setupForSelectedDate(selectedTime)
+                    setupForSelectedDate(selectedTime!!)
                 }
             }
             ScheduleMeetingDialogFragment.ScheduleMeetingState.DAY -> {
@@ -262,7 +251,7 @@ class ScheduleMeetingDialogFragment : DialogFragment() {
                 titleTextView.setText(R.string.drift_sdk_select_a_time)
                 backChevron.visibility = View.VISIBLE
                 if (userAvailability != null && selectedDate != null) {
-                    adapter.setupForDates(userAvailability!!.getDatesForDay(selectedDate), ScheduleMeetingAdapter.SelectionType.TIME)
+                    adapter.setupForDates(userAvailability!!.getDatesForDay(selectedDate!!), ScheduleMeetingAdapter.SelectionType.TIME)
                 }
                 recyclerView.visibility = View.VISIBLE
                 confirmationScrollView.visibility = View.GONE
@@ -270,7 +259,7 @@ class ScheduleMeetingDialogFragment : DialogFragment() {
         }
     }
 
-    fun didPressBackChevron() {
+    private fun didPressBackChevron() {
 
         when (scheduleMeetingState) {
             ScheduleMeetingDialogFragment.ScheduleMeetingState.CONFIRM -> changeToState(ScheduleMeetingState.TIME)
@@ -280,7 +269,7 @@ class ScheduleMeetingDialogFragment : DialogFragment() {
         }
     }
 
-    fun didPressSchedule() {
+    private fun didPressSchedule() {
 
         progressBar.visibility = View.VISIBLE
 
@@ -295,12 +284,15 @@ class ScheduleMeetingDialogFragment : DialogFragment() {
         }
     }
 
-    fun createMessageForMeeting(googleMeeting: GoogleMeeting?) {
+    private fun createMessageForMeeting(googleMeeting: GoogleMeeting) {
         progressBar.visibility = View.VISIBLE
 
-        val messageRequest = MessageRequest(googleMeeting, userAvailability, userId, conversationId, selectedTime)
+        val currentUserAvailability = userAvailability ?: return
+        val currentSelectedTime = selectedTime ?: return
 
-        MessageManager.instance.sendMessageForConversationId(conversationId, messageRequest, APICallbackWrapper<Message> { response ->
+        val messageRequest = MessageRequest(googleMeeting, currentUserAvailability, userId, conversationId, currentSelectedTime)
+
+        MessageManager.instance.sendMessageForConversationId(conversationId, messageRequest) { response ->
             progressBar.visibility = View.GONE
 
             if (response != null) {
@@ -308,25 +300,25 @@ class ScheduleMeetingDialogFragment : DialogFragment() {
             } else {
                 showAlertForCreatingMeetingMessage(googleMeeting)
             }
-        })
+        }
     }
 
-    fun showAlertForFailedToGetAvailability() {
+    private fun showAlertForFailedToGetAvailability() {
         Alert.showAlert(activity, "Error", "Failed to load users availability", "Retry") { setupAvailabilityCall() }
     }
 
-    fun showAlertForScheduleMeeting() {
+    private fun showAlertForScheduleMeeting() {
         Alert.showAlert(activity, "Error", "Failed to schedule meeting", "Retry") { didPressSchedule() }
     }
 
-    fun showAlertForCreatingMeetingMessage(googleMeeting: GoogleMeeting?) {
+    private fun showAlertForCreatingMeetingMessage(googleMeeting: GoogleMeeting) {
         Alert.showAlert(activity, "Error", "Failed to schedule meeting", "Retry") { createMessageForMeeting(googleMeeting) }
     }
 
     companion object {
 
-        private val USER_ID_ARG = "userIDArg"
-        private val CONVERSATION_ID_ARG = "conversationIDArg"
+        private const val USER_ID_ARG = "userIDArg"
+        private const val CONVERSATION_ID_ARG = "conversationIDArg"
 
         private val TAG = ScheduleMeetingDialogFragment::class.java.simpleName
 
