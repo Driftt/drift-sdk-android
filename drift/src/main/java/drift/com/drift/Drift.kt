@@ -45,7 +45,7 @@ class Drift private constructor() {
             }
         }
 
-        private val isConnected: Boolean
+        val isConnected: Boolean
             get() = DriftManager.instance.loadingUser == true || SocketManager.instance.isConnected
 
         fun setLoggerListener(loggerListener: LoggerListener) {
