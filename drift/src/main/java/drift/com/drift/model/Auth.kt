@@ -25,11 +25,14 @@ class Auth {
     @SerializedName("endUser")
     var endUser: EndUser? = null
 
-    fun saveAuth(context: Context) {
+    fun saveAuth() {
         val gson = Gson()
         val stringAuth = gson.toJson(this)
-        val prefs = context.getSharedPreferences(Preferences.AUTH_STORE, Context.MODE_PRIVATE)
-        prefs.edit().putString(Preferences.AUTH_CACHE, stringAuth).apply()
+        val context = Drift.getContext()
+        if (context != null) {
+            val prefs = context.getSharedPreferences(Preferences.AUTH_STORE, Context.MODE_PRIVATE)
+            prefs.edit().putString(Preferences.AUTH_CACHE, stringAuth).apply()
+        }
         _auth = this
     }
 
@@ -46,7 +49,8 @@ class Auth {
                 return _auth
             }
 
-        private fun loadAuth(context: Context): Auth? {
+        private fun loadAuth(): Auth? {
+            val context = Drift.getContext() ?: return null
 
             val prefs = context.getSharedPreferences(Preferences.AUTH_STORE, Context.MODE_PRIVATE)
             val authJSON = prefs.getString(Preferences.AUTH_CACHE, null) ?: return null
@@ -55,9 +59,12 @@ class Auth {
             return gson.fromJson(authJSON, Auth::class.java)
         }
 
-        fun deleteAuth(context: Context) {
-            val prefs = context.getSharedPreferences(Preferences.AUTH_STORE, Context.MODE_PRIVATE)
-            prefs.edit().remove(Preferences.AUTH_CACHE).apply()
+        fun deleteAuth() {
+            val context = Drift.getContext()
+            if (context != null) {
+                val prefs = context.getSharedPreferences(Preferences.AUTH_STORE, Context.MODE_PRIVATE)
+                prefs.edit().remove(Preferences.AUTH_CACHE).apply()
+            }
             _auth = null
         }
     }

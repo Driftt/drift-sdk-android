@@ -30,11 +30,14 @@ class Embed {
     @SerializedName("configuration")
     var configuration: Configuration? = null
 
-    fun saveEmbed(context: Context) {
+    fun saveEmbed() {
         val gson = Gson()
         val stringAuth = gson.toJson(this)
-        val prefs = context.getSharedPreferences(Preferences.EMBED_STORE, Context.MODE_PRIVATE)
-        prefs.edit().putString(Preferences.EMBED_CACHE, stringAuth).apply()
+        val context = Drift.getContext()
+        if (context != null) {
+            val prefs = context.getSharedPreferences(Preferences.EMBED_STORE, Context.MODE_PRIVATE)
+            prefs.edit().putString(Preferences.EMBED_CACHE, stringAuth).apply()
+        }
         _embed = this
     }
 
@@ -52,7 +55,9 @@ class Embed {
                 return _embed
             }
 
-        private fun loadEmbed(context: Context): Embed? {
+        private fun loadEmbed(): Embed? {
+
+            val context = Drift.getContext() ?: return null
 
             val prefs = context.getSharedPreferences(Preferences.EMBED_STORE, Context.MODE_PRIVATE)
             val authJSON = prefs.getString(Preferences.EMBED_CACHE, null) ?: return null
@@ -60,12 +65,5 @@ class Embed {
             val gson = GsonBuilder().create()
             return gson.fromJson(authJSON, Embed::class.java)
         }
-
-        fun deleteEmbed(context: Context) {
-            val prefs = context.getSharedPreferences(Preferences.EMBED_STORE, Context.MODE_PRIVATE)
-            prefs.edit().remove(Preferences.EMBED_CACHE).apply()
-            _embed = null
-        }
     }
-
 }

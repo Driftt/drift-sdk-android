@@ -69,6 +69,10 @@ class Drift private constructor() {
             LogoutHelper.logout()
         }
 
+        internal fun getContext() : Context? {
+            return currentActivity?.applicationContext
+        }
+
         val currentActivity: Activity?
             get() = _drift.applicationLifecycleHelper.currentActivity
     }

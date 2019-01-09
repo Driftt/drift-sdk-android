@@ -17,11 +17,12 @@ class ApplicationLifecycleHelper : Application.ActivityLifecycleCallbacks {
 
     var currentActivity: Activity? = null
 
-    private fun onApplicationStarted(activity: Activity) {
+    private fun onApplicationStarted(activity: Activity?) {
         LoggerHelper.logMessage(TAG, "Application Did Start")
     }
 
-    private fun onApplicationResumed(activity: Activity) {
+
+    private fun onApplicationResumed(activity: Activity?) {
         LoggerHelper.logMessage(TAG, "Application Did Resume")
         val orgId = Auth.instance?.endUser?.orgId ?: return
         val endUserId = Auth.instance?.endUser?.id ?: return
@@ -38,12 +39,11 @@ class ApplicationLifecycleHelper : Application.ActivityLifecycleCallbacks {
         LoggerHelper.logMessage(TAG, "Application Did Stop")
     }
 
-
-    override fun onActivityCreated(activity: Activity, bundle: Bundle) {
+    override fun onActivityCreated(activity: Activity?, savedInstanceState: Bundle?) {
 
     }
 
-    override fun onActivityResumed(activity: Activity) {
+    override fun onActivityResumed(activity: Activity?) {
 
         currentActivity = activity
 
@@ -61,8 +61,8 @@ class ApplicationLifecycleHelper : Application.ActivityLifecycleCallbacks {
         resumed++
     }
 
-    override fun onActivityPaused(activity: Activity) {
-        if (activity.isChangingConfigurations) {
+    override fun onActivityPaused(activity: Activity?) {
+        if (activity?.isChangingConfigurations == true) {
             LoggerHelper.logMessage(TAG, "Activity Rotating, ignoring Pause")
             rotating = true
             return
@@ -71,11 +71,10 @@ class ApplicationLifecycleHelper : Application.ActivityLifecycleCallbacks {
         resumed--
     }
 
-    override fun onActivityStopped(activity: Activity) {
-
+    override fun onActivityStopped(activity: Activity?) {
         PresentationManager.instance.closePopupView()
 
-        if (activity.isChangingConfigurations) {
+        if (activity?.isChangingConfigurations == true) {
             LoggerHelper.logMessage(TAG, "Activity Rotating, ignoring Stop")
             rotating = true
             return
@@ -93,8 +92,7 @@ class ApplicationLifecycleHelper : Application.ActivityLifecycleCallbacks {
         started--
     }
 
-    override fun onActivityStarted(activity: Activity) {
-
+    override fun onActivityStarted(activity: Activity?) {
         currentActivity = activity
 
         if (rotating) {
@@ -109,11 +107,11 @@ class ApplicationLifecycleHelper : Application.ActivityLifecycleCallbacks {
         started++
     }
 
-    override fun onActivitySaveInstanceState(activity: Activity, bundle: Bundle) {
+    override fun onActivitySaveInstanceState(activity: Activity?, outState: Bundle?) {
         LoggerHelper.logMessage(TAG, "Activity Save Instance State")
     }
 
-    override fun onActivityDestroyed(activity: Activity) {
+    override fun onActivityDestroyed(activity: Activity?) {
         LoggerHelper.logMessage(TAG, "Activity Destroyed")
     }
 
