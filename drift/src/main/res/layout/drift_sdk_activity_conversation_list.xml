@@ -45,7 +45,7 @@
                 />
         </LinearLayout>
 
-        <androidx.appcompat.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/drift_sdk_conversation_list_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
