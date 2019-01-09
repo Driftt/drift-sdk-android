@@ -23,9 +23,9 @@ class MainActivity : AppCompatActivity() {
 
         conversationButton = findViewById(R.id.drift_sdk_main_activity_show_conversations)
         createConversationButton = findViewById(R.id.drift_sdk_main_activity_create_conversations)
-//        conversationButton.setOnClickListener { Drift.showConversationActivity() }
+        conversationButton.setOnClickListener { Drift.showConversationActivity(this) }
         createConversationButton.setOnClickListener {
-//            Drift.showCreateConversationActivity()
+            Drift.showCreateConversationActivity(this)
         }
 
     }

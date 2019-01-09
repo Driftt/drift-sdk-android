@@ -6,7 +6,8 @@ import android.util.Log
 //import drift.com.drift.Drift
 
 import com.google.android.gms.security.ProviderInstaller
-//import drift.com.drift.helpers.LoggerListener
+import drift.com.drift.Drift
+import drift.com.drift.helpers.LoggerListener
 
 
 /**
@@ -18,14 +19,13 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         updateAndroidSecurityProvider()
-//        Drift.setupDrift(this, "")
-//
-//        Drift.setLoggerListener(object: LoggerListener {
-//            override fun logMessage(message: String) {
-//                Log.d("DRIFT_SDK", message)
-//            }
-//
-//        })
+        Drift.setupDrift(this, "")
+
+        Drift.setLoggerListener(object: LoggerListener {
+            override fun logMessage(message: String) {
+                Log.d("DRIFT_SDK", message)
+            }
+        })
     }
 
 
