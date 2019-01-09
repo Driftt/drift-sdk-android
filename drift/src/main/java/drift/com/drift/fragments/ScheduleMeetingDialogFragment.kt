@@ -40,7 +40,7 @@ import drift.com.drift.model.UserAvailability
 import drift.com.drift.wrappers.ScheduleMeetingWrapper
 
 
-class ScheduleMeetingDialogFragment : DialogFragment() {
+internal class ScheduleMeetingDialogFragment : DialogFragment() {
 
     private var userId: Int = 0
     private var conversationId: Int = 0

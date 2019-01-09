@@ -27,7 +27,7 @@ import drift.com.drift.managers.ConversationManager
 import drift.com.drift.managers.UserManager
 import drift.com.drift.model.Auth
 
-class ConversationListActivity : DriftActivity() {
+internal class ConversationListActivity : DriftActivity() {
 
     private lateinit var conversationRecyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar

@@ -47,7 +47,7 @@ import drift.com.drift.model.User
 import drift.com.drift.views.AttachmentView
 
 
-class ConversationAdapter(private val activity: ConversationActivity, messages: MutableList<Message>?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+internal class ConversationAdapter(private val activity: ConversationActivity, messages: MutableList<Message>?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var messages: MutableList<Message>? = null
 
@@ -293,7 +293,7 @@ class ConversationAdapter(private val activity: ConversationActivity, messages: 
             val timeStamp = DateFormat.getTimeFormat(activity).format(message.createdAt)
             timeTextView.text = timeStamp
 
-            val body = message.formattedString
+            val body = message.getFormattedString()
             if (body == null || body.isEmpty()) {
                 mainTextView.visibility = View.GONE
             } else {

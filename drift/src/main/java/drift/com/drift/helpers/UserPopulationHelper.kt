@@ -16,7 +16,7 @@ import drift.com.drift.R
 import drift.com.drift.model.User
 
 
-object UserPopulationHelper {
+internal object UserPopulationHelper {
     fun populateTextAndImageFromUser(context: Context, user: User?, textView: TextView?, imageView: ImageView) {
 
         var uriToLoad: Uri? = null

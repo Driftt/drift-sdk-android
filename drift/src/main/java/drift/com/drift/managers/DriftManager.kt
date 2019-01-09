@@ -11,7 +11,7 @@ import drift.com.drift.wrappers.DriftManagerWrapper
  * Created by eoin on 28/07/2017.
  */
 
-class DriftManager {
+internal class DriftManager {
 
     private var registerInformation: RegisterInformation? = null
 

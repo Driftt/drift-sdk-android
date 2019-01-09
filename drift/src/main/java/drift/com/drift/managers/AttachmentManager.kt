@@ -10,7 +10,7 @@ import drift.com.drift.wrappers.AttachmentWrapper
  * Created by eoin on 25/08/2017.
  */
 
-class AttachmentManager {
+internal class AttachmentManager {
 
     private var attachmentMap = HashMap<Int, Attachment>()
 

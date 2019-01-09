@@ -6,7 +6,7 @@ import com.bumptech.glide.load.model.LazyHeaders
 
 import drift.com.drift.model.Auth
 
-object GlideHelper {
+internal object GlideHelper {
 
     fun getAttachmentURLForGlide(attachmentURL: String): GlideUrl {
         val auth = Auth.instance

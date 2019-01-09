@@ -9,7 +9,7 @@ import drift.com.drift.wrappers.UserManagerWrapper
  * Created by eoin on 04/08/2017.
  */
 
-class UserManager {
+internal class UserManager {
 
     private var userMap = HashMap<Int, User>()
 

@@ -9,7 +9,7 @@ import java.util.ArrayList
  * Created by eoin on 28/07/2017.
  */
 
-class Theme {
+internal class Theme {
 
     @Expose
     @SerializedName("backgroundColor")

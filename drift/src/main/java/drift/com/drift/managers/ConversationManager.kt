@@ -8,7 +8,7 @@ import drift.com.drift.wrappers.ConversationListWrapper
  * Created by eoin on 08/08/2017.
  */
 
-class ConversationManager {
+internal class ConversationManager {
 
     var conversations = ArrayList<ConversationExtra>()
         private set

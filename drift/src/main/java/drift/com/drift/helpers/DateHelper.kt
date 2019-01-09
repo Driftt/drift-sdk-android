@@ -9,7 +9,7 @@ import java.util.Date
 import drift.com.drift.Drift
 
 
-object DateHelper {
+internal object DateHelper {
     fun isSameDay(dateOne: Date?, dateTwo: Date?): Boolean {
 
         if (dateOne == null || dateTwo == null) {

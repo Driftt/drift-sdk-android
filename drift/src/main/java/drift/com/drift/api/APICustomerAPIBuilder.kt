@@ -19,7 +19,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 
-interface APICustomerAPIBuilder {
+internal interface APICustomerAPIBuilder {
 
     @POST("oauth/token")
     @FormUrlEncoded

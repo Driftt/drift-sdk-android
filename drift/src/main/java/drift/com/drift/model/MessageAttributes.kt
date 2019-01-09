@@ -9,7 +9,7 @@ import java.util.ArrayList
  * Created by eoin on 22/02/2018.
  */
 
-class MessageAttributes {
+internal class MessageAttributes {
 
     @Expose
     @SerializedName("scheduleMeetingWith")

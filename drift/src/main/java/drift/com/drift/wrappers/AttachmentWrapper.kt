@@ -14,13 +14,13 @@ import retrofit2.Response
  * Created by eoin on 25/08/2017.
  */
 
-object AttachmentWrapper {
+internal object AttachmentWrapper {
 
     private val TAG = AttachmentWrapper::class.java.simpleName
 
     fun getAttachments(attachmentIds: List<Int>, callback: (response: ArrayList<Attachment>?) -> Unit) {
 
-        val imgixOptions = HashMap<String, Any>()
+        val imgixOptions = HashMap<String, String>()
 
         imgixOptions["img_auto"] = "compress"
 

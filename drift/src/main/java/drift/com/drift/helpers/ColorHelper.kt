@@ -5,7 +5,7 @@ import android.graphics.Color
 import drift.com.drift.model.Embed
 
 
-object ColorHelper {
+internal object ColorHelper {
 
     val foregroundColor: Int
         get() {

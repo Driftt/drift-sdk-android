@@ -14,7 +14,7 @@ import retrofit2.Response
  * Created by eoin on 27/02/2018.
  */
 
-object ScheduleMeetingWrapper {
+internal object ScheduleMeetingWrapper {
 
     private val TAG = ScheduleMeetingWrapper::class.java.simpleName
 

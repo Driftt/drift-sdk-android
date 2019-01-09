@@ -10,7 +10,7 @@ import java.util.Date
  * Created by eoin on 28/02/2018.
  */
 
-class GoogleMeeting {
+internal class GoogleMeeting {
 
     @Expose
     @SerializedName("id")

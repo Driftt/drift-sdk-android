@@ -15,7 +15,7 @@ import drift.com.drift.helpers.Preferences
  * Created by eoin on 28/07/2017.
  */
 
-class Auth {
+internal class Auth {
 
     @Expose
     @SerializedName("accessToken")

@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
  * Created by eoin on 04/08/2017.
  */
 
-class ConversationExtra {
+internal class ConversationExtra {
 
     @Expose
     @SerializedName("conversation")

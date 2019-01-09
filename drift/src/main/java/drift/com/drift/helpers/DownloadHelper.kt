@@ -14,7 +14,7 @@ import drift.com.drift.model.Auth
 import android.content.Context.DOWNLOAD_SERVICE
 
 
-class DownloadHelper {
+internal class DownloadHelper {
 
     private val downloads = ArrayList<Long>()
 

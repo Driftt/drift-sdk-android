@@ -30,7 +30,7 @@ import drift.com.drift.model.Message
  * Created by eoin on 23/08/2017.
  */
 
-class PresentationManager {
+internal class PresentationManager {
 
     private var pw: PopupWindow? = null
 
@@ -185,7 +185,7 @@ class PresentationManager {
 
             UserPopulationHelper.populateTextAndImageFromUser(activity, user, titleTextView, userImageView)
 
-            val text = message.formattedString
+            val text = message.getFormattedString()
 
             if (text == null || text.isEmpty() || text.trim { it <= ' ' }.isEmpty()) {
                 subtitleTextView.text = String(Character.toChars(0x1F4CE)) + " [Attachment]"

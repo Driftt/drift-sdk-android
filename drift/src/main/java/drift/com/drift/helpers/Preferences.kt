@@ -1,7 +1,7 @@
 package drift.com.drift.helpers
 
 
-object Preferences {
+internal object Preferences {
 
     const val EMBED_STORE = "DRIFT_SDK_EMBED_STORE"
     const val EMBED_CACHE = "DRIFT_SDK_EMBED_CACHE"

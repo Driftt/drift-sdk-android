@@ -11,7 +11,7 @@ import retrofit2.Response
  * Created by eoin on 25/08/2017.
  */
 
-object ConversationReadWrapper {
+internal object ConversationReadWrapper {
 
     private val TAG = ConversationReadWrapper::class.java.simpleName
 

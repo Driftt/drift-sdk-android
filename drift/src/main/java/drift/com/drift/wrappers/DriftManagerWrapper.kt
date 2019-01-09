@@ -16,7 +16,7 @@ import retrofit2.Response
  * Created by eoin on 28/07/2017.
  */
 
-object DriftManagerWrapper {
+internal object DriftManagerWrapper {
 
     fun getEmbed(embedId: String, callback: (response: Embed?) -> Unit) {
 

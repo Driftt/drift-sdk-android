@@ -16,7 +16,7 @@ import drift.com.drift.wrappers.MessagesWrapper
  * Created by eoin on 11/08/2017.
  */
 
-class MessageManager {
+internal class MessageManager {
 
     private var messageCache = HashMap<Int, ArrayList<Message>>()
     private var failedMessageCache = HashMap<Int, ArrayList<Message>>()

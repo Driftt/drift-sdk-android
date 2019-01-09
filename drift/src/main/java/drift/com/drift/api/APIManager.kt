@@ -10,7 +10,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-object APIManager {
+internal object APIManager {
 
     private val API_CUSTOMER_URL = "https://customer.api.drift.com/"
     private val API_CONVERSATION_URL = "https://conversation.api.drift.com/"

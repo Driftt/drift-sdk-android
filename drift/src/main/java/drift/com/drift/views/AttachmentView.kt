@@ -25,7 +25,7 @@ import drift.com.drift.model.Message
  * Created by eoin on 26/08/2017.
  */
 
-class AttachmentView(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
+internal class AttachmentView(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
 
     private var fileExtensionTextView: TextView
     private var fileNameTextView: TextView

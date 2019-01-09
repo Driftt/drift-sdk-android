@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
  * Created by eoin on 28/07/2017.
  */
 
-class User {
+internal class User {
     @Expose
     @SerializedName("id")
     var id: Int = 0

@@ -13,7 +13,7 @@ import java.util.Date
  * Created by eoin on 27/02/2018.
  */
 
-class UserAvailability {
+internal class UserAvailability {
 
     @Expose
     @SerializedName("slotDuration")

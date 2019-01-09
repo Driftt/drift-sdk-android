@@ -14,7 +14,7 @@ import drift.com.drift.helpers.LoggerHelper
  * Created by eoin on 15/08/2017.
  */
 
-class ConversationContext(context: Context) {
+internal class ConversationContext(context: Context) {
 
     @Expose
     @SerializedName("userAgent")

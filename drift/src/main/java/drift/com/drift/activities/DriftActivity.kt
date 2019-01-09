@@ -12,7 +12,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import drift.com.drift.helpers.NetworkReciever
 import drift.com.drift.helpers.Notification
 
-open class DriftActivity : AppCompatActivity() {
+internal open class DriftActivity : AppCompatActivity() {
 
     private val networkChangeReciever = NetworkReciever()
 

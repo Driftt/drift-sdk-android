@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
  * Created by eoin on 03/08/2017.
  */
 
-class SocketAuth {
+internal class SocketAuth {
     @Expose
     @SerializedName("user_id")
     var userId: String? = null

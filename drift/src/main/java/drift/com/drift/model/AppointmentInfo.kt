@@ -9,7 +9,7 @@ import java.util.Date
  * Created by eoin on 22/02/2018.
  */
 
-class AppointmentInfo {
+internal class AppointmentInfo {
 
     @Expose
     @SerializedName("availabilitySlot")

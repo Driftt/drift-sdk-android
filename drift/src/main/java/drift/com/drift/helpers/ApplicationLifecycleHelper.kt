@@ -8,7 +8,7 @@ import drift.com.drift.managers.PresentationManager
 import drift.com.drift.model.Auth
 
 
-class ApplicationLifecycleHelper : Application.ActivityLifecycleCallbacks {
+internal class ApplicationLifecycleHelper : Application.ActivityLifecycleCallbacks {
 
     private var started: Int = 0
     private var resumed: Int = 0

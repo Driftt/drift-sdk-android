@@ -10,7 +10,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import drift.com.drift.Drift
 
 
-class NetworkReciever : BroadcastReceiver() {
+internal class NetworkReciever : BroadcastReceiver() {
 
 
     override fun onReceive(context: Context, intent: Intent) {

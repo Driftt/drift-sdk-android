@@ -19,7 +19,7 @@ import retrofit2.Response
  * Created by eoin on 11/08/2017.
  */
 
-object MessagesWrapper {
+internal object MessagesWrapper {
 
     private val TAG = MessagesWrapper::class.java.simpleName
 

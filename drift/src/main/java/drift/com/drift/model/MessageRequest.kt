@@ -16,7 +16,7 @@ import drift.com.drift.helpers.TextHelper
  */
 
 
-class MessageRequest {
+internal class MessageRequest {
 
     @Expose
     @SerializedName("body")

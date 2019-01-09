@@ -19,7 +19,7 @@ import java.util.TimeZone
  * Created by eoin on 28/07/2017.
  */
 
-class Configuration {
+internal class Configuration {
 
     @Expose
     @SerializedName("inboxId")

@@ -11,7 +11,7 @@ import java.util.Date
  * Created by eoin on 25/08/2017.
  */
 
-class Attachment {
+internal class Attachment {
 
     @Expose
     @SerializedName("id")

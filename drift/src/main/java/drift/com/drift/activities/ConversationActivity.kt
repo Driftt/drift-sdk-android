@@ -42,7 +42,7 @@ import drift.com.drift.model.Message
 import drift.com.drift.model.MessageRequest
 import drift.com.drift.model.User
 
-class ConversationActivity : DriftActivity() {
+internal class ConversationActivity : DriftActivity() {
 
 
     private lateinit var textEntryEditText: EditText

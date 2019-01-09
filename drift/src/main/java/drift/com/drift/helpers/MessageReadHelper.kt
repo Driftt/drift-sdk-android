@@ -5,7 +5,7 @@ import drift.com.drift.model.Message
 import drift.com.drift.wrappers.ConversationReadWrapper
 
 
-object MessageReadHelper {
+internal object MessageReadHelper {
 
     var TAG = MessageReadHelper::class.java.simpleName
 

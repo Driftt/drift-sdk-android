@@ -12,7 +12,7 @@ import drift.com.drift.helpers.TextHelper
  * Created by eoin on 28/07/2017.
  */
 
-class Message {
+internal class Message {
 
     @Expose
     @SerializedName("id")
@@ -66,7 +66,7 @@ class Message {
     @SerializedName("attributes")
     var attributes: MessageAttributes? = null
 
-    internal var formattedString: String? = null
+    private var formattedString: String? = null
 
     var preMessage = false
 

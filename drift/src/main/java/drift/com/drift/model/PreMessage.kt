@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
  * Created by eoin on 22/02/2018.
  */
 
-class PreMessage {
+internal class PreMessage {
 
     @Expose
     @SerializedName("body")

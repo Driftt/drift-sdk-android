@@ -12,7 +12,7 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 
 
-interface APIAuthlessBuilder {
+internal interface APIAuthlessBuilder {
 
     @GET("https://js.drift.com/embeds/{refreshString}/{embedId}.json")
     fun getEmbed(@Path("embedId") embedId: String, @Path("refreshString") refreshRate: String): Call<Embed>

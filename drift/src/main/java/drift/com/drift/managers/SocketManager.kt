@@ -16,7 +16,7 @@ import okhttp3.OkHttpClient
  * Created by eoin on 15/08/2017.
  */
 
-class SocketManager {
+internal class SocketManager {
 
     private val gson = APIManager.generateGson()
 

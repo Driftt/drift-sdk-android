@@ -5,7 +5,7 @@ import android.text.Html
 import android.text.SpannableStringBuilder
 import android.text.util.Linkify
 
-object TextHelper {
+internal object TextHelper {
 
     fun cleanString(body: String): String {
         var body = body

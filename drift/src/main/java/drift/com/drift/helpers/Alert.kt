@@ -5,7 +5,7 @@ import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
 
 
-class Alert {
+internal class Alert {
     companion object {
 
         fun showAlert(activity: Activity?, title: String, message: String, positiveTitle: String, block: (() -> Unit)?) {

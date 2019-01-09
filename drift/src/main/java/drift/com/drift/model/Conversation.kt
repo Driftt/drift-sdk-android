@@ -9,7 +9,7 @@ import java.util.Date
  * Created by eoin on 28/07/2017.
  */
 
-class Conversation {
+internal class Conversation {
 
     @Expose
     @SerializedName("id")

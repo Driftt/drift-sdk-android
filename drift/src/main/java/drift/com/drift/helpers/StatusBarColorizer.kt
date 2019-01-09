@@ -5,7 +5,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 
 
-object StatusBarColorizer {
+internal object StatusBarColorizer {
 
     fun setActivityColor(activity: AppCompatActivity) {
 

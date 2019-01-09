@@ -18,13 +18,13 @@ import retrofit2.http.Query
 import retrofit2.http.QueryMap
 
 
-interface APIConversationAPIBuilder {
+internal interface APIConversationAPIBuilder {
 
     @GET("conversations/{conversationId}/messages")
     fun getMessages(@Path("conversationId") conversationId: Int?): Call<ArrayList<Message>>
 
     @GET("attachments")
-    fun getAttachments(@Query("id") attachmentIds: List<Int>, @QueryMap imgixOptions: Map<String, Any>): Call<ArrayList<Attachment>>
+    fun getAttachments(@Query("id") attachmentIds: List<Int>, @QueryMap imgixOptions: Map<String, String>): Call<ArrayList<Attachment>>
 
 
     @GET("conversations/end_users/{endUserId}/extra")

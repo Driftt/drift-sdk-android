@@ -9,7 +9,7 @@ import org.joda.time.DateTimeConstants
  * Created by eoin on 28/07/2017.
  */
 
-class OpenHour {
+internal class OpenHour {
 
     @Expose
     @SerializedName("opens")

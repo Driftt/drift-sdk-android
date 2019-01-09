@@ -11,7 +11,7 @@ import java.util.TimeZone
  * Created by eoin on 28/02/2018.
  */
 
-class MessageRequestAttributesAppointment
+internal class MessageRequestAttributesAppointment
 /*
 
         "id":googleMeetingId,

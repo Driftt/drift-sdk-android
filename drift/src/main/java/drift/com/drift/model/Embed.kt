@@ -16,7 +16,7 @@ import kotlin.coroutines.experimental.coroutineContext
  * Created by eoin on 28/07/2017.
  */
 
-class Embed {
+internal class Embed {
 
     @Expose
     @SerializedName("id")

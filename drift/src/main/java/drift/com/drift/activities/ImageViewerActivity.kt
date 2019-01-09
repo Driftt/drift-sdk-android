@@ -23,7 +23,7 @@ import drift.com.drift.helpers.DownloadHelper
 import drift.com.drift.helpers.GlideHelper
 import drift.com.drift.helpers.StatusBarColorizer
 
-class ImageViewerActivity : DriftActivity() {
+internal class ImageViewerActivity : DriftActivity() {
 
     private lateinit var imageView: ImageView
     private lateinit var progressBar: ProgressBar
