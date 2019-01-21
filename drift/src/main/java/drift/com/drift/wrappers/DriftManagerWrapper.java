@@ -3,7 +3,6 @@ package drift.com.drift.wrappers;
 import java.util.HashMap;
 
 import drift.com.drift.api.APIManager;
-import drift.com.drift.managers.SocketManager;
 import drift.com.drift.model.Auth;
 import drift.com.drift.model.Embed;
 import drift.com.drift.model.IdentifyResponse;

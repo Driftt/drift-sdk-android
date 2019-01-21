@@ -115,8 +115,8 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
         context.startActivity(intent);
     }
 
-    int conversationId = -1;
-    int endUserId = -1;
+    private int conversationId = -1;
+    private Long endUserId = -1L;
     private ConversationType conversationType = ConversationType.CONTINUE;
 
 
@@ -354,7 +354,7 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
 
 
         Auth auth = Auth.getInstance();
-        if (auth != null && message.authorId == auth.endUser.id && message.contentType.equals("CHAT") && (message.attributes == null || message.attributes.appointmentInfo == null)&& !message.fakeMessage){
+        if (auth != null && message.authorId.equals(auth.endUser.id) && message.contentType.equals("CHAT") && (message.attributes == null || message.attributes.appointmentInfo == null) && !message.fakeMessage){
             LoggerHelper.logMessage(TAG, "Ignoring own message");
             return;
         }

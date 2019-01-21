@@ -31,7 +31,7 @@ public interface APIConversationAPIBuilder {
 
 
     @GET("conversations/end_users/{endUserId}/extra")
-    Call<ArrayList<ConversationExtra>> getConversationsForEndUser(@Path("endUserId") int endUserId);
+    Call<ArrayList<ConversationExtra>> getConversationsForEndUser(@Path("endUserId") Long endUserId);
 
     @POST("conversations/{conversationId}/messages")
     Call<Message> postMessage(@Path("conversationId") Integer conversationId, @Body MessageRequest messageRequest);

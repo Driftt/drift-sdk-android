@@ -114,40 +114,11 @@ public class MessageManager {
             fakeMessage.authorType = "USER";
 
             if (preMessage.sender != null) {
-                fakeMessage.authorId = preMessage.sender.id;
+                fakeMessage.authorId = preMessage.sender.id.longValue();
                 fakeMessages.add(fakeMessage);
             }
         }
 
-
-        /*
-
-        let date = message.createdAt
-        var output: [Message] = []
-        for (index, preMessage) in preMessages.enumerated() {
-            let fakeMessage = Message()
-
-            fakeMessage.createdAt = date.addingTimeInterval(TimeInterval(-(index + 1)))
-            fakeMessage.conversationId = message.conversationId
-            fakeMessage.body = TextHelper.cleanString(body: preMessage.messageBody)
-            fakeMessage.formattedBody = TextHelper.attributedTextForString(text: fakeMessage.body ?? "")
-            fakeMessage.fakeMessage = true
-            fakeMessage.preMessage = true
-            fakeMessage.uuid = UUID().uuidString
-
-            fakeMessage.sendStatus = .Sent
-            fakeMessage.contentType = ContentType.Chat
-            fakeMessage.authorType = AuthorType.User
-
-            if let sender = preMessage.user {
-                fakeMessage.authorId = sender.userId
-                output.append(fakeMessage)
-            }
-        }
-
-        return output
-
-         */
 
         return fakeMessages;
     }

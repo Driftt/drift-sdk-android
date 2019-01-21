@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.text.format.Formatter;
 import android.util.AttributeSet;
@@ -13,8 +12,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import java.util.ArrayList;
 
 import drift.com.drift.R;
 import drift.com.drift.activities.ImageViewerActivity;

@@ -28,13 +28,13 @@ public class MessageRequest {
     public String type = "CHAT";
     @Expose
     @SerializedName("authorId")
-    public int authorId;
+    private Long authorId;
     @Expose
     @SerializedName("attachments")
-    public List<Integer> attachments;
+    private List<Integer> attachments;
     @Expose
     @SerializedName("context")
-    public ConversationContext conversationContext;
+    private ConversationContext conversationContext;
     @Expose
     @SerializedName("attributes")
     MessageRequestAttributes attributes;
@@ -46,7 +46,7 @@ public class MessageRequest {
         attributes = new MessageRequestAttributes(googleMeeting, userAvailability, meetingUserId, conversationId, timeSlot);
     }
 
-    public MessageRequest(String body, int authorId, @Nullable Integer attachmentId, Context context){
+    public MessageRequest(String body, Long authorId, @Nullable Integer attachmentId, Context context){
 
         this.body = TextHelper.wrapTextForSending(body);
         this.authorId = authorId;

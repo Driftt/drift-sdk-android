@@ -1,5 +1,7 @@
 package drift.com.drift.managers;
 
+import android.support.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -22,10 +24,15 @@ public class UserManager {
         return _userManager;
     }
 
-    public HashMap<Integer, User> userMap = new HashMap<>();
+    private HashMap<Integer, User> userMap = new HashMap<>();
 
     public void clearCache(){
         userMap = new HashMap<>();
+    }
+
+    @Nullable
+    public User getUserForId(int userId) {
+        return userMap.get(userId);
     }
 
     public void getUsers(int orgId, final UserManagerCallback userManagerCallback){
