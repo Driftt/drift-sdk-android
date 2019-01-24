@@ -40,10 +40,28 @@ public class Drift {
         return _drift;
     }
 
+    public static void registerUser(String userId, String email, String userJwt) {
+        if (!isConnected()) {
+            LoggerHelper.logMessage("LIFECYCLE", "Registering User");
+            DriftManager.getInstance().registerUser(userId, email, userJwt);
+        } else {
+            LoggerHelper.logMessage("LIFECYCLE", "Not Registering User, already connected");
+        }
+    }
+
+    public static void registerUser(String userId) {
+        if (!isConnected()) {
+            LoggerHelper.logMessage("LIFECYCLE", "Registering User");
+            DriftManager.getInstance().registerUser(userId, null, null);
+        } else {
+            LoggerHelper.logMessage("LIFECYCLE", "Not Registering User, already connected");
+        }
+    }
+
     public static void registerUser(String userId, String email) {
         if (!isConnected()) {
             LoggerHelper.logMessage("LIFECYCLE", "Registering User");
-            DriftManager.getInstance().registerUser(userId, email);
+            DriftManager.getInstance().registerUser(userId, email, null);
         } else {
             LoggerHelper.logMessage("LIFECYCLE", "Not Registering User, already connected");
         }
