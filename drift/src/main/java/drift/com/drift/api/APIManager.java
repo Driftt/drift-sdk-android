@@ -1,11 +1,13 @@
 package drift.com.drift.api;
 
+import android.os.Build;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.Date;
 
-import drift.com.drift.BuildConfig;
+import drift.com.drift.Drift;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -56,12 +58,11 @@ public class APIManager {
     private static String getUserAgentText() {
 
         String libVersionName = drift.com.drift.BuildConfig.VERSION_NAME;
-        
 
+        String packageName = Drift.getContext().getPackageName();
+        int osVersion = Build.VERSION.SDK_INT;
 
-        //"Drift-SDK/\(verion) (\(identifer); build:\(build); \(osName) \(osVersion)) \(alamofireVersion)"
-
-        return "Drift-SDK-Android " + libVersionName;
+        return "Drift-SDK-Android/" + libVersionName + " (" +packageName+"; " + String.valueOf(osVersion) + ")";
     }
 
     private static void setupRestClient() {
