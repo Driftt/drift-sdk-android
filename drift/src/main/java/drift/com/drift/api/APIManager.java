@@ -61,8 +61,9 @@ public class APIManager {
 
         String packageName = Drift.getContext().getPackageName();
         int osVersion = Build.VERSION.SDK_INT;
-
-        return "Drift-SDK-Android/" + libVersionName + " (" +packageName+"; " + String.valueOf(osVersion) + ")";
+        String deviceName = android.os.Build.MODEL;
+        String manufacturer = Build.MANUFACTURER;
+        return "Drift-SDK-Android/" + libVersionName + " (" +packageName+"; " + String.valueOf(osVersion) + "; " + manufacturer + "; " + deviceName + "; )";
     }
 
     private static void setupRestClient() {
