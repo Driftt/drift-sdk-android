@@ -39,12 +39,17 @@ public class DriftManagerWrapper {
     }
 
 
-    public static void postIdentity(int orgId, String userId, String email, final APICallbackWrapper<IdentifyResponse> callback){
+    public static void postIdentity(int orgId, String userId, String email, String userJwt, final APICallbackWrapper<IdentifyResponse> callback){
 
         HashMap<String, Object> jsonPayload = new HashMap<>();
 
         jsonPayload.put("orgId", orgId);
         jsonPayload.put("userId", userId);
+
+        if (userJwt != null) {
+            jsonPayload.put("signedIdentity", userJwt);
+        }
+
 
         HashMap<String, Object> inlineEmailAttributes = new HashMap<>();
         inlineEmailAttributes.put("email", email);
@@ -68,7 +73,7 @@ public class DriftManagerWrapper {
         });
     }
 
-    public static void getAuth(int orgId, String userId, String email, String redirectUri, String clientId, final APICallbackWrapper<Auth> callback){
+    public static void getAuth(int orgId, String userId, String email, String userJwt, String redirectUri, String clientId, final APICallbackWrapper<Auth> callback){
 
         HashMap<String, Object> jsonPayload = new HashMap<>();
 
@@ -79,6 +84,9 @@ public class DriftManagerWrapper {
         jsonPayload.put("redirect_uri", redirectUri);
         jsonPayload.put("client_id", clientId);
 
+        if (userJwt != null) {
+            jsonPayload.put("userJwt", userJwt);
+        }
 
         APIManager.getCustomerClient().getAuth(jsonPayload).enqueue(new Callback<Auth>() {
             @Override

@@ -44,7 +44,7 @@ public class DriftManager {
                     LoggerHelper.logMessage(TAG, "Get Embed Success");
 
                     if (registerInformation != null) {
-                        registerUser(registerInformation.userId, registerInformation.email);
+                        registerUser(registerInformation.userId, registerInformation.email, registerInformation.userJwt);
                     }
 
                 }
@@ -52,13 +52,13 @@ public class DriftManager {
         });
     }
 
-    public void registerUser(String userId, final String email) {
+    public void registerUser(String userId, final String email, final String userJwt) {
 
         final Embed embed = Embed.getInstance();
 
         if (embed == null) {
             LoggerHelper.logMessage(TAG, "No Embed, not registering yet");
-            registerInformation = new RegisterInformation(userId, email);
+            registerInformation = new RegisterInformation(userId, email, userJwt);
             return;
         }
 
@@ -70,12 +70,12 @@ public class DriftManager {
 
         ///Post Identify
         loadingUser = true;
-        DriftManagerWrapper.postIdentity(embed.orgId, userId, email, new APICallbackWrapper<IdentifyResponse>() {
+        DriftManagerWrapper.postIdentity(embed.orgId, userId, email, userJwt, new APICallbackWrapper<IdentifyResponse>() {
             @Override
             public void onResponse(IdentifyResponse response) {
                 if ( response != null ) {
                     LoggerHelper.logMessage(TAG, "Identify Complete");
-                    getAuth(embed, response, email);
+                    getAuth(embed, response, email, userJwt);
                 } else {
                     LoggerHelper.logMessage(TAG, "Identify Failed");
                     loadingUser = false;
@@ -84,9 +84,9 @@ public class DriftManager {
         });
     }
 
-    private void getAuth(final Embed embed, IdentifyResponse identifyResponse, String email) {
+    private void getAuth(final Embed embed, IdentifyResponse identifyResponse, String email, String userJwt) {
 
-        DriftManagerWrapper.getAuth(identifyResponse.orgId, identifyResponse.userId, email, embed.configuration.redirectUri, embed.configuration.authClientId, new APICallbackWrapper<Auth>() {
+        DriftManagerWrapper.getAuth(identifyResponse.orgId, identifyResponse.userId, email, userJwt, embed.configuration.redirectUri, embed.configuration.authClientId, new APICallbackWrapper<Auth>() {
             @Override
             public void onResponse(Auth response) {
                 if (response != null) {
@@ -118,12 +118,14 @@ public class DriftManager {
 
     private class RegisterInformation {
 
+        public String userJwt;
         private String userId;
         private String email;
 
-        RegisterInformation(String userId, String email){
+        RegisterInformation(String userId, String email, String userJwt){
             this.email = email;
             this.userId = userId;
+            this.userJwt = userJwt;
         }
 
     }
