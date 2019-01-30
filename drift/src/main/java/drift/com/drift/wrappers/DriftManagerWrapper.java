@@ -85,7 +85,7 @@ public class DriftManagerWrapper {
 
         if (email != null) {
             jsonPayload.put("email", email);
-        }r
+        }
 
         if (userJwt != null) {
             jsonPayload.put("userJwt", userJwt);
