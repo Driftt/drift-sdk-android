@@ -1,10 +1,13 @@
 package drift.com.drift.api;
 
+import android.os.Build;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.Date;
 
+import drift.com.drift.Drift;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -51,15 +54,29 @@ public class APIManager {
                 .create();
     }
 
+
+    private static String getUserAgentText() {
+
+        String libVersionName = drift.com.drift.BuildConfig.VERSION_NAME;
+
+        String packageName = Drift.getContext().getPackageName();
+        int osVersion = Build.VERSION.SDK_INT;
+        String deviceName = android.os.Build.MODEL;
+        String manufacturer = Build.MANUFACTURER;
+        return "Drift-SDK-Android/" + libVersionName + " (" +packageName+"; " + String.valueOf(osVersion) + "; " + manufacturer + "; " + deviceName + "; )";
+    }
+
     private static void setupRestClient() {
 
 
         Gson gson = generateGson();
         OkHttpClient baseOkHttpClient = new OkHttpClient();
 
+        String userAgent = getUserAgentText();
 
         OkHttpClient customerClient = baseOkHttpClient.newBuilder()
                 .addInterceptor(new APIAuthTokenInterceptor())
+                .addInterceptor(new UserAgentInterceptor(userAgent))
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -72,6 +89,7 @@ public class APIManager {
 
         OkHttpClient conversationClient = baseOkHttpClient.newBuilder()
                 .addInterceptor(new APIAuthTokenInterceptor())
+                .addInterceptor(new UserAgentInterceptor(userAgent))
                 .build();
 
         Retrofit retrofitV2 = new Retrofit.Builder()
@@ -84,6 +102,7 @@ public class APIManager {
 
 
         OkHttpClient authlessClient = baseOkHttpClient.newBuilder()
+                .addInterceptor(new UserAgentInterceptor(userAgent))
                 .build();
 
         Retrofit retrofitV3 = new Retrofit.Builder()

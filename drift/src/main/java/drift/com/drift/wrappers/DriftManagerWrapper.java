@@ -77,12 +77,15 @@ public class DriftManagerWrapper {
 
         HashMap<String, Object> jsonPayload = new HashMap<>();
 
-        jsonPayload.put("email", email);
         jsonPayload.put("org_id", orgId);
         jsonPayload.put("user_id", userId);
         jsonPayload.put("grant_type", "sdk");
         jsonPayload.put("redirect_uri", redirectUri);
         jsonPayload.put("client_id", clientId);
+
+        if (email != null) {
+            jsonPayload.put("email", email);
+        }
 
         if (userJwt != null) {
             jsonPayload.put("userJwt", userJwt);
