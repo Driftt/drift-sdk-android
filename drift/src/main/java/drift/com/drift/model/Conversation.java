@@ -41,7 +41,7 @@ public class Conversation {
 
     @Expose
     @SerializedName("endUserId")
-    public Integer endUserId;
+    public Long endUserId;
 
     @Expose
     @SerializedName("subject")
