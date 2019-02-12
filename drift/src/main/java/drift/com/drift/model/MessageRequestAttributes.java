@@ -22,13 +22,13 @@ public class MessageRequestAttributes {
     MessageRequestAttributesAppointment appointment;
     @Expose
     @SerializedName("scheduleMeetingWith")
-    int meetingUserId;
+    Long meetingUserId;
     @Expose
     @SerializedName("scheduleMeetingFlow")
     boolean scheduleMeetingFlow = true;
 
 
-    MessageRequestAttributes(GoogleMeeting googleMeeting, UserAvailability userAvailability, int meetingUserId, int conversationId, Date timeSlot) {
+    MessageRequestAttributes(GoogleMeeting googleMeeting, UserAvailability userAvailability, Long meetingUserId, int conversationId, Date timeSlot) {
 
         this.meetingUserId = meetingUserId;
         this.appointment = new MessageRequestAttributesAppointment(googleMeeting, userAvailability, meetingUserId, conversationId, timeSlot);

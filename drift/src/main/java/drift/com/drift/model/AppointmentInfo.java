@@ -25,7 +25,7 @@ public class AppointmentInfo {
 
     @Expose
     @SerializedName("agentId")
-    public Integer agentId;
+    public Long agentId;
 
     @Expose
     @SerializedName("conversationId")

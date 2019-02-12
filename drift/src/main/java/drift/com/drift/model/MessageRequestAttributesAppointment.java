@@ -27,7 +27,7 @@ public class MessageRequestAttributesAppointment {
     int slotDuration;
     @Expose
     @SerializedName("agentId")
-    int agentId;
+    Long agentId;
     @Expose
     @SerializedName("conversationId")
     int conversationId;
@@ -53,7 +53,7 @@ public class MessageRequestAttributesAppointment {
 
      */
 
-    MessageRequestAttributesAppointment(GoogleMeeting googleMeeting, UserAvailability userAvailability, int meetingUserId, int conversationId, Date timeSlot) {
+    MessageRequestAttributesAppointment(GoogleMeeting googleMeeting, UserAvailability userAvailability, Long meetingUserId, int conversationId, Date timeSlot) {
         googleMeetingId = googleMeeting.meetingId;
         googleMeetingURL = googleMeeting.meetingURL;
         dateSlot = timeSlot;

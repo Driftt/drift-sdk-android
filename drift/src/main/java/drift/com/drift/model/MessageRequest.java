@@ -40,7 +40,7 @@ public class MessageRequest {
     MessageRequestAttributes attributes;
 
 
-    public MessageRequest(GoogleMeeting googleMeeting, UserAvailability userAvailability, int meetingUserId, int conversationId, Date timeSlot){
+    public MessageRequest(GoogleMeeting googleMeeting, UserAvailability userAvailability, Long meetingUserId, int conversationId, Date timeSlot){
         this.body = "";
         this.type = "CHAT";
         attributes = new MessageRequestAttributes(googleMeeting, userAvailability, meetingUserId, conversationId, timeSlot);

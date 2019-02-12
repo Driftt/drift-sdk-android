@@ -416,7 +416,7 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
 
         progressBar.setVisibility(View.VISIBLE);
 
-        Integer welcomeUserId = null;
+        Long welcomeUserId = null;
         if (userForWelcomeMessage != null){
             welcomeUserId = userForWelcomeMessage.id;
         }
@@ -459,7 +459,7 @@ public class ConversationActivity extends DriftActivity implements AttachmentCal
         conversationAdapter.updateForAttachments(attachments);
     }
 
-    public void didPressScheduleMeetingFor(int userId) {
+    public void didPressScheduleMeetingFor(Long userId) {
         ScheduleMeetingDialogFragment.newInstance(userId, conversationId).show(getSupportFragmentManager(), ScheduleMeetingDialogFragment.class.getSimpleName());
     }
 }

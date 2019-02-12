@@ -108,7 +108,7 @@ public class ConversationListAdapter extends RecyclerView.Adapter<ConversationLi
 
 
             if (conversationExtra.lastAgentMessage != null) {
-                User user = UserManager.getInstance().getUserForId(conversationExtra.lastAgentMessage.authorId.intValue());
+                User user = UserManager.getInstance().getUserForId(conversationExtra.lastAgentMessage.authorId);
                 UserPopulationHelper.populateTextAndImageFromUser(context, user, userNameTextView, userImageView);
             } else if (conversationExtra.lastMessage != null
                     && conversationExtra.lastMessage.attributes != null

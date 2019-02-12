@@ -52,7 +52,7 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
 
     private static final String TAG = ScheduleMeetingDialogFragment.class.getSimpleName();
 
-    private int userId;
+    private Long userId;
     private int conversationId;
 
 
@@ -99,10 +99,10 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
 
     public ScheduleMeetingDialogFragment() {}
 
-    public static ScheduleMeetingDialogFragment newInstance(int userId, int conversationId) {
+    public static ScheduleMeetingDialogFragment newInstance(Long userId, int conversationId) {
         ScheduleMeetingDialogFragment fragment = new ScheduleMeetingDialogFragment();
         Bundle args = new Bundle();
-        args.putInt(USER_ID_ARG, userId);
+        args.putLong(USER_ID_ARG, userId);
         args.putInt(CONVERSATION_ID_ARG, conversationId);
         fragment.setArguments(args);
         return fragment;
@@ -112,7 +112,7 @@ public class ScheduleMeetingDialogFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            userId = getArguments().getInt(USER_ID_ARG);
+            userId = getArguments().getLong(USER_ID_ARG);
             conversationId = getArguments().getInt(CONVERSATION_ID_ARG);
         }
     }

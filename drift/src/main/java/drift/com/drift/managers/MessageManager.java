@@ -284,7 +284,7 @@ public class MessageManager {
 
     }
 
-    public void createConversation(String body, @Nullable String welcomeMessage, @Nullable Integer welcomeUserId, final APICallbackWrapper<Message> callbackWrapper) {
+    public void createConversation(String body, @Nullable String welcomeMessage, @Nullable Long welcomeUserId, final APICallbackWrapper<Message> callbackWrapper) {
 
         MessagesWrapper.createConversation(body, welcomeMessage, welcomeUserId, new APICallbackWrapper<Message>() {
             @Override
