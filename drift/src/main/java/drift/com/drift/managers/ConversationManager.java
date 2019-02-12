@@ -1,6 +1,8 @@
 package drift.com.drift.managers;
 
 import java.util.ArrayList;
+
+import drift.com.drift.Drift;
 import drift.com.drift.model.ConversationExtra;
 import drift.com.drift.wrappers.APICallbackWrapper;
 import drift.com.drift.wrappers.ConversationListWrapper;
@@ -68,13 +70,21 @@ public class ConversationManager {
 
                     for (ConversationExtra conversationExtra : response) {
                         if (conversationExtra.conversation != null && !conversationExtra.conversation.type.equals("EMAIL")){
-                            filteredConversationExtras.add(conversationExtra);
+                            if (DriftManager.getInstance().showAutomatedMessages) {
+                                //Add all conversations
+                                filteredConversationExtras.add(conversationExtra);
+                            } else {
+                                //Only add conversations we have a status for
+                                if (conversationExtra.conversation.getConversationStatus() != null) {
+                                    filteredConversationExtras.add(conversationExtra);
+                                }
+                            }
                         }
                     }
                     conversations = filteredConversationExtras;
                 }
 
-                conversationsCallback.onResponse(response);
+                conversationsCallback.onResponse(conversations);
             }
         });
 
