@@ -388,7 +388,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }
 
 
-            setupForUser(message, UserManager.getInstance().getUserForId(message.authorId.intValue()));
+            setupForUser(message, UserManager.getInstance().getUserForId(message.authorId));
 
         }
 

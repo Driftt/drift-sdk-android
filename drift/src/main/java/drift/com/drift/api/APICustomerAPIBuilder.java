@@ -29,8 +29,8 @@ public interface APICustomerAPIBuilder {
     Call<ArrayList<User>> getUsers(@Path("orgId") Integer orgId);
 
     @GET("scheduling/{userId}/availability")
-    Call<UserAvailability> getUserAvailability(@Path("userId") int userId);
+    Call<UserAvailability> getUserAvailability(@Path("userId") Long userId);
 
     @POST("scheduling/{userId}/schedule")
-    Call<GoogleMeeting> scheduleMeeting(@Path("userId") int userId, @Query("conversationId") int conversationId, @Body RequestBody timestamp);
+    Call<GoogleMeeting> scheduleMeeting(@Path("userId") Long userId, @Query("conversationId") int conversationId, @Body RequestBody timestamp);
 }

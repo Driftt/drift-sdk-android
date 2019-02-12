@@ -24,14 +24,14 @@ public class UserManager {
         return _userManager;
     }
 
-    private HashMap<Integer, User> userMap = new HashMap<>();
+    private HashMap<Long, User> userMap = new HashMap<>();
 
     public void clearCache(){
         userMap = new HashMap<>();
     }
 
     @Nullable
-    public User getUserForId(int userId) {
+    public User getUserForId(Long userId) {
         return userMap.get(userId);
     }
 

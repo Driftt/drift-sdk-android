@@ -18,7 +18,7 @@ public class ScheduleMeetingWrapper {
 
     private static String TAG = ScheduleMeetingWrapper.class.getSimpleName();
 
-    public static void getUserAvailability(int userId, final APICallbackWrapper<UserAvailability> callback){
+    public static void getUserAvailability(Long userId, final APICallbackWrapper<UserAvailability> callback){
 
         APIManager.getCustomerClient().getUserAvailability(userId).enqueue(new Callback<UserAvailability>() {
             @Override
@@ -38,7 +38,7 @@ public class ScheduleMeetingWrapper {
         });
     }
 
-    public static void scheduleMeeting(int userId, int conversationId, double timestamp, final APICallbackWrapper<GoogleMeeting> callback){
+    public static void scheduleMeeting(Long userId, int conversationId, double timestamp, final APICallbackWrapper<GoogleMeeting> callback){
 
         RequestBody body =
                 RequestBody.create(MediaType.parse("application/json"), String.valueOf(timestamp));

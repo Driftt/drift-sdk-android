@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
 public class User {
     @Expose
     @SerializedName("id")
-    public Integer id;
+    public Long id;
     @Expose
     @SerializedName("orgId")
     public Integer orgId;

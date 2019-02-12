@@ -66,7 +66,7 @@ public class MessagesWrapper {
         });
     }
 
-    public static void createConversation(String bodyString, @Nullable String welcomeMessage, @Nullable Integer welcomeUserId, final APICallbackWrapper<Message> callback) {
+    public static void createConversation(String bodyString, @Nullable String welcomeMessage, @Nullable Long welcomeUserId, final APICallbackWrapper<Message> callback) {
 
         HashMap<String, Object> payload = new HashMap<>();
 
@@ -77,7 +77,7 @@ public class MessagesWrapper {
         payload.put("body", body);
 
         if (welcomeMessage != null && welcomeUserId != null) {
-            HashMap<String, Integer> sender = new HashMap<>();
+            HashMap<String, Long> sender = new HashMap<>();
             sender.put("id", welcomeUserId);
 
 

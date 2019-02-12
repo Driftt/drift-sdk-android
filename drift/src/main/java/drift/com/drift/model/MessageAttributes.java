@@ -25,7 +25,7 @@ public class MessageAttributes {
 
     @Expose
     @SerializedName("presentSchedule")
-    public Integer presentSchedule;
+    public Long presentSchedule;
 
     @Expose
     @SerializedName("appointmentInfo")
