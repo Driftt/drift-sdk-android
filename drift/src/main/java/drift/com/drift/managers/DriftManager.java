@@ -26,6 +26,9 @@ public class DriftManager {
 
     public Boolean loadingUser = false;
 
+    public Boolean showAutomatedMessages = true;
+
+
     public static DriftManager getInstance() {
         return _driftManager;
     }

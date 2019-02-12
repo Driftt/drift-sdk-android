@@ -83,6 +83,10 @@ public class Drift {
         LogoutHelper.logout();
     }
 
+    public static void showAutomatedMessages(Boolean show) {
+        DriftManager.getInstance().showAutomatedMessages = show;
+    }
+
     public static Context getContext() {
         return _drift.context;
     }

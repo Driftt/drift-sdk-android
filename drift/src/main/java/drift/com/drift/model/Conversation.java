@@ -3,6 +3,8 @@ package drift.com.drift.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Date;
 
 /**
@@ -10,6 +12,8 @@ import java.util.Date;
  */
 
 public class Conversation {
+
+    public enum ConversationStatus {OPEN, CLOSED, PENDING}
 
     @Expose
     @SerializedName("id")
@@ -54,5 +58,15 @@ public class Conversation {
     @Expose
     @SerializedName("updatedAt")
     public Date updatedAt;
+
+    @Nullable
+    public ConversationStatus getConversationStatus() {
+        try {
+            return ConversationStatus.valueOf(status);
+        }catch (Throwable t) {
+            t.printStackTrace();
+            return null;
+        }
+    }
 
 }
