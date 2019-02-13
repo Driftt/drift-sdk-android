@@ -8,6 +8,10 @@ import java.util.Date
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import android.os.Build
+import drift.com.drift.Drift
+
+
 
 
 internal object APIManager {
@@ -32,15 +36,29 @@ internal object APIManager {
                 .create()
     }
 
+    private fun getUserAgentText(): String {
+
+        val libVersionName = drift.com.drift.BuildConfig.VERSION_NAME
+
+        val packageName = Drift.getContext()?.packageName ?: ""
+        val osVersion = Build.VERSION.SDK_INT
+        val deviceName = android.os.Build.MODEL
+        val manufacturer = Build.MANUFACTURER
+        return "Drift-SDK-Android/$libVersionName ($packageName; $osVersion; $manufacturer; $deviceName; )"
+    }
+
     private fun setupRestClient() {
 
 
         val gson = generateGson()
         val baseOkHttpClient = OkHttpClient()
 
+        val userAgent = getUserAgentText()
+
 
         val customerClient = baseOkHttpClient.newBuilder()
                 .addInterceptor(APIAuthTokenInterceptor())
+                .addInterceptor(UserAgentInterceptor(userAgent))
                 .build()
 
         val retrofit = Retrofit.Builder()
@@ -53,6 +71,7 @@ internal object APIManager {
 
         val conversationClient = baseOkHttpClient.newBuilder()
                 .addInterceptor(APIAuthTokenInterceptor())
+                .addInterceptor(UserAgentInterceptor(userAgent))
                 .build()
 
         val retrofitV2 = Retrofit.Builder()
@@ -65,6 +84,7 @@ internal object APIManager {
 
 
         val authlessClient = baseOkHttpClient.newBuilder()
+                .addInterceptor(UserAgentInterceptor(userAgent))
                 .build()
 
         val retrofitV3 = Retrofit.Builder()

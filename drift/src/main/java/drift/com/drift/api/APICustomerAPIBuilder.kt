@@ -29,8 +29,8 @@ internal interface APICustomerAPIBuilder {
     fun getUsers(@Path("orgId") orgId: Int?): Call<ArrayList<User>>
 
     @GET("scheduling/{userId}/availability")
-    fun getUserAvailability(@Path("userId") userId: Int): Call<UserAvailability>
+    fun getUserAvailability(@Path("userId") userId: Long): Call<UserAvailability>
 
     @POST("scheduling/{userId}/schedule")
-    fun scheduleMeeting(@Path("userId") userId: Int, @Query("conversationId") conversationId: Int, @Body timestamp: RequestBody): Call<GoogleMeeting>
+    fun scheduleMeeting(@Path("userId") userId: Long, @Query("conversationId") conversationId: Int, @Body timestamp: RequestBody): Call<GoogleMeeting>
 }

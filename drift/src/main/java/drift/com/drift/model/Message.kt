@@ -55,7 +55,7 @@ internal class Message {
     var contentType: String? = null
     @Expose
     @SerializedName("authorId")
-    var authorId: Long? = 0L
+    var authorId: Long = 0L
     @Expose
     @SerializedName("createdAt")
     var createdAt: Date? = null

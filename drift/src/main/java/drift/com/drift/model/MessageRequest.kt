@@ -26,7 +26,7 @@ internal class MessageRequest {
     var type = "CHAT"
     @Expose
     @SerializedName("authorId")
-    private var authorId: Long? = null
+    private var authorId: Long = 0L
     @Expose
     @SerializedName("attachments")
     private var attachments: MutableList<Int>? = null
@@ -38,13 +38,13 @@ internal class MessageRequest {
     private var attributes: MessageRequestAttributes? = null
 
 
-    constructor(googleMeeting: GoogleMeeting, userAvailability: UserAvailability, meetingUserId: Int, conversationId: Int, timeSlot: Date) {
+    constructor(googleMeeting: GoogleMeeting, userAvailability: UserAvailability, meetingUserId: Long, conversationId: Int, timeSlot: Date) {
         this.body = ""
         this.type = "CHAT"
         attributes = MessageRequestAttributes(googleMeeting, userAvailability, meetingUserId, conversationId, timeSlot)
     }
 
-    constructor(body: String, authorId: Long?, attachmentId: Int?, context: Context) {
+    constructor(body: String, authorId: Long, attachmentId: Int?, context: Context) {
 
         this.body = TextHelper.wrapTextForSending(body)
         this.authorId = authorId

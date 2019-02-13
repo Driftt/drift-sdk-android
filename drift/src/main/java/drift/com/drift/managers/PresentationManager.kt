@@ -30,9 +30,10 @@ import drift.com.drift.model.Message
  * Created by eoin on 23/08/2017.
  */
 
-internal class PresentationManager {
+internal object PresentationManager {
 
     private var pw: PopupWindow? = null
+    private val TAG = PresentationManager::class.java.simpleName
 
     internal fun didReceiveNewMessage(message: Message) {
 
@@ -42,7 +43,7 @@ internal class PresentationManager {
 
         //If not in conversation activity and popup not currently showing show popup
 
-        ConversationManager.instance.manuallyAddUnreadCount()
+        ConversationManager.manuallyAddUnreadCount()
 
         val activity = Drift.currentActivity
 
@@ -52,7 +53,7 @@ internal class PresentationManager {
             activity.didReceiveNewMessage()
         } else if (message.authorType == "USER") {
 
-            showPopupForMessage(message, ConversationManager.instance.unreadCountForUser - 1)
+            showPopupForMessage(message, ConversationManager.unreadCountForUser - 1)
 
         }
     }
@@ -60,8 +61,8 @@ internal class PresentationManager {
     fun checkForUnreadMessagesToShow(orgId: Int, endUserId: Long?) {
 
         LoggerHelper.logMessage(TAG, "Checking for Messages to show")
-        UserManager.instance.getUsersIfWeNeedTo(orgId) {
-            ConversationManager.instance.getConversationsForEndUser(endUserId) { response ->
+        UserManager.getUsersIfWeNeedTo(orgId) {
+            ConversationManager.getConversationsForEndUser(endUserId) { response ->
                 if (response != null) {
 
                     showMessagePopupFromManager()
@@ -77,7 +78,7 @@ internal class PresentationManager {
 
         val handler = Handler()
         handler.postDelayed({
-            if (!ConversationManager.instance.conversations.isEmpty()) {
+            if (!ConversationManager.conversations.isEmpty()) {
                 showMessagePopupFromManager()
             }
         }, 1000)
@@ -89,7 +90,7 @@ internal class PresentationManager {
         ///Check for unread conversation extras
         val unreadMessages = ArrayList<Message>()
         var unreadMessageCount = -1
-        for (conversationExtra in ConversationManager.instance.conversations) {
+        for (conversationExtra in ConversationManager.conversations) {
             if (conversationExtra.unreadMessages != 0) {
                 if (conversationExtra.lastAgentMessage != null) {
                     unreadMessages.add(conversationExtra.lastAgentMessage!!)
@@ -105,13 +106,13 @@ internal class PresentationManager {
 
     private fun showPopupForMessage(message: Message, otherMessages: Int) {
 
-        val user = UserManager.instance.getUserForId(message.authorId!!.toInt())
+        val user = UserManager.getUserForId(message.authorId)
         val auth = Auth.instance
         if (user != null) {
             showPopupForMessage(user, message, otherMessages)
         } else if (auth?.endUser?.orgId != null) {
-            UserManager.instance.getUsers(auth.endUser?.orgId!!) {
-                val newUser = UserManager.instance.getUserForId(message.authorId!!.toInt())
+            UserManager.getUsers(auth.endUser?.orgId!!) {
+                val newUser = UserManager.getUserForId(message.authorId)
                 showPopupForMessage(newUser, message, otherMessages)
             }
         }
@@ -148,7 +149,7 @@ internal class PresentationManager {
 
 
             //We need to get the instance of the LayoutInflater, use the context of this activity
-            val inflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val inflater = activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             //Inflate the view from a predefined XML layout
             val layout = inflater.inflate(R.layout.drift_sdk_new_message_view, null)
 
@@ -233,10 +234,4 @@ internal class PresentationManager {
         }
     }
 
-    companion object {
-
-        private val TAG = PresentationManager::class.java.simpleName
-
-        val instance = PresentationManager()
-    }
 }

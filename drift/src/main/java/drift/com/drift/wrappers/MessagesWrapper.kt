@@ -59,7 +59,7 @@ internal object MessagesWrapper {
         })
     }
 
-    fun createConversation(bodyString: String, welcomeMessage: String?, welcomeUserId: Int?, callback: (response: Message?) -> Unit) {
+    fun createConversation(bodyString: String, welcomeMessage: String?, welcomeUserId: Long?, callback: (response: Message?) -> Unit) {
 
         val payload = HashMap<String, Any>()
 
@@ -70,7 +70,7 @@ internal object MessagesWrapper {
         payload["body"] = body
 
         if (welcomeMessage != null && welcomeUserId != null) {
-            val sender = HashMap<String, Int>()
+            val sender = HashMap<String, Long>()
             sender["id"] = welcomeUserId
 
 

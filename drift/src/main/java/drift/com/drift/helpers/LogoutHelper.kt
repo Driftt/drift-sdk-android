@@ -7,16 +7,15 @@ import drift.com.drift.managers.PresentationManager
 import drift.com.drift.managers.SocketManager
 import drift.com.drift.managers.UserManager
 import drift.com.drift.model.Auth
-import drift.com.drift.model.Embed
 
 object LogoutHelper {
     fun logout() {
-        PresentationManager.instance.closePopupView()
-        UserManager.instance.clearCache()
-        ConversationManager.instance.clearCache()
-        MessageManager.instance.clearCache()
-        AttachmentManager.instance.clearCache()
+        PresentationManager.closePopupView()
+        UserManager.clearCache()
+        ConversationManager.clearCache()
+        MessageManager.clearCache()
+        AttachmentManager.clearCache()
         Auth.deleteAuth()
-        SocketManager.instance.disconnect()
+        SocketManager.disconnect()
     }
 }

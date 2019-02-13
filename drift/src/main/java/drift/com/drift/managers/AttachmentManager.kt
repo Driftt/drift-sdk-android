@@ -10,7 +10,9 @@ import drift.com.drift.wrappers.AttachmentWrapper
  * Created by eoin on 25/08/2017.
  */
 
-internal class AttachmentManager {
+internal object AttachmentManager {
+
+    private val TAG = AttachmentManager::class.java.simpleName
 
     private var attachmentMap = HashMap<Int, Attachment>()
 
@@ -69,10 +71,4 @@ internal class AttachmentManager {
         }
     }
 
-    companion object {
-
-        private val TAG = AttachmentManager::class.java.simpleName
-
-        val instance = AttachmentManager()
-    }
 }

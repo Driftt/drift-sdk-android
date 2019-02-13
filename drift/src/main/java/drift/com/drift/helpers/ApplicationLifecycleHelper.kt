@@ -26,7 +26,7 @@ internal class ApplicationLifecycleHelper : Application.ActivityLifecycleCallbac
         LoggerHelper.logMessage(TAG, "Application Did Resume")
         val orgId = Auth.instance?.endUser?.orgId ?: return
         val endUserId = Auth.instance?.endUser?.id ?: return
-        PresentationManager.instance.checkForUnreadMessagesToShow(orgId, endUserId)
+        PresentationManager.checkForUnreadMessagesToShow(orgId, endUserId)
     }
 
     private fun onApplicationPaused() {
@@ -49,7 +49,7 @@ internal class ApplicationLifecycleHelper : Application.ActivityLifecycleCallbac
 
         if (rotating) {
             LoggerHelper.logMessage(TAG, "Activity Rotating, ignoring Resuming")
-            PresentationManager.instance.checkWeNeedToReshowMessagePopover()
+            PresentationManager.checkWeNeedToReshowMessagePopover()
             rotating = false
             return
         }
@@ -72,7 +72,7 @@ internal class ApplicationLifecycleHelper : Application.ActivityLifecycleCallbac
     }
 
     override fun onActivityStopped(activity: Activity?) {
-        PresentationManager.instance.closePopupView()
+        PresentationManager.closePopupView()
 
         if (activity?.isChangingConfigurations == true) {
             LoggerHelper.logMessage(TAG, "Activity Rotating, ignoring Stop")

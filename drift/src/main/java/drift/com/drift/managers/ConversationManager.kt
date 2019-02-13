@@ -8,7 +8,7 @@ import drift.com.drift.wrappers.ConversationListWrapper
  * Created by eoin on 08/08/2017.
  */
 
-internal class ConversationManager {
+internal object ConversationManager {
 
     var conversations = ArrayList<ConversationExtra>()
         private set
@@ -25,7 +25,7 @@ internal class ConversationManager {
 
             for (conversationExtra in conversations) {
                 if (conversationExtra.unreadMessages != 0) {
-                    unreadCount += conversationExtra.unreadMessages!!
+                    unreadCount += conversationExtra.unreadMessages
                 }
             }
 
@@ -62,11 +62,4 @@ internal class ConversationManager {
         }
 
     }
-
-    companion object {
-
-        val instance = ConversationManager()
-    }
-
-
 }

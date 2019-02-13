@@ -31,22 +31,22 @@ class Drift private constructor() {
             JodaTimeAndroid.init(application)
 
             application.registerActivityLifecycleCallbacks(_drift.applicationLifecycleHelper)
-            DriftManager.instance.getDataFromEmbeds(embedId)
+            DriftManager.getDataFromEmbeds(embedId)
 
             return _drift
         }
 
-        fun registerUser(userId: String, email: String) {
+        fun registerUser(userId: String, email: String? = null, userJwt: String? = null) {
             if (!isConnected) {
                 LoggerHelper.logMessage("LIFECYCLE", "Registering User")
-                DriftManager.instance.registerUser(userId, email)
+                DriftManager.registerUser(userId, email, userJwt)
             } else {
                 LoggerHelper.logMessage("LIFECYCLE", "Not Registering User, already connected")
             }
         }
 
         val isConnected: Boolean
-            get() = DriftManager.instance.loadingUser == true || SocketManager.instance.isConnected
+            get() = DriftManager.loadingUser == true || SocketManager.isConnected
 
         fun setLoggerListener(loggerListener: LoggerListener) {
             _drift.mLoggerListener = loggerListener

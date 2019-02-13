@@ -16,7 +16,9 @@ import okhttp3.OkHttpClient
  * Created by eoin on 15/08/2017.
  */
 
-internal class SocketManager {
+internal object SocketManager {
+
+    private val TAG = SocketManager::class.java.simpleName
 
     private val gson = APIManager.generateGson()
 
@@ -24,15 +26,13 @@ internal class SocketManager {
     private var channel: PhxChannel? = null
 
     val isConnected: Boolean
-        get() = if (socket != null) {
-            socket!!.isConnected
-        } else false
+        get() = socket?.isConnected ?: false
 
     fun disconnect() {
         try {
 
-            if (socket != null && socket!!.isConnected) {
-                socket!!.disconnect()
+            if (socket?.isConnected == true) {
+                socket?.disconnect()
             }
 
         } catch (e: Exception) {
@@ -45,15 +45,14 @@ internal class SocketManager {
 
         try {
 
-            if (socket != null && socket!!.isConnected) {
-                socket!!.disconnect()
+            if (socket?.isConnected == true) {
+                socket?.disconnect()
             }
             val url = getSocketURL(auth.orgId, auth.sessionToken)
             socket = PhxSocket(url, null, OkHttpClient())
 
-            socket?.logger = fun(s: String): Unit {
-                LoggerHelper.logMessage("Drift Socket", s)
-                return Unit
+            socket?.logger = {
+                LoggerHelper.logMessage("Drift Socket", it)
             }
 
             socket?.onOpen {
@@ -104,8 +103,6 @@ internal class SocketManager {
                 channel?.join(null, null)
                         ?.receive("ok") { phxMessage ->
                             LoggerHelper.logMessage(TAG, "You have joined '" + phxMessage.event + "'")
-
-                            Unit
                         }
             }
 
@@ -141,7 +138,7 @@ internal class SocketManager {
 
                     if (message != null && message.contentType == "CHAT") {
                         LoggerHelper.logMessage(TAG, "Received new Message")
-                        PresentationManager.instance.didReceiveNewMessage(message)
+                        PresentationManager.didReceiveNewMessage(message)
                     }
                 }
                 else -> LoggerHelper.logMessage(TAG, "Undealt with socket event type: $type")
@@ -154,15 +151,7 @@ internal class SocketManager {
         return "wss://" + orgId.toString() + "-" + computeShardId(orgId).toString() + ".chat.api.drift.com/ws/websocket?session_token=" + socketAuth
     }
 
-    companion object {
-
-        private val TAG = SocketManager::class.java.simpleName
-
-        val instance = SocketManager()
-
-        private fun computeShardId(orgId: Int): Int {
-            return orgId % 50 //WS_NUM_SHARDS
-        }
+    private fun computeShardId(orgId: Int): Int {
+        return orgId % 50 //WS_NUM_SHARDS
     }
-
 }

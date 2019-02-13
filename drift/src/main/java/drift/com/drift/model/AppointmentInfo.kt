@@ -25,7 +25,7 @@ internal class AppointmentInfo {
 
     @Expose
     @SerializedName("agentId")
-    var agentId: Int? = null
+    var agentId: Long? = null
 
     @Expose
     @SerializedName("conversationId")

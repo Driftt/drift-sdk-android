@@ -12,7 +12,7 @@ internal object GlideHelper {
         val auth = Auth.instance
         var authHeader = ""
         if (auth != null) {
-            authHeader = "bearer " + auth!!.accessToken
+            authHeader = "bearer " + auth.accessToken
         }
         val headers = LazyHeaders.Builder()
                 .addHeader("Authorization", authHeader).build()

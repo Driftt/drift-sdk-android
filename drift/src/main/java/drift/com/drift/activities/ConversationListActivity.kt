@@ -80,11 +80,11 @@ internal class ConversationListActivity : DriftActivity() {
         DrawableCompat.setTint(backgroundDrawable, ColorHelper.backgroundColor)
 
 
-        conversationListAdapter = ConversationListAdapter(this, ConversationManager.instance.conversations)
+        conversationListAdapter = ConversationListAdapter(this, ConversationManager.conversations)
         conversationRecyclerView.adapter = conversationListAdapter
 
         if (conversationListAdapter.itemCount == 0) {
-            if (ConversationManager.instance.isApiCallComplete) {
+            if (ConversationManager.isApiCallComplete) {
                 emptyState.visibility = View.VISIBLE
                 progressBar.visibility = View.GONE
             } else {
@@ -105,7 +105,7 @@ internal class ConversationListActivity : DriftActivity() {
         val auth = Auth.instance
         if (auth?.endUser != null) {
 
-            UserManager.instance.getUsers(auth.endUser!!.orgId!!) { success ->
+            UserManager.getUsers(auth.endUser!!.orgId!!) { success ->
                 if (success) {
                     fetchData(auth)
                 } else {
@@ -116,7 +116,7 @@ internal class ConversationListActivity : DriftActivity() {
     }
 
     private fun fetchData(auth: Auth) {
-        ConversationManager.instance.getConversationsForEndUser(auth.endUser!!.id) { response ->
+        ConversationManager.getConversationsForEndUser(auth.endUser!!.id) { response ->
             if (response != null) {
                 progressBar.visibility = View.GONE
                 LoggerHelper.logMessage(TAG, response.toString())

@@ -31,7 +31,7 @@ internal class Theme {
     var userListMode: String? = null
     @Expose
     @SerializedName("userList")
-    var userListIds: ArrayList<Int>? = null
+    var userListIds: ArrayList<Long>? = null
     @Expose
     @SerializedName("timezone")
     var timezone: String? = null

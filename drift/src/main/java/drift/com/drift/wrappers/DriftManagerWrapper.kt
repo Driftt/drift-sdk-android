@@ -36,16 +36,22 @@ internal object DriftManagerWrapper {
     }
 
 
-    fun postIdentity(orgId: Int, userId: String, email: String, callback: (response: IdentifyResponse?) -> Unit) {
+    fun postIdentity(orgId: Int, userId: String, email: String?, userJwt: String? , callback: (response: IdentifyResponse?) -> Unit) {
 
         val jsonPayload = HashMap<String, Any>()
 
         jsonPayload["orgId"] = orgId
         jsonPayload["userId"] = userId
 
-        val inlineEmailAttributes = HashMap<String, Any>()
-        inlineEmailAttributes["email"] = email
-        jsonPayload["attributes"] = inlineEmailAttributes
+        if (userJwt != null) {
+            jsonPayload["signedIdentity"] = userJwt
+        }
+
+        if (email != null) {
+            val inlineEmailAttributes = HashMap<String, Any>()
+            inlineEmailAttributes["email"] = email
+            jsonPayload["attributes"] = inlineEmailAttributes
+        }
 
 
         APIManager.authlessClient.postIdentify(jsonPayload).enqueue(object : Callback<IdentifyResponse> {
@@ -63,11 +69,17 @@ internal object DriftManagerWrapper {
         })
     }
 
-    fun getAuth(orgId: Int, userId: String, email: String, redirectUri: String, clientId: String, callback: (response: Auth?) -> Unit) {
+    fun getAuth(orgId: Int, userId: String, email: String?, userJwt: String?, redirectUri: String, clientId: String, callback: (response: Auth?) -> Unit) {
 
         val jsonPayload = HashMap<String, Any>()
 
-        jsonPayload["email"] = email
+        if (email != null) {
+            jsonPayload["email"] = email
+        }
+
+        if (userJwt != null) {
+            jsonPayload["userJwt"] = userJwt
+        }
         jsonPayload["org_id"] = orgId
         jsonPayload["user_id"] = userId
         jsonPayload["grant_type"] = "sdk"

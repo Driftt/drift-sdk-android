@@ -25,7 +25,7 @@ internal class MessageAttributes {
 
     @Expose
     @SerializedName("presentSchedule")
-    var presentSchedule: Int? = null
+    var presentSchedule: Long? = null
 
     @Expose
     @SerializedName("appointmentInfo")

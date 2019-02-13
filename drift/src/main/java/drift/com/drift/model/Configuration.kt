@@ -78,11 +78,8 @@ internal class Configuration {
                 }
             }
 
-            if (selectedUser == null) {
-                val randomUser = team!![Random().nextInt(team!!.size)]
-                if (randomUser != null) {
-                    selectedUser = randomUser
-                }
+            if (selectedUser == null && !team.isNullOrEmpty()) {
+                selectedUser = team!!.random()
             }
 
             return selectedUser

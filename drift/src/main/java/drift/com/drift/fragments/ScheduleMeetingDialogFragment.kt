@@ -42,7 +42,7 @@ import drift.com.drift.wrappers.ScheduleMeetingWrapper
 
 internal class ScheduleMeetingDialogFragment : DialogFragment() {
 
-    private var userId: Int = 0
+    private var userId: Long = 0
     private var conversationId: Int = 0
 
     private var scheduleMeetingState = ScheduleMeetingState.DAY
@@ -87,7 +87,7 @@ internal class ScheduleMeetingDialogFragment : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            userId = arguments!!.getInt(USER_ID_ARG)
+            userId = arguments!!.getLong(USER_ID_ARG)
             conversationId = arguments!!.getInt(CONVERSATION_ID_ARG)
         }
     }
@@ -162,7 +162,7 @@ internal class ScheduleMeetingDialogFragment : DialogFragment() {
 
         confirmationButton.setOnClickListener { didPressSchedule() }
 
-        val user = UserManager.instance.getUserForId(userId)
+        val user = UserManager.getUserForId(userId)
         if (user != null) {
             userTextView.text = user.userName
             val requestOptions = RequestOptions()
@@ -292,7 +292,7 @@ internal class ScheduleMeetingDialogFragment : DialogFragment() {
 
         val messageRequest = MessageRequest(googleMeeting, currentUserAvailability, userId, conversationId, currentSelectedTime)
 
-        MessageManager.instance.sendMessageForConversationId(conversationId, messageRequest) { response ->
+        MessageManager.sendMessageForConversationId(conversationId, messageRequest) { response ->
             progressBar.visibility = View.GONE
 
             if (response != null) {
@@ -322,10 +322,10 @@ internal class ScheduleMeetingDialogFragment : DialogFragment() {
 
         private val TAG = ScheduleMeetingDialogFragment::class.java.simpleName
 
-        fun newInstance(userId: Int, conversationId: Int): ScheduleMeetingDialogFragment {
+        fun newInstance(userId: Long, conversationId: Int): ScheduleMeetingDialogFragment {
             val fragment = ScheduleMeetingDialogFragment()
             val args = Bundle()
-            args.putInt(USER_ID_ARG, userId)
+            args.putLong(USER_ID_ARG, userId)
             args.putInt(CONVERSATION_ID_ARG, conversationId)
             fragment.arguments = args
             return fragment

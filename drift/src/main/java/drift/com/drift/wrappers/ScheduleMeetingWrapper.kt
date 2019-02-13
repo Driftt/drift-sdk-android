@@ -18,7 +18,7 @@ internal object ScheduleMeetingWrapper {
 
     private val TAG = ScheduleMeetingWrapper::class.java.simpleName
 
-    fun getUserAvailability(userId: Int, callback: (response: UserAvailability?) -> Unit) {
+    fun getUserAvailability(userId: Long, callback: (response: UserAvailability?) -> Unit) {
 
         APIManager.customerClient.getUserAvailability(userId).enqueue(object : Callback<UserAvailability> {
             override fun onResponse(call: Call<UserAvailability>, response: Response<UserAvailability>) {
@@ -36,7 +36,7 @@ internal object ScheduleMeetingWrapper {
         })
     }
 
-    fun scheduleMeeting(userId: Int, conversationId: Int, timestamp: Double, callback: (response: GoogleMeeting?) -> Unit) {
+    fun scheduleMeeting(userId: Long, conversationId: Int, timestamp: Double, callback: (response: GoogleMeeting?) -> Unit) {
 
         val body = RequestBody.create(MediaType.parse("application/json"), timestamp.toString())
 

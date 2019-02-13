@@ -78,15 +78,11 @@ internal class ConversationListAdapter(private val context: Context, private var
 
 
             if (conversationExtra.lastAgentMessage != null) {
-                val user = UserManager.instance.getUserForId(conversationExtra.lastAgentMessage!!.authorId!!.toInt())
+                val user = UserManager.getUserForId(conversationExtra.lastAgentMessage!!.authorId)
                 UserPopulationHelper.populateTextAndImageFromUser(context, user, userNameTextView, userImageView)
-            } else if (conversationExtra.lastMessage != null
-                    && conversationExtra.lastMessage!!.attributes != null
-                    && conversationExtra.lastMessage!!.attributes!!.preMessages != null
-                    && !conversationExtra.lastMessage!!.attributes!!.preMessages.isEmpty()) {
-
+            } else if (!conversationExtra.lastMessage?.attributes?.preMessages.isNullOrEmpty()) {
                 val preMessage = conversationExtra.lastMessage!!.attributes!!.preMessages[0]
-                val user = UserManager.instance.getUserForId(preMessage.sender!!.id!!)
+                val user = UserManager.getUserForId(preMessage.sender!!.id)
                 UserPopulationHelper.populateTextAndImageFromUser(context, user, userNameTextView, userImageView)
             } else {
                 Glide.with(context).clear(userImageView)

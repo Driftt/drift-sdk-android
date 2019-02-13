@@ -102,7 +102,7 @@ internal class ConversationAdapter(private val activity: ConversationActivity, m
         }
     }
 
-    fun updateForAttachments(attachments: ArrayList<Attachment>) {
+    fun updateForAttachments() {
         notifyDataSetChanged()
     }
 
@@ -225,7 +225,7 @@ internal class ConversationAdapter(private val activity: ConversationActivity, m
                 val attachments = ArrayList<Attachment>()
 
                 for (attachmentId in message.attachmentIds!!) {
-                    val attachment = AttachmentManager.instance.getAttachment(attachmentId)
+                    val attachment = AttachmentManager.getAttachment(attachmentId)
                     if (attachment != null) {
                         attachments.add(attachment)
                     }
@@ -311,7 +311,7 @@ internal class ConversationAdapter(private val activity: ConversationActivity, m
 
             if (message.attributes != null && message.attributes!!.presentSchedule != null) {
 
-                val user = UserManager.instance.getUserForId(message.attributes!!.presentSchedule!!)
+                val user = UserManager.getUserForId(message.attributes!!.presentSchedule!!)
 
                 if (user != null) {
 
@@ -344,7 +344,7 @@ internal class ConversationAdapter(private val activity: ConversationActivity, m
             }
 
 
-            setupForUser(message, UserManager.instance.getUserForId(message.authorId!!.toInt()))
+            setupForUser(message, UserManager.getUserForId(message.authorId))
 
         }
 
@@ -447,7 +447,7 @@ internal class ConversationAdapter(private val activity: ConversationActivity, m
                 if (message.attributes!!.appointmentInfo != null && message.attributes!!.appointmentInfo!!.agentId != null) {
                     val appointmentInformation = message.attributes!!.appointmentInfo
 
-                    val user = UserManager.instance.getUserForId(appointmentInformation!!.agentId!!)
+                    val user = UserManager.getUserForId(appointmentInformation!!.agentId!!)
 
                     if (user != null) {
                         val requestOptions = RequestOptions()

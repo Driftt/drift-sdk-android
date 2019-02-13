@@ -9,15 +9,15 @@ import drift.com.drift.wrappers.UserManagerWrapper
  * Created by eoin on 04/08/2017.
  */
 
-internal class UserManager {
+internal object UserManager {
 
-    private var userMap = HashMap<Int, User>()
+    private var userMap = HashMap<Long, User>()
 
     fun clearCache() {
         userMap = HashMap()
     }
 
-    fun getUserForId(userId: Int): User? {
+    fun getUserForId(userId: Long): User? {
         return userMap[userId]
     }
 
@@ -46,7 +46,4 @@ internal class UserManager {
         getUsers(orgId, userManagerCallback)
     }
 
-    companion object {
-        val instance = UserManager()
-    }
 }

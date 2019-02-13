@@ -11,7 +11,9 @@ import drift.com.drift.wrappers.DriftManagerWrapper
  * Created by eoin on 28/07/2017.
  */
 
-internal class DriftManager {
+internal object DriftManager {
+
+    private val TAG = DriftManager::class.java.simpleName
 
     private var registerInformation: RegisterInformation? = null
 
@@ -29,20 +31,20 @@ internal class DriftManager {
                 LoggerHelper.logMessage(TAG, "Get Embed Success")
 
                 if (registerInformation != null) {
-                    registerUser(registerInformation!!.userId, registerInformation!!.email)
+                    registerUser(registerInformation!!.userId, registerInformation?.email, registerInformation?.userJwt)
                 }
 
             }
         }
     }
 
-    fun registerUser(userId: String, email: String) {
+    fun registerUser(userId: String, email: String? = null, userJwt: String? = null) {
 
         val embed = Embed.instance
 
         if (embed == null) {
             LoggerHelper.logMessage(TAG, "No Embed, not registering yet")
-            registerInformation = RegisterInformation(userId, email)
+            registerInformation = RegisterInformation(userId, email, userJwt)
             return
         }
 
@@ -54,10 +56,10 @@ internal class DriftManager {
 
         ///Post Identify
         loadingUser = true
-        DriftManagerWrapper.postIdentity(embed.orgId!!, userId, email) { response ->
+        DriftManagerWrapper.postIdentity(embed.orgId!!, userId, email, userJwt) { response ->
             if (response != null) {
                 LoggerHelper.logMessage(TAG, "Identify Complete")
-                getAuth(embed, response, email)
+                getAuth(embed, response, email, userJwt)
             } else {
                 LoggerHelper.logMessage(TAG, "Identify Failed")
                 loadingUser = false
@@ -65,13 +67,13 @@ internal class DriftManager {
         }
     }
 
-    private fun getAuth(embed: Embed, identifyResponse: IdentifyResponse, email: String) {
+    private fun getAuth(embed: Embed, identifyResponse: IdentifyResponse, email: String?, userJwt: String?) {
 
         val userId = identifyResponse.userId ?: return
         val authClientId = embed.configuration!!.authClientId ?: return
         val redirectUri = embed.configuration!!.redirectUri ?: return
 
-        DriftManagerWrapper.getAuth(identifyResponse.orgId!!, userId, email, redirectUri, authClientId) { response ->
+        DriftManagerWrapper.getAuth(identifyResponse.orgId!!, userId, email, userJwt, redirectUri, authClientId) { response ->
             if (response?.accessToken != null) {
                 response.saveAuth()
                 LoggerHelper.logMessage(TAG, "Auth Complete")
@@ -87,7 +89,7 @@ internal class DriftManager {
         DriftManagerWrapper.getSocketAuth(orgId, accessToken) { response ->
             if (response != null) {
                 LoggerHelper.logMessage(TAG, "Socket Auth Complete")
-                SocketManager.instance.connect(response)
+                SocketManager.connect(response)
             } else {
                 LoggerHelper.logMessage(TAG, "Socket Auth Failed")
             }
@@ -95,12 +97,6 @@ internal class DriftManager {
         }
     }
 
-    private inner class RegisterInformation internal constructor(internal val userId: String, internal val email: String)
+    private class RegisterInformation internal constructor(internal val userId: String, internal val email: String?, internal val userJwt: String?)
 
-    companion object {
-
-        private val TAG = DriftManager::class.java.simpleName
-
-        val instance = DriftManager()
-    }
 }

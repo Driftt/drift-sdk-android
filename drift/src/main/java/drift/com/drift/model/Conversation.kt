@@ -11,13 +11,13 @@ import java.util.Date
 
 internal class Conversation {
 
+    enum class ConversationStatus {
+        OPEN, CLOSED, PENDING;
+    }
+
     @Expose
     @SerializedName("id")
     var id: Int? = null
-
-    @Expose
-    @SerializedName("displayId")
-    var displayId: Int? = null
 
     @Expose
     @SerializedName("type")
@@ -25,34 +25,28 @@ internal class Conversation {
 
     @Expose
     @SerializedName("status")
-    var status: String? = null
+    private var status: String? = null
 
     @Expose
     @SerializedName("orgId")
     var orgId: Int? = null
 
     @Expose
-    @SerializedName("inboxId")
-    var inboxId: Int? = null
-
-    @Expose
-    @SerializedName("endUserId")
-    var endUserId: Int? = null
-
-    @Expose
-    @SerializedName("subject")
-    var subject: Any? = null
-
-    @Expose
     @SerializedName("preview")
     var preview: String? = null
 
     @Expose
-    @SerializedName("user")
-    var user: User? = null
-
-    @Expose
     @SerializedName("updatedAt")
     var updatedAt: Date? = null
+
+    val conversationStatus: ConversationStatus?
+        get() {
+            return try {
+                status?.let { ConversationStatus.valueOf(it) }
+            } catch (t: Throwable) {
+                null
+            }
+
+        }
 
 }

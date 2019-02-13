@@ -72,7 +72,7 @@ internal class ConversationActivity : DriftActivity() {
     }
 
     private var conversationId = -1
-    private var endUserId: Long? = -1L
+    private var endUserId: Long = -1L
     private var conversationType = ConversationType.CONTINUE
 
     private enum class ConversationType {
@@ -115,7 +115,7 @@ internal class ConversationActivity : DriftActivity() {
 
         val auth = Auth.instance
         if (auth?.endUser != null) {
-            endUserId = auth.endUser?.id
+            endUserId = auth.endUser?.id ?: -1L
         } else {
             //No Auth
             Toast.makeText(this, "We're sorry, an unknown error occurred", Toast.LENGTH_LONG).show()
@@ -151,7 +151,7 @@ internal class ConversationActivity : DriftActivity() {
             }
         })
 
-        AttachmentManager.instance.setAttachmentLoadHandle {
+        AttachmentManager.setAttachmentLoadHandle {
             didLoadAttachments(it)
         }
 
@@ -165,7 +165,7 @@ internal class ConversationActivity : DriftActivity() {
             }
         })
 
-        conversationAdapter = ConversationAdapter(this, MessageManager.instance.getMessagesForConversationId(conversationId))
+        conversationAdapter = ConversationAdapter(this, MessageManager.getMessagesForConversationId(conversationId))
         recyclerView.adapter = conversationAdapter
 
         if (conversationAdapter.itemCount == 0) {
@@ -178,7 +178,7 @@ internal class ConversationActivity : DriftActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        AttachmentManager.instance.removeAttachmentLoadHandle()
+        AttachmentManager.removeAttachmentLoadHandle()
         unregisterReceiver(downloadReceiver)
 
     }
@@ -198,7 +198,7 @@ internal class ConversationActivity : DriftActivity() {
 
         if (conversationId != -1) {
 
-            MessageManager.instance.getMessagesForConversation(conversationId) { response ->
+            MessageManager.getMessagesForConversation(conversationId) { response ->
                 if (response != null) {
                     progressBar.visibility = View.GONE
                     LoggerHelper.logMessage(TAG, response.toString())
@@ -218,7 +218,7 @@ internal class ConversationActivity : DriftActivity() {
                         }
                     }
 
-                    AttachmentManager.instance.loadAttachments(attachmentIds)
+                    AttachmentManager.loadAttachments(attachmentIds)
 
                 } else {
                     LoggerHelper.logMessage(TAG, "Failed to load messages")
@@ -287,14 +287,14 @@ internal class ConversationActivity : DriftActivity() {
 
 
         val auth = Auth.instance
-        if (auth != null && message.authorId === auth.endUser!!.id && message.contentType == "CHAT" && (message.attributes == null || message.attributes!!.appointmentInfo == null) && !message.fakeMessage) {
+        if (auth != null && message.authorId == auth.endUser!!.id && message.contentType == "CHAT" && (message.attributes == null || message.attributes!!.appointmentInfo == null) && !message.fakeMessage) {
             LoggerHelper.logMessage(TAG, "Ignoring own message")
             return
         }
 
 
         val originalCount = conversationAdapter.itemCount
-        val newMessages = MessageManager.instance.addMessageToConversation(conversationId, message)
+        val newMessages = MessageManager.addMessageToConversation(conversationId, message)
         if (newMessages.size == originalCount + 1 && (message.attributes == null || message.attributes!!.appointmentInfo == null)) {
             conversationAdapter.updateDataAddingInOneMessage(newMessages, recyclerView)
         } else {
@@ -324,15 +324,15 @@ internal class ConversationActivity : DriftActivity() {
         message.sendStatus = Message.SendStatus.SENDING
         conversationAdapter.updateMessage(message)
 
-        MessageManager.instance.sendMessageForConversationId(conversationId, messageRequest) { response ->
+        MessageManager.sendMessageForConversationId(conversationId, messageRequest) { response ->
             if (response != null) {
                 message.sendStatus = Message.SendStatus.SENT
-                MessageManager.instance.removeMessageFromFailedCache(message, conversationId)
+                MessageManager.removeMessageFromFailedCache(message, conversationId)
                 conversationAdapter.updateMessage(message)
             } else {
                 message.sendStatus = Message.SendStatus.FAILED
-                MessageManager.instance.addMessageFailedToConversation(message, conversationId)
-                conversationAdapter.updateData(MessageManager.instance.getMessagesForConversationId(conversationId))
+                MessageManager.addMessageFailedToConversation(message, conversationId)
+                conversationAdapter.updateData(MessageManager.getMessagesForConversationId(conversationId))
             }
         }
     }
@@ -345,12 +345,12 @@ internal class ConversationActivity : DriftActivity() {
 
         progressBar.visibility = View.VISIBLE
 
-        var welcomeUserId: Int? = null
+        var welcomeUserId: Long? = null
         if (userForWelcomeMessage != null) {
             welcomeUserId = userForWelcomeMessage!!.id
         }
 
-        MessageManager.instance.createConversation(textToSend, welcomeMessage, welcomeUserId) { response ->
+        MessageManager.createConversation(textToSend, welcomeMessage, welcomeUserId) { response ->
             progressBar.visibility = View.GONE
 
             if (response != null) {
@@ -371,10 +371,10 @@ internal class ConversationActivity : DriftActivity() {
 
     private fun didLoadAttachments(attachments: ArrayList<Attachment>) {
         LoggerHelper.logMessage(TAG, "Did load attachments: " + attachments.size)
-        conversationAdapter.updateForAttachments(attachments)
+        conversationAdapter.updateForAttachments()
     }
 
-    fun didPressScheduleMeetingFor(userId: Int) {
+    fun didPressScheduleMeetingFor(userId: Long) {
         ScheduleMeetingDialogFragment.newInstance(userId, conversationId).show(supportFragmentManager, ScheduleMeetingDialogFragment::class.java.simpleName)
     }
 

@@ -16,7 +16,7 @@ import drift.com.drift.wrappers.MessagesWrapper
  * Created by eoin on 11/08/2017.
  */
 
-internal class MessageManager {
+internal object MessageManager {
 
     private var messageCache = HashMap<Int, ArrayList<Message>>()
     private var failedMessageCache = HashMap<Int, ArrayList<Message>>()
@@ -94,7 +94,7 @@ internal class MessageManager {
             fakeMessage.authorType = "USER"
 
             if (preMessage.sender != null) {
-                fakeMessage.authorId = preMessage.sender!!.id!!.toLong()
+                fakeMessage.authorId = preMessage.sender!!.id
                 fakeMessages.add(fakeMessage)
             }
         }
@@ -202,14 +202,10 @@ internal class MessageManager {
 
     }
 
-    fun createConversation(body: String, welcomeMessage: String?, welcomeUserId: Int?, callbackWrapper: (response: Message?) -> Unit) {
+    fun createConversation(body: String, welcomeMessage: String?, welcomeUserId: Long?, callbackWrapper: (response: Message?) -> Unit) {
 
         MessagesWrapper.createConversation(body, welcomeMessage, welcomeUserId) { response -> callbackWrapper(response) }
 
     }
 
-    companion object {
-
-        val instance = MessageManager()
-    }
 }

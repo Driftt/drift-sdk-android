@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName
 internal class User {
     @Expose
     @SerializedName("id")
-    var id: Int = 0
+    var id: Long = 0
     @Expose
     @SerializedName("orgId")
     var orgId: Int = 0

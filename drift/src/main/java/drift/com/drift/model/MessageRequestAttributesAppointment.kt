@@ -26,11 +26,11 @@ internal class MessageRequestAttributesAppointment
 
      */
 internal constructor(googleMeeting: GoogleMeeting, userAvailability: UserAvailability,
-agentId: Int, conversationId: Int, dateSlot: Date) {
+agentId: Long, conversationId: Int, dateSlot: Date) {
 
     @Expose
     @SerializedName("agentId")
-    internal var agentId: Int = agentId
+    internal var agentId: Long = agentId
 
     @Expose
     @SerializedName("conversationId")
