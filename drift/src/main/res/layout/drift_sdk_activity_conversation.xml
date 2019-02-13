@@ -30,7 +30,7 @@
             android:paddingBottom="4dp"
             android:visibility="gone"/>
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/drift_sdk_conversation_activity_recycler_activity"
             android:layout_width="match_parent"
             android:layout_height="0dp"
