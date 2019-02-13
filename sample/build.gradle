@@ -20,6 +20,10 @@ android {
         }
         debug {
             minifyEnabled false
+<<<<<<< HEAD
+=======
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+>>>>>>> 9f3363d659e7d4f3792eb72951c83874e8ee5d90
         }
     }
 }
