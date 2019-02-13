@@ -52,10 +52,6 @@ public class Conversation {
     public String preview;
 
     @Expose
-    @SerializedName("user")
-    public User user;
-
-    @Expose
     @SerializedName("updatedAt")
     public Date updatedAt;
 
