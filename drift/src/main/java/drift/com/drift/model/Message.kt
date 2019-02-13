@@ -18,9 +18,6 @@ internal class Message {
     @SerializedName("id")
     var id: Int? = null
     @Expose
-    @SerializedName("inboxId")
-    var inboxId: Int? = null
-    @Expose
     @SerializedName("type")
     var type: String? = null
     @Expose
@@ -33,23 +30,11 @@ internal class Message {
     @SerializedName("authorType")
     var authorType: String? = null
     @Expose
-    @SerializedName("subject")
-    var subject: String? = null
-    @Expose
     @SerializedName("body")
     var body: String? = null
     @Expose
     @SerializedName("uuid")
     var uuid: String? = null
-    @Expose
-    @SerializedName("originalHtml")
-    var originalHtml: String? = null
-    @Expose
-    @SerializedName("originalText")
-    var originalText: String? = null
-    @Expose
-    @SerializedName("conversationEvent")
-    var conversationEvent: String? = null
     @Expose
     @SerializedName("contentType")
     var contentType: String? = null

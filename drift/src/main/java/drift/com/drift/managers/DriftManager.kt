@@ -49,7 +49,7 @@ internal object DriftManager {
             return
         }
 
-        if (loadingUser!!) {
+        if (loadingUser) {
             return
         }
 

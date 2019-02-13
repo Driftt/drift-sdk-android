@@ -16,14 +16,6 @@ internal class AppointmentInfo {
     var availabilitySlot: Date? = null
 
     @Expose
-    @SerializedName("endUserTimeZone")
-    var endUserTimeZone: String? = null
-
-    @Expose
-    @SerializedName("agentTimeZone")
-    var agentTimeZone: String? = null
-
-    @Expose
     @SerializedName("agentId")
     var agentId: Long? = null
 

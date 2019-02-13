@@ -20,12 +20,4 @@ internal class GoogleMeeting {
     @SerializedName("url")
     var meetingURL: String? = null
 
-    @Expose
-    @SerializedName("start")
-    var startTime: Date? = null
-
-    @Expose
-    @SerializedName("end")
-    var endTime: Date? = null
-
 }

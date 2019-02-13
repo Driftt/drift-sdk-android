@@ -33,10 +33,6 @@ internal class Attachment {
     @SerializedName("size")
     var size: Int? = null
 
-    @Expose
-    @SerializedName("createdAt")
-    var createdAt: Date? = null
-
     val isImage: Boolean
         get() = mimeType!!.equals("image/jpeg", ignoreCase = true) || mimeType!!.equals("image/png", ignoreCase = true) || mimeType!!.equals("image/gif", ignoreCase = true) || mimeType!!.equals("image/jpg", ignoreCase = true)
 

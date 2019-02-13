@@ -22,14 +22,6 @@ import java.util.TimeZone
 internal class Configuration {
 
     @Expose
-    @SerializedName("inboxId")
-    var inboxId: Int? = null
-
-    @Expose
-    @SerializedName("refreshRate")
-    var refreshRate: Int? = null
-
-    @Expose
     @SerializedName("authClientId")
     var authClientId: String? = null
 
@@ -40,10 +32,6 @@ internal class Configuration {
     @Expose
     @SerializedName("theme")
     var theme: Theme? = null
-
-    @Expose
-    @SerializedName("enabled")
-    var enabled: Boolean? = null
 
     @Expose
     @SerializedName("widgetStatus")

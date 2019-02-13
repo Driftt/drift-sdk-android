@@ -12,14 +12,6 @@ import java.util.ArrayList
 internal class MessageAttributes {
 
     @Expose
-    @SerializedName("scheduleMeetingWith")
-    var scheduleMeetingWith: Int? = null
-
-    @Expose
-    @SerializedName("scheduleMeetingFlow")
-    var scheduleMeetingFlow = false
-
-    @Expose
     @SerializedName("offerSchedule")
     var offerSchedule = -1
 
