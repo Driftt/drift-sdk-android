@@ -52,13 +52,22 @@ internal object ConversationManager {
 
                 for (conversationExtra in response) {
                     if (conversationExtra.conversation != null && conversationExtra.conversation!!.type != "EMAIL") {
-                        filteredConversationExtras.add(conversationExtra)
+
+                        if (DriftManager.showAutomatedMessages) {
+                            //Add all conversations
+                            filteredConversationExtras.add(conversationExtra)
+                        } else {
+                            //Only add conversations we have a status for
+                            if (conversationExtra.conversation?.conversationStatus != null) {
+                                filteredConversationExtras.add(conversationExtra)
+                            }
+                        }
                     }
                 }
                 conversations = filteredConversationExtras
             }
 
-            conversationsCallback(response)
+            conversationsCallback(conversations)
         }
 
     }

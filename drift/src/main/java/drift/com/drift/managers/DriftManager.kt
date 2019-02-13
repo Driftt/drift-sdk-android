@@ -17,7 +17,8 @@ internal object DriftManager {
 
     private var registerInformation: RegisterInformation? = null
 
-    var loadingUser: Boolean? = false
+    var loadingUser: Boolean = false
+    var showAutomatedMessages = true
 
     fun getDataFromEmbeds(embedId: String) {
         val embed = Embed.instance

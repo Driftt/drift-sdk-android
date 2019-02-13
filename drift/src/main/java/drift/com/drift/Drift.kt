@@ -69,6 +69,10 @@ class Drift private constructor() {
             LogoutHelper.logout()
         }
 
+        fun showAutomatedMessages(show: Boolean) {
+            DriftManager.showAutomatedMessages = show
+        }
+
         internal fun getContext() : Context? {
             return currentActivity?.applicationContext
         }
