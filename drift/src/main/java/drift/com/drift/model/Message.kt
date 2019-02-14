@@ -16,7 +16,7 @@ internal class Message {
 
     @Expose
     @SerializedName("id")
-    var id: Int? = null
+    var id: Long? = null
     @Expose
     @SerializedName("type")
     var type: String? = null

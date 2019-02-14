@@ -37,9 +37,9 @@ internal interface APIConversationAPIBuilder {
     fun createConversation(@Body payload: HashMap<String, Any>): Call<Message>
 
     @POST("https://conversation2.api.drift.com/messages/{messageId}/read")
-    fun markMessageAsRead(@Path("messageId") messageId: Int?): Call<ResponseBody>
+    fun markMessageAsRead(@Path("messageId") messageId: Long?): Call<ResponseBody>
 
     @POST("https://conversation2.api.drift.com/messages/{messageId}/read-until")
-    fun markMessageAsReadAlongWithPreviousMessages(@Path("messageId") messageId: Int?): Call<ResponseBody>
+    fun markMessageAsReadAlongWithPreviousMessages(@Path("messageId") messageId: Long?): Call<ResponseBody>
 
 }

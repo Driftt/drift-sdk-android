@@ -15,7 +15,7 @@ internal object ConversationReadWrapper {
 
     private val TAG = ConversationReadWrapper::class.java.simpleName
 
-    fun markMessageAsReadAlongWithPrevious(messageId: Int, callback: (response: Boolean) -> Unit) {
+    fun markMessageAsReadAlongWithPrevious(messageId: Long, callback: (response: Boolean) -> Unit) {
 
         APIManager.conversationClient.markMessageAsReadAlongWithPreviousMessages(messageId).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
