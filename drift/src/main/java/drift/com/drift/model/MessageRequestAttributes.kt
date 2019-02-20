@@ -9,7 +9,7 @@ import java.util.Date
  * Created by eoin on 28/02/2018.
  */
 
-internal class MessageRequestAttributes (googleMeeting: GoogleMeeting, userAvailability: UserAvailability, meetingUserId: Long, conversationId: Int, timeSlot: Date) {
+internal class MessageRequestAttributes (googleMeeting: GoogleMeeting, userAvailability: UserAvailability, meetingUserId: Long, conversationId: Long, timeSlot: Date) {
 
     /*
         "scheduleMeetingFlow": true,

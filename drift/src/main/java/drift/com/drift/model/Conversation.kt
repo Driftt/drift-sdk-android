@@ -17,7 +17,7 @@ internal class Conversation {
 
     @Expose
     @SerializedName("id")
-    var id: Int? = null
+    var id: Long? = null
 
     @Expose
     @SerializedName("type")

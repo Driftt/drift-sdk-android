@@ -16,7 +16,7 @@ internal class Message {
 
     @Expose
     @SerializedName("id")
-    var id: Int? = null
+    var id: Long? = null
     @Expose
     @SerializedName("type")
     var type: String? = null
@@ -25,7 +25,7 @@ internal class Message {
     var orgId: Int? = null
     @Expose
     @SerializedName("conversationId")
-    var conversationId: Int? = null
+    var conversationId: Long? = null
     @Expose
     @SerializedName("authorType")
     var authorType: String? = null

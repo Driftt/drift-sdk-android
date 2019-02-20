@@ -78,7 +78,7 @@ internal object DriftManagerWrapper {
         }
 
         if (userJwt != null) {
-            jsonPayload["userJwt"] = userJwt
+            jsonPayload["jwt"] = userJwt
         }
         jsonPayload["org_id"] = orgId
         jsonPayload["user_id"] = userId

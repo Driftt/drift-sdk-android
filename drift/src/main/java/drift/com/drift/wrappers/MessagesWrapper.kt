@@ -23,7 +23,7 @@ internal object MessagesWrapper {
 
     private val TAG = MessagesWrapper::class.java.simpleName
 
-    fun getMessagesForConversationId(conversationId: Int, callback: (response: ArrayList<Message>?) -> Unit) {
+    fun getMessagesForConversationId(conversationId: Long, callback: (response: ArrayList<Message>?) -> Unit) {
 
         APIManager.conversationClient.getMessages(conversationId).enqueue(object : Callback<ArrayList<Message>> {
             override fun onResponse(call: Call<ArrayList<Message>>, response: Response<ArrayList<Message>>) {
@@ -41,7 +41,7 @@ internal object MessagesWrapper {
         })
     }
 
-    fun sendMessageToConversation(conversationId: Int, message: MessageRequest, callback: (response: Message?) -> Unit) {
+    fun sendMessageToConversation(conversationId: Long, message: MessageRequest, callback: (response: Message?) -> Unit) {
 
         APIManager.conversationClient.postMessage(conversationId, message).enqueue(object : Callback<Message> {
             override fun onResponse(call: Call<Message>, response: Response<Message>) {

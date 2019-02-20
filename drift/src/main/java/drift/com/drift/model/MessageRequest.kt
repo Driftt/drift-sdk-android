@@ -38,7 +38,7 @@ internal class MessageRequest {
     private var attributes: MessageRequestAttributes? = null
 
 
-    constructor(googleMeeting: GoogleMeeting, userAvailability: UserAvailability, meetingUserId: Long, conversationId: Int, timeSlot: Date) {
+    constructor(googleMeeting: GoogleMeeting, userAvailability: UserAvailability, meetingUserId: Long, conversationId: Long, timeSlot: Date) {
         this.body = ""
         this.type = "CHAT"
         attributes = MessageRequestAttributes(googleMeeting, userAvailability, meetingUserId, conversationId, timeSlot)
@@ -58,7 +58,7 @@ internal class MessageRequest {
 
     }
 
-    fun messageFromRequest(conversationId: Int?): Message {
+    fun messageFromRequest(conversationId: Long?): Message {
 
         val message = Message()
         message.conversationId = conversationId
