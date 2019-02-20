@@ -25,7 +25,7 @@ internal class Message {
     var orgId: Int? = null
     @Expose
     @SerializedName("conversationId")
-    var conversationId: Int? = null
+    var conversationId: Long? = null
     @Expose
     @SerializedName("authorType")
     var authorType: String? = null

@@ -43,7 +43,7 @@ import drift.com.drift.wrappers.ScheduleMeetingWrapper
 internal class ScheduleMeetingDialogFragment : DialogFragment() {
 
     private var userId: Long = 0
-    private var conversationId: Int = 0
+    private var conversationId: Long = 0
 
     private var scheduleMeetingState = ScheduleMeetingState.DAY
 
@@ -88,7 +88,7 @@ internal class ScheduleMeetingDialogFragment : DialogFragment() {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
             userId = arguments!!.getLong(USER_ID_ARG)
-            conversationId = arguments!!.getInt(CONVERSATION_ID_ARG)
+            conversationId = arguments!!.getLong(CONVERSATION_ID_ARG)
         }
     }
 
@@ -322,11 +322,11 @@ internal class ScheduleMeetingDialogFragment : DialogFragment() {
 
         private val TAG = ScheduleMeetingDialogFragment::class.java.simpleName
 
-        fun newInstance(userId: Long, conversationId: Int): ScheduleMeetingDialogFragment {
+        fun newInstance(userId: Long, conversationId: Long): ScheduleMeetingDialogFragment {
             val fragment = ScheduleMeetingDialogFragment()
             val args = Bundle()
             args.putLong(USER_ID_ARG, userId)
-            args.putInt(CONVERSATION_ID_ARG, conversationId)
+            args.putLong(CONVERSATION_ID_ARG, conversationId)
             fragment.arguments = args
             return fragment
         }

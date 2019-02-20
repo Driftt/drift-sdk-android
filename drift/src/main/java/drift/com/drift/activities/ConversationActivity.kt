@@ -71,7 +71,7 @@ internal class ConversationActivity : DriftActivity() {
         }
     }
 
-    private var conversationId = -1
+    private var conversationId: Long = -1L
     private var endUserId: Long = -1L
     private var conversationType = ConversationType.CONTINUE
 
@@ -103,12 +103,12 @@ internal class ConversationActivity : DriftActivity() {
         val intent = intent
 
         if (intent.extras != null) {
-            conversationId = intent.extras!!.getInt(CONVERSATION_ID, -1)
+            conversationId = intent.extras!!.getLong(CONVERSATION_ID, -1)
             conversationType = intent.extras!!.getSerializable(CONVERSATION_TYPE) as ConversationType
         }
 
 
-        if (conversationId == -1 && conversationType == ConversationType.CONTINUE) {
+        if (conversationId == -1L && conversationType == ConversationType.CONTINUE) {
             Toast.makeText(this, "Invalid Conversation Id", Toast.LENGTH_SHORT).show()
             finish()
         }
@@ -196,7 +196,7 @@ internal class ConversationActivity : DriftActivity() {
             progressBar.visibility = View.GONE
         }
 
-        if (conversationId != -1) {
+        if (conversationId != -1L) {
 
             MessageManager.getMessagesForConversation(conversationId) { response ->
                 if (response != null) {
@@ -384,10 +384,10 @@ internal class ConversationActivity : DriftActivity() {
         private const val CONVERSATION_ID = "DRIFT_CONVERSATION_ID_PARAM"
         private const val CONVERSATION_TYPE = "DRIFT_CONVERSATION_TYPE_PARAM"
 
-        fun intentForConversation(context: Context, conversationId: Int): Intent {
+        fun intentForConversation(context: Context, conversationId: Long): Intent {
 
             val data = Bundle()
-            data.putInt(CONVERSATION_ID, conversationId)
+            data.putLong(CONVERSATION_ID, conversationId)
             data.putSerializable(CONVERSATION_TYPE, ConversationType.CONTINUE)
 
             return Intent(context, ConversationActivity::class.java)

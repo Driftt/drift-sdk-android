@@ -18,15 +18,15 @@ import drift.com.drift.wrappers.MessagesWrapper
 
 internal object MessageManager {
 
-    private var messageCache = HashMap<Int, ArrayList<Message>>()
-    private var failedMessageCache = HashMap<Int, ArrayList<Message>>()
+    private var messageCache = HashMap<Long, ArrayList<Message>>()
+    private var failedMessageCache = HashMap<Long, ArrayList<Message>>()
 
     fun clearCache() {
         messageCache = HashMap()
         failedMessageCache = HashMap()
     }
 
-    fun addMessageToConversation(conversationId: Int, message: Message): ArrayList<Message> {
+    fun addMessageToConversation(conversationId: Long, message: Message): ArrayList<Message> {
 
         val successMessages = messageCache[conversationId]
 
@@ -45,7 +45,7 @@ internal object MessageManager {
     }
 
 
-    fun getMessagesForConversationId(conversationId: Int): ArrayList<Message>? {
+    fun getMessagesForConversationId(conversationId: Long): ArrayList<Message>? {
 
         val failedMessages = failedMessageCache[conversationId]
 
@@ -150,7 +150,7 @@ internal object MessageManager {
         return output
     }
 
-    fun addMessageFailedToConversation(message: Message, conversationId: Int) {
+    fun addMessageFailedToConversation(message: Message, conversationId: Long) {
 
         val successMessages = messageCache[conversationId]
 
@@ -172,7 +172,7 @@ internal object MessageManager {
     }
 
 
-    fun removeMessageFromFailedCache(message: Message, conversationId: Int) {
+    fun removeMessageFromFailedCache(message: Message, conversationId: Long) {
 
         val failedMessages = failedMessageCache[conversationId]
 
@@ -181,7 +181,7 @@ internal object MessageManager {
         }
     }
 
-    fun getMessagesForConversation(conversationId: Int, conversationsCallback: (response: ArrayList<Message>?) -> Unit) {
+    fun getMessagesForConversation(conversationId: Long, conversationsCallback: (response: ArrayList<Message>?) -> Unit) {
 
         MessagesWrapper.getMessagesForConversationId(conversationId) { response ->
             if (response != null) {
@@ -195,7 +195,7 @@ internal object MessageManager {
         }
     }
 
-    fun sendMessageForConversationId(conversationId: Int, messageRequest: MessageRequest, conversationsCallback: (response: Message?) -> Unit) {
+    fun sendMessageForConversationId(conversationId: Long, messageRequest: MessageRequest, conversationsCallback: (response: Message?) -> Unit) {
 
 
         MessagesWrapper.sendMessageToConversation(conversationId, messageRequest) { response -> conversationsCallback(response) }

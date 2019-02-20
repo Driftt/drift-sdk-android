@@ -36,7 +36,7 @@ internal object ScheduleMeetingWrapper {
         })
     }
 
-    fun scheduleMeeting(userId: Long, conversationId: Int, timestamp: Double, callback: (response: GoogleMeeting?) -> Unit) {
+    fun scheduleMeeting(userId: Long, conversationId: Long, timestamp: Double, callback: (response: GoogleMeeting?) -> Unit) {
 
         val body = RequestBody.create(MediaType.parse("application/json"), timestamp.toString())
 

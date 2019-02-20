@@ -21,7 +21,7 @@ import retrofit2.http.QueryMap
 internal interface APIConversationAPIBuilder {
 
     @GET("conversations/{conversationId}/messages")
-    fun getMessages(@Path("conversationId") conversationId: Int?): Call<ArrayList<Message>>
+    fun getMessages(@Path("conversationId") conversationId: Long?): Call<ArrayList<Message>>
 
     @GET("attachments")
     fun getAttachments(@Query("id") attachmentIds: List<Int>, @QueryMap imgixOptions: Map<String, String>): Call<ArrayList<Attachment>>
@@ -31,7 +31,7 @@ internal interface APIConversationAPIBuilder {
     fun getConversationsForEndUser(@Path("endUserId") endUserId: Long?): Call<ArrayList<ConversationExtra>>
 
     @POST("conversations/{conversationId}/messages")
-    fun postMessage(@Path("conversationId") conversationId: Int?, @Body messageRequest: MessageRequest): Call<Message>
+    fun postMessage(@Path("conversationId") conversationId: Long?, @Body messageRequest: MessageRequest): Call<Message>
 
     @POST("messages")
     fun createConversation(@Body payload: HashMap<String, Any>): Call<Message>
