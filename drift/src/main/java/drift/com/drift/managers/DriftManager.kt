@@ -1,6 +1,7 @@
 package drift.com.drift.managers
 
 
+import drift.com.drift.Drift
 import drift.com.drift.helpers.LoggerHelper
 import drift.com.drift.helpers.LogoutHelper
 import drift.com.drift.model.Embed
@@ -82,6 +83,7 @@ internal object DriftManager {
             } else {
                 LoggerHelper.logMessage(TAG, "Auth Failed")
                 loadingUser = false
+                Drift.logout()
             }
         }
     }
