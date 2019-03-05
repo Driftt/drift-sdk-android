@@ -18,8 +18,11 @@ internal object APIManager {
 
     private val API_CUSTOMER_URL = "https://customer.api.drift.com/"
     private val API_CONVERSATION_URL = "https://conversation.api.drift.com/"
+    private val API_MESSAGING_URL = "https://messaging.api.drift.com/"
+
 
     lateinit var conversationClient: APIConversationAPIBuilder
+    lateinit var messagingClient: APIMessagingAPIBulder
     lateinit var customerClient: APICustomerAPIBuilder
     lateinit var authlessClient: APIAuthlessBuilder
 
@@ -95,6 +98,18 @@ internal object APIManager {
 
         this.authlessClient = retrofitV3.create(APIAuthlessBuilder::class.java)
 
+        val messagingClient = baseOkHttpClient.newBuilder()
+                .addInterceptor(APIAuthTokenInterceptor())
+                .addInterceptor(UserAgentInterceptor(userAgent))
+                .build()
+
+        val retrofitV4 = Retrofit.Builder()
+                .baseUrl(API_MESSAGING_URL)
+                .callFactory(messagingClient)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build()
+
+        this.messagingClient = retrofitV4.create(APIMessagingAPIBulder::class.java)
 
     }
 

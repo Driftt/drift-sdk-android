@@ -43,7 +43,7 @@ internal object MessagesWrapper {
 
     fun sendMessageToConversation(conversationId: Long, message: MessageRequest, callback: (response: Message?) -> Unit) {
 
-        APIManager.conversationClient.postMessage(conversationId, message).enqueue(object : Callback<Message> {
+        APIManager.messagingClient.postMessage(conversationId, message).enqueue(object : Callback<Message> {
             override fun onResponse(call: Call<Message>, response: Response<Message>) {
                 if (response.code() != 200 && response.code() != 201 || response.body() == null) {
                     callback(null)
@@ -86,7 +86,7 @@ internal object MessagesWrapper {
             payload["attributes"] = attributes
         }
 
-        APIManager.conversationClient.createConversation(payload).enqueue(object : Callback<Message> {
+        APIManager.messagingClient.createConversation(payload).enqueue(object : Callback<Message> {
             override fun onResponse(call: Call<Message>, response: Response<Message>) {
                 if (response.code() != 200 && response.code() != 201 || response.body() == null) {
                     callback(null)

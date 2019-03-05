@@ -26,15 +26,8 @@ internal interface APIConversationAPIBuilder {
     @GET("attachments")
     fun getAttachments(@Query("id") attachmentIds: List<Int>, @QueryMap imgixOptions: Map<String, String>): Call<ArrayList<Attachment>>
 
-
     @GET("conversations/end_users/{endUserId}/extra")
     fun getConversationsForEndUser(@Path("endUserId") endUserId: Long?): Call<ArrayList<ConversationExtra>>
-
-    @POST("conversations/{conversationId}/messages")
-    fun postMessage(@Path("conversationId") conversationId: Long?, @Body messageRequest: MessageRequest): Call<Message>
-
-    @POST("messages")
-    fun createConversation(@Body payload: HashMap<String, Any>): Call<Message>
 
     @POST("https://conversation2.api.drift.com/messages/{messageId}/read")
     fun markMessageAsRead(@Path("messageId") messageId: Long?): Call<ResponseBody>
