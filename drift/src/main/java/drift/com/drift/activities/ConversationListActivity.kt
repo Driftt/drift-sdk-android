@@ -104,14 +104,7 @@ internal class ConversationListActivity : DriftActivity() {
 
         val auth = Auth.instance
         if (auth?.endUser != null) {
-
-            UserManager.getUsers(auth.endUser!!.orgId!!) { success ->
-                if (success) {
-                    fetchData(auth)
-                } else {
-                    LoggerHelper.logMessage(TAG, "Failed to load users")
-                }
-            }
+            fetchData(auth)
         }
     }
 

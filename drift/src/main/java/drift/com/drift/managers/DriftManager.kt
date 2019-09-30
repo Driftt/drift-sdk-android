@@ -30,6 +30,7 @@ internal object DriftManager {
         DriftManagerWrapper.getEmbed(embedId) { response ->
             if (response != null) {
                 response.saveEmbed()
+                UserManager.setUsers(response.configuration?.team ?: listOf())
                 LoggerHelper.logMessage(TAG, "Get Embed Success")
 
                 if (registerInformation != null) {

@@ -1,7 +1,6 @@
 package drift.com.drift.model
 
 import android.content.Context
-import android.content.SharedPreferences
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -10,7 +9,6 @@ import com.google.gson.annotations.SerializedName
 
 import drift.com.drift.Drift
 import drift.com.drift.helpers.Preferences
-import kotlin.coroutines.experimental.coroutineContext
 
 /**
  * Created by eoin on 28/07/2017.
@@ -49,7 +47,7 @@ internal class Embed {
         val instance: Embed?
             get() {
                 if (_embed == null) {
-                    _embed = Embed.loadEmbed()
+                    _embed = loadEmbed()
                 }
 
                 return _embed

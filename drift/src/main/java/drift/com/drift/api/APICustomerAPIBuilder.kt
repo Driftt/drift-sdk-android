@@ -1,12 +1,10 @@
 package drift.com.drift.api
 
 
-import java.util.ArrayList
 import java.util.HashMap
 
 import drift.com.drift.model.Auth
 import drift.com.drift.model.GoogleMeeting
-import drift.com.drift.model.User
 import drift.com.drift.model.UserAvailability
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -24,9 +22,6 @@ internal interface APICustomerAPIBuilder {
     @POST("oauth/token")
     @FormUrlEncoded
     fun getAuth(@FieldMap loginPayload: HashMap<String, Any>): Call<Auth>
-
-    @GET("organizations/{orgId}/users")
-    fun getUsers(@Path("orgId") orgId: Int?): Call<ArrayList<User>>
 
     @GET("scheduling/{userId}/availability")
     fun getUserAvailability(@Path("userId") userId: Long): Call<UserAvailability>

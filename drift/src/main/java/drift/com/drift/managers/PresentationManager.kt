@@ -61,15 +61,13 @@ internal object PresentationManager {
     fun checkForUnreadMessagesToShow(orgId: Int, endUserId: Long?) {
 
         LoggerHelper.logMessage(TAG, "Checking for Messages to show")
-        UserManager.getUsersIfWeNeedTo(orgId) {
-            ConversationManager.getConversationsForEndUser(endUserId) { response ->
-                if (response != null) {
+        ConversationManager.getConversationsForEndUser(endUserId) { response ->
+            if (response != null) {
 
-                    showMessagePopupFromManager()
+                showMessagePopupFromManager()
 
-                } else {
-                    LoggerHelper.logMessage(TAG, "Failed to get conversation extras")
-                }
+            } else {
+                LoggerHelper.logMessage(TAG, "Failed to get conversation extras")
             }
         }
     }
@@ -111,10 +109,8 @@ internal object PresentationManager {
         if (user != null) {
             showPopupForMessage(user, message, otherMessages)
         } else if (auth?.endUser?.orgId != null) {
-            UserManager.getUsers(auth.endUser?.orgId!!) {
-                val newUser = UserManager.getUserForId(message.authorId)
-                showPopupForMessage(newUser, message, otherMessages)
-            }
+            val newUser = UserManager.getUserForId(message.authorId)
+            showPopupForMessage(newUser, message, otherMessages)
         }
 
     }
