@@ -96,7 +96,7 @@ internal class ScheduleMeetingDialogFragment : DialogFragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_schedule_meeting_dialog, container, false)
-        dialog.window!!.requestFeature(Window.FEATURE_NO_TITLE)
+        dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
 
         headerTitleTextView = view.findViewById(R.id.drift_sdk_schedule_meeting_fragment_header_title_text_view)
         headerDurationTextView = view.findViewById(R.id.drift_sdk_schedule_meeting_fragment_duration_text_view)
