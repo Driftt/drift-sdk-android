@@ -79,19 +79,21 @@
             <Button
                 android:id="@+id/drift_sdk_new_message_close_button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/drift_sdk_dismiss"
                 android:textAllCaps="false"
                 android:background="@drawable/drift_sdk_new_message_left_button_background"
                 android:textColor="@color/drift_sdk_white"
                 android:textSize="12sp"
+                tools:background="@color/drift_sdk_red"
+                style="@style/DriftButton"
                 />
 
             <Button
                 android:id="@+id/drift_sdk_new_message_open_button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/drift_sdk_open"
                 android:textStyle="bold"
@@ -99,6 +101,8 @@
                 android:background="@drawable/drift_sdk_new_message_right_button_background"
                 android:textColor="@color/drift_sdk_white"
                 android:textSize="12sp"
+                tools:background="@color/drift_sdk_red"
+                style="@style/DriftButton"
                 />
 
         </LinearLayout>

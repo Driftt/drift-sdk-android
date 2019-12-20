@@ -79,7 +79,10 @@
             android:layout_gravity="center"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:background="@drawable/drift_sdk_empty_state_button_background"/>
+            android:background="@drawable/drift_sdk_empty_state_button_background"
+            style="@style/DriftButton"
+
+            />
 
     </LinearLayout>
 
