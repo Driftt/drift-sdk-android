@@ -9,4 +9,7 @@
         <item name="colorAccent">@color/driftColorAccent</item>
     </style>
 
+    <style name="DriftButton" parent="Widget.AppCompat.Button"/>
+
+
 </resources>

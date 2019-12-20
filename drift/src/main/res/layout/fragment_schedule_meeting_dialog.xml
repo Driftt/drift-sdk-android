@@ -178,7 +178,9 @@
                         android:textColor="@color/drift_sdk_white"
                         android:background="@drawable/drift_sdk_schedule_meeting_confirmation_button"
                         android:layout_marginBottom="15dp"
-                        android:layout_marginTop="30dp"/>
+                        android:layout_marginTop="30dp"
+                        style="@style/DriftButton"
+                        />
 
                     <TextView
                         android:layout_width="match_parent"
