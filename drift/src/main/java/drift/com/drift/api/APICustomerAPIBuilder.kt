@@ -22,10 +22,4 @@ internal interface APICustomerAPIBuilder {
     @POST("oauth/token")
     @FormUrlEncoded
     fun getAuth(@FieldMap loginPayload: HashMap<String, Any>): Call<Auth>
-
-    @GET("scheduling/{userId}/availability")
-    fun getUserAvailability(@Path("userId") userId: Long): Call<UserAvailability>
-
-    @POST("scheduling/{userId}/schedule")
-    fun scheduleMeeting(@Path("userId") userId: Long, @Query("conversationId") conversationId: Long, @Body timestamp: RequestBody): Call<GoogleMeeting>
 }

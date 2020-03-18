@@ -13,17 +13,19 @@ import drift.com.drift.Drift
 
 
 
-
 internal object APIManager {
 
-    private val API_CUSTOMER_URL = "https://customer.api.drift.com/"
-    private val API_CONVERSATION_URL = "https://conversation.api.drift.com/"
-    private val API_MESSAGING_URL = "https://messaging.api.drift.com/"
+    private const val API_CUSTOMER_URL = "https://customer.api.drift.com/"
+    private const val API_CONVERSATION_URL = "https://conversation.api.drift.com/"
+    private const val API_MESSAGING_URL = "https://messaging.api.drift.com/"
+    private const val API_MEETING_URL = "https://meetings.api.drift.com/"
+
 
 
     lateinit var conversationClient: APIConversationAPIBuilder
     lateinit var messagingClient: APIMessagingAPIBulder
     lateinit var customerClient: APICustomerAPIBuilder
+    lateinit var meetingClient: APIMeetingAPIBuilder
     lateinit var authlessClient: APIAuthlessBuilder
 
     init {
@@ -110,6 +112,19 @@ internal object APIManager {
                 .build()
 
         this.messagingClient = retrofitV4.create(APIMessagingAPIBulder::class.java)
+
+        val meetingClient = baseOkHttpClient.newBuilder()
+                .addInterceptor(APIAuthTokenInterceptor())
+                .addInterceptor(UserAgentInterceptor(userAgent))
+                .build()
+
+        val retrofitV5 = Retrofit.Builder()
+                .baseUrl(API_MEETING_URL)
+                .callFactory(meetingClient)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build()
+
+        this.meetingClient = retrofitV5.create(APIMeetingAPIBuilder::class.java)
 
     }
 
