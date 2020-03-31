@@ -45,6 +45,7 @@ internal class ConversationListActivity : DriftActivity() {
 
         val actionBar = supportActionBar
         actionBar?.title = "Conversations"
+        actionBar?.setDisplayHomeAsUpEnabled(true)
 
         conversationRecyclerView = findViewById(R.id.drift_sdk_conversation_list_recycler_view)
         progressBar = findViewById(R.id.drift_sdk_conversation_list_progress_bar)
@@ -148,6 +149,9 @@ internal class ConversationListActivity : DriftActivity() {
         if (id == R.id.drift_sdk_create_conversation_action) {
             val intent = ConversationActivity.intentForCreateConversation(this@ConversationListActivity)
             this@ConversationListActivity.startActivity(intent)
+            return true
+        } else if (id == android.R.id.home) {
+            finish()
             return true
         } else {
             return super.onOptionsItemSelected(item)
