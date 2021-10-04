@@ -138,7 +138,6 @@ internal object SocketManager {
 
                     if (message != null && message.contentType == "CHAT") {
                         LoggerHelper.logMessage(TAG, "Received new Message")
-                        PresentationManager.didReceiveNewMessage(message)
                     }
                 }
                 else -> LoggerHelper.logMessage(TAG, "Undealt with socket event type: $type")
