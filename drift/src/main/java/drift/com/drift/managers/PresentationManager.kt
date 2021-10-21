@@ -110,7 +110,7 @@ internal object PresentationManager {
 
 
     private fun showPopupForMessage(message: Message, otherMessages: Int) {
-        if (shouldShowMessagePopup) {
+        if (!shouldShowMessagePopup) {
             return
         }
         val user = UserManager.getUserForId(message.authorId)
@@ -126,7 +126,7 @@ internal object PresentationManager {
 
 
     private fun showPopupForMessage(user: User?, message: Message?, otherMessages: Int) {
-        if (shouldShowMessagePopup) {
+        if (!shouldShowMessagePopup) {
             return
         }
 
