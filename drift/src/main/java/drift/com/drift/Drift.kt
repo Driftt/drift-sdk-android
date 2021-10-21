@@ -13,6 +13,7 @@ import drift.com.drift.helpers.LoggerHelper
 import drift.com.drift.helpers.LoggerListener
 import drift.com.drift.helpers.LogoutHelper
 import drift.com.drift.managers.DriftManager
+import drift.com.drift.managers.PresentationManager
 import drift.com.drift.managers.SocketManager
 
 class Drift private constructor() {
@@ -67,6 +68,10 @@ class Drift private constructor() {
         fun logout() {
             LoggerHelper.logMessage("LIFECYCLE", "Logout")
             LogoutHelper.logout()
+        }
+
+        fun disableNotificationPopups(disable: Boolean) {
+            PresentationManager.setDisablePopupForMessages(disable)
         }
 
         fun showAutomatedMessages(show: Boolean) {
