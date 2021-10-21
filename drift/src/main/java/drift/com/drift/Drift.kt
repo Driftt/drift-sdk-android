@@ -70,8 +70,8 @@ class Drift private constructor() {
             LogoutHelper.logout()
         }
 
-        fun disableNotificationPopups(disable: Boolean) {
-            PresentationManager.setDisablePopupForMessages(disable)
+        fun shouldShowMessagePopup(show: Boolean) {
+            PresentationManager.shouldShowMessagePopup(show)
         }
 
         fun showAutomatedMessages(show: Boolean) {

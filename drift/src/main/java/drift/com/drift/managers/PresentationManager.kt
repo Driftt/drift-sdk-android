@@ -34,7 +34,7 @@ internal object PresentationManager {
 
     private var pw: PopupWindow? = null
     private val TAG = PresentationManager::class.java.simpleName
-    private var disabledShowMessagePopup = false
+    private var shouldShowMessagePopup = true
 
     internal fun didReceiveNewMessage(message: Message) {
 
@@ -104,13 +104,13 @@ internal object PresentationManager {
     }
 
 
-    fun setDisablePopupForMessages(isDisabled: Boolean) {
-        disabledShowMessagePopup = isDisabled
+    fun shouldShowMessagePopup(show: Boolean) {
+        shouldShowMessagePopup = show
     }
 
 
     private fun showPopupForMessage(message: Message, otherMessages: Int) {
-        if (disabledShowMessagePopup) {
+        if (shouldShowMessagePopup) {
             return
         }
         val user = UserManager.getUserForId(message.authorId)
@@ -126,7 +126,7 @@ internal object PresentationManager {
 
 
     private fun showPopupForMessage(user: User?, message: Message?, otherMessages: Int) {
-        if (disabledShowMessagePopup) {
+        if (shouldShowMessagePopup) {
             return
         }
 
